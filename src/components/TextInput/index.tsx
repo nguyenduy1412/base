@@ -154,26 +154,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
                 : "border-input-border",
           )}
         >
-          {innerShadow && (
-            <>
-              <View
-                pointerEvents="none"
-                className="absolute top-0 left-0 right-0 h-1 bg-linear-to-b from-text-field-inner-shadow to-text-field-inner-shadow-transparent pointer-events-none"
-              />
-              <View
-                pointerEvents="none"
-                className="absolute top-0 bottom-0 left-0 w-[5px] bg-linear-to-r from-text-field-inner-shadow-soft to-text-field-inner-shadow-transparent pointer-events-none"
-              />
-              <View
-                pointerEvents="none"
-                className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-b from-text-field-inner-highlight-transparent to-text-field-inner-highlight pointer-events-none"
-              />
-              <View
-                pointerEvents="none"
-                className="absolute top-0 bottom-0 right-0 w-1 bg-linear-to-r from-text-field-inner-highlight-transparent to-text-field-inner-highlight-soft pointer-events-none"
-              />
-            </>
-          )}
+      
           {leftIcon && (
             <View className="mr-2">
               {renderIconWithColor(leftIcon, iconColor)}
