@@ -74,13 +74,13 @@ export const getShadowClass = (
 };
 
 export const fallbackColors: Record<ButtonColor, string> = {
-  primary: "#E23A36",
-  text: "#4B2416",
-  background: "#FFF7EC",
-  "background-element": "#FFF0DF",
-  "background-selected": "#F6E4D2",
-  "text-secondary": "#8B6A58",
-  "login-button": "#f87b80",
+  primary: "#3B7A57",
+  text: "#313533",
+  background: "#FAF8F5",
+  "background-element": "#FFFFFF",
+  "background-selected": "#D0DFD7",
+  "text-secondary": "#49504D",
+  "login-button": "#3B7A57",
   white: "#ffffff",
   blue: "#5a87e0",
 };
