@@ -1,16 +1,1 @@
-export const EMAIL_ICON = require("./email.png");
-export const KEY_ICON = require("./key.png");
-export const GRASS = require("./grass.png");
-export const BACKGROUND1 = require("./background1.png");
-export const FACEBOOK = require("./facebook.png");
-export const GOOGLE = require("./google.png");
-export const AVATAR = require("./avatar.png");
-export const LOCK_ICON = require("./lock.png");
-export const BOTTOM_TAB = require("./bottomtab.png");
-export const STAR_ICON = require("./star.png");
-export const CIRCEL_ICON = require("./circel.png");
-export const FRIEND_ICON = require("./friend.png");
-export const BACKGROUND_LOGIN = require("./background-login.jpg");
-export const KAIZER_BG_ADMIN = require("./kaizer-bg-admin.jpg");
-export const KAIZER_SIDERBAR = require("./kaizer-siderbar.png");
-export const KAIZER_FOOTER_SIDERBAR = require("./kaizer-footer-siderbar.png");
+export const BACKGROUND_RUN = require("./background-login.jpg");

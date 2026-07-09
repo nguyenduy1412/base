@@ -7,8 +7,6 @@ import { TouchableOpacity, View } from "react-native";
 import { useCSSVariable } from "uniwind";
 import LottieView from "../Lottie";
 import {
-  colorClassMap,
-  darkenColor,
   fallbackColors,
   getShadowClass,
 } from "./helpers";
@@ -39,7 +37,7 @@ export const Button = React.forwardRef<
   const isDisabled = disabled || isLoading;
   const isDark = theme$.mode.get() === "dark";
 
-  const bgClass = colorClassMap[color];
+  const bgClass = `bg-${color}`;
 
   const cssVarName = `--color-${color}`;
   const resolvedBgColor = useCSSVariable(cssVarName) as string;
@@ -48,8 +46,6 @@ export const Button = React.forwardRef<
   const shadowClass = isShadow
     ? cn("shadow-lg", getShadowClass(color, isDark, bgColorHex))
     : "";
-
-  const bottomBorderColor = darkenColor(bgColorHex, 0.25);
 
   return (
     <TouchableOpacity
@@ -62,6 +58,7 @@ export const Button = React.forwardRef<
       className={cn(
         "w-full rounded-full flex-row items-center justify-center px-6 py-3 android:disabled:opacity-60 ios:disabled:opacity-80 web:disabled:opacity-80 transition-all overflow-hidden relative",
         shadowClass,
+        bgClass,
         className,
         "bg-primary",
       )}
