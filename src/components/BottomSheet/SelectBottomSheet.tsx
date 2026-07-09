@@ -1,0 +1,67 @@
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { Check } from "lucide-react-native";
+import { forwardRef } from "react";
+import { View } from "react-native";
+
+import { AppBottomSheet } from "@/components/BottomSheet";
+import { Button } from "@/components/Button";
+import { Text } from "@/components/Text";
+
+export type SelectBottomSheetOption = {
+  label: string;
+  value: string;
+};
+
+type SelectBottomSheetProps = {
+  title: string;
+  options: SelectBottomSheetOption[];
+  selectedValue?: string;
+  onSelect: (option: SelectBottomSheetOption) => void;
+};
+
+export const SelectBottomSheet = forwardRef<
+  BottomSheetModal,
+  SelectBottomSheetProps
+>(function SelectBottomSheet({ title, options, selectedValue, onSelect }, ref) {
+  return (
+    <AppBottomSheet ref={ref} title={title}>
+      <View className="gap-3">
+        {options.map((option) => {
+          const selected = option.value === selectedValue;
+
+          return (
+            <Button
+              key={option.value}
+              color="white"
+              isShadow={false}
+              activeOpacity={0.85}
+              onPress={() => onSelect(option)}
+              className={`h-11.25 rounded-xl border px-4 py-0 ${
+                selected
+                  ? "border-[#3B7A57] bg-[#EBF2EE]"
+                  : "border-[#D7DAD9] bg-white"
+              }`}
+            >
+              <View className="w-full flex-row items-center justify-between">
+                <Text
+                  variant="body15Regular"
+                  className="leading-5.5 text-[#49504D]"
+                >
+                  {option.label}
+                </Text>
+
+                {selected ? (
+                  <View className="h-6 w-6 items-center justify-center rounded-full bg-[#3B7A57]">
+                    <Check size={16} color="#FFFFFF" strokeWidth={2.5} />
+                  </View>
+                ) : null}
+              </View>
+            </Button>
+          );
+        })}
+      </View>
+    </AppBottomSheet>
+  );
+});
+
+SelectBottomSheet.displayName = "SelectBottomSheet";

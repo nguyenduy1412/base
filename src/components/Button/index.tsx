@@ -63,35 +63,10 @@ export const Button = React.forwardRef<
         "w-full rounded-full flex-row items-center justify-center px-6 py-3 android:disabled:opacity-60 ios:disabled:opacity-80 web:disabled:opacity-80 transition-all overflow-hidden relative",
         shadowClass,
         className,
+        "bg-primary",
       )}
       {...props}
     >
-      <View
-        pointerEvents="none"
-        style={{ backgroundColor: bottomBorderColor }}
-        className="absolute inset-0 rounded-full"
-      />
-
-      <View
-        pointerEvents="none"
-        className={cn(
-          "absolute top-px left-[1.5px] right-[1.5px] bottom-[3px] rounded-full overflow-hidden",
-          bgClass,
-        )}
-      >
-        <View
-          pointerEvents="none"
-          className="absolute inset-0 bg-linear-to-b from-transparent to-black/20 pointer-events-none"
-        />
-      </View>
-
-      <View
-        pointerEvents="none"
-        className="absolute top-px left-px right-px h-6 overflow-hidden pointer-events-none"
-      >
-        <View className="absolute top-0 left-0 right-0 h-[46px] rounded-full border border-white/35" />
-      </View>
-
       <View
         className={cn(
           "flex-row items-center justify-center w-full",
