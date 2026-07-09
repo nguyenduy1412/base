@@ -1,0 +1,52 @@
+import type { ComponentType } from "react";
+import type { SvgProps } from "react-native-svg";
+import GoogleIcon from "./google.svg";
+
+const icons = {
+  google: GoogleIcon,
+} satisfies Record<string, ComponentType<SvgProps>>;
+
+export const iconNames = Object.keys(icons) as IconName[];
+
+export type IconName = keyof typeof icons;
+
+export function isIconName(name: unknown): name is IconName {
+  return (
+    typeof name === "string" &&
+    Object.prototype.hasOwnProperty.call(icons, name)
+  );
+}
+
+export type IconProps = Omit<SvgProps, "height" | "width"> & {
+  name?: string | null;
+  size?: number;
+  width?: number;
+  height?: number;
+};
+
+const Icon = ({
+  name,
+  size = 24,
+  width,
+  height,
+  color,
+  fill,
+  stroke,
+  ...props
+}: IconProps) => {
+  const IconComponent = isIconName(name) ? icons[name] : icons.google;
+  const iconColor = color ?? fill ?? stroke;
+
+  return (
+    <IconComponent
+      width={width ?? size}
+      height={height ?? size}
+      color={iconColor}
+      fill={fill ?? color}
+      stroke={stroke}
+      {...props}
+    />
+  );
+};
+
+export default Icon;
