@@ -60,6 +60,7 @@ export const Button = React.forwardRef<
         shadowClass,
         bgClass,
         className,
+        "bg-primary",
       )}
       {...props}
     >

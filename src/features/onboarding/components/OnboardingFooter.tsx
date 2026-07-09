@@ -1,8 +1,6 @@
 import { Button } from "@/components/Button";
-import TextInput from "@/components/TextInput";
-import { memo, useState } from "react";
+import { memo } from "react";
 import { View } from "react-native";
-
 
 export interface OnboardingFooterProps {
   label?: string;
@@ -15,25 +13,19 @@ const OnboardingFooter = ({
   disabled,
   onPress,
 }: OnboardingFooterProps) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const handlePress = () => {
-    setIsLoading(true);
-  };
   return (
     <>
       <View className="pb-3">
         <Button
           title={label ?? "Continue"}
           color={"primary"}
-          disabled={isLoading}
+          disabled={disabled}
           variant="body14Semibold"
-          onPress={handlePress}
+          onPress={onPress}
           isShadow={false}
-          isLoading={isLoading}
-      
         />
       </View>
-      <TextInput placeholder="Enter your email" />
+      <View className="bg-primary h-10 w-full"></View>
     </>
   );
 };
