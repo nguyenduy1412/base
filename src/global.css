@@ -1,0 +1,403 @@
+@import "tailwindcss";
+@import "uniwind";
+
+@theme {
+  --breakpoint-xs: 360px;
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1440px;
+  --breakpoint-3xl: 1920px;
+
+  --font-sans: "Nunito-Regular";
+  --font-sans-medium: "Nunito-Medium";
+  --font-sans-semibold: "Nunito-SemiBold";
+  --font-sans-bold: "Nunito-Bold";
+  --font-sans-extrabold: "Nunito-ExtraBold";
+}
+
+:root {
+  --font-display:
+    Spline Sans, Inter, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+  --font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono,
+    Courier New, monospace;
+  --font-rounded:
+    "SF Pro Rounded", "Hiragino Maru Gothic ProN", Meiryo, "MS PGothic",
+    sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+}
+
+@layer theme {
+  :root {
+    @variant light {
+      --color-blue: #598ae4;
+      --color-white: #ffffff;
+      --color-black: #000000;
+      --color-brown: #cb8036;
+      --color-cream: #fff3d8;
+      --color-primary: #e23a36;
+      --color-primary-pressed: #96132c;
+      --color-primary-soft: #ffcdd2;
+      --color-primary-transparent: #c41e3aa3;
+      --color-login-button: #f87b80;
+      --color-secondary: #28806f;
+      --color-secondary-soft: #40c4aa;
+      --color-background: #fff7ec;
+      --color-surface: #f6e4d2;
+      --color-card: #fffdf7;
+      --color-card-background: #fffdf7;
+      --color-input-background: #fff0df;
+      --color-warm-background: #fff0df;
+      --color-on-primary: #ffffff;
+      --color-on-error: #ffffff;
+      --color-text: #4b2416;
+      --color-text-heading: #3a1c12;
+      --color-text-primary: #4b2416;
+      --color-text-strong: #5c3122;
+      --color-text-default: #6b3b2a;
+      --color-text-secondary: #8b6a58;
+      --color-icon: #7d4e3a;
+      --color-label: #7d4e3a;
+      --color-placeholder: #a9826a;
+      --color-disabled-text: #b9957a;
+      --color-border: #c9aa8f;
+      --color-border-medium: #c9aa8f;
+      --color-input-border: #e8c9ae;
+      --color-input-focused-border: #c9aa8f;
+      --color-divider: #f0d8c2;
+      --color-subtle-stroke: #f0d8c2;
+      --color-error: #df1c41;
+      --color-error-strong: #96132c;
+      --color-error-soft: #f87b80;
+      --color-error-surface: #fadbe1;
+      --color-error-overlay: #c41e3a3d;
+      --color-success: #40c4aa;
+      --color-success-strong: #28806f;
+      --color-success-surface: #ddf3ef;
+      --color-warning: #ffbe4c;
+      --color-warning-strong: #966422;
+      --color-warning-surface: #ffefc9;
+      --color-text-field-shadow: rgba(184, 126, 82, 0.14);
+      --color-text-field-inner-shadow: rgba(184, 126, 82, 0.2);
+      --color-text-field-inner-shadow-soft: rgba(184, 126, 82, 0.06);
+      --color-text-field-inner-shadow-transparent: rgba(58, 28, 18, 0);
+      --color-text-field-inner-highlight: rgba(255, 255, 255, 0.18);
+      --color-text-field-inner-highlight-soft: rgba(255, 255, 255, 0.16);
+      --color-text-field-inner-highlight-transparent: rgba(255, 255, 255, 0);
+      --color-yellow: #f2a415;
+      --color-purple: #bc48f2;
+      --color-modal-background: #ffffff;
+      --color-modal-text-secondary: #8b6a58;
+    }
+    @variant dark {
+      --color-blue: #5ba3f5;
+      --color-white: #fffdfd;
+      --color-black: #000000;
+      --color-brown: #cb8036;
+      --color-cream: #fff3d8;
+      --color-primary: #e53935;
+      --color-primary-pressed: #96132c;
+      --color-primary-soft: #38171c;
+      --color-primary-transparent: #c41e3aa3;
+      --color-login-button: #f87b80;
+      --color-secondary: #28806f;
+      --color-secondary-soft: #40c4aa;
+      --color-background: #181818;
+      --color-surface: #1a1919;
+      --color-card: #1a1919;
+      --color-card-background: #1a1919;
+      --color-input-background: #181818;
+      --color-warm-background: #181818;
+      --color-on-primary: #fffdfd;
+      --color-on-error: #fffdfd;
+      --color-text: #fffdfd;
+      --color-text-heading: #fffdfd;
+      --color-text-primary: #fffdfd;
+      --color-text-strong: #f2f0f0;
+      --color-text-default: #e6e4e4;
+      --color-text-secondary: #d9d7d7;
+      --color-icon: #cccaca;
+      --color-label: #cccaca;
+      --color-placeholder: #737272;
+      --color-disabled-text: #737272;
+      --color-border: #4d4c4c;
+      --color-border-medium: #4d4c4c;
+      --color-input-border: #404040;
+      --color-input-focused-border: #737272;
+      --color-divider: #404040;
+      --color-subtle-stroke: #404040;
+      --color-error: #96132c;
+      --color-error-strong: #96132c;
+      --color-error-soft: #df1c41;
+      --color-error-surface: rgba(229, 57, 53, 0.2);
+      --color-error-overlay: #c41e3a3d;
+      --color-success: #40c4aa;
+      --color-success-strong: #28806f;
+      --color-success-surface: #ddf3ef;
+      --color-warning: #ffbe4c;
+      --color-warning-strong: #966422;
+      --color-warning-surface: #ffefc9;
+      --color-text-field-shadow: rgba(0, 0, 0, 0.24);
+      --color-text-field-inner-shadow: rgba(0, 0, 0, 0.28);
+      --color-text-field-inner-shadow-soft: rgba(0, 0, 0, 0.12);
+      --color-text-field-inner-shadow-transparent: rgba(0, 0, 0, 0);
+      --color-text-field-inner-highlight: rgba(255, 255, 255, 0.1);
+      --color-text-field-inner-highlight-soft: rgba(255, 255, 255, 0.08);
+      --color-text-field-inner-highlight-transparent: rgba(255, 255, 255, 0);
+      --color-yellow: #f2a415;
+      --color-purple: #bc48f2;
+      --color-modal-background: #181818;
+      --color-modal-text-secondary: #999898;
+    }
+  }
+}
+
+/* ==========================================================================
+   Admin Panel — Ghibli solid palette (no glass / opacity)
+   ========================================================================== */
+
+.admin-theme {
+  --admin-sidebar: #F9EFDA;
+  --admin-card: #F5F0E8;
+  --admin-card-hover: #EDE6D8;
+  --admin-card-inner: #EDE6D8;
+  --admin-border: #E8E0D0;
+  --admin-border-strong: #D4C4A8;
+  --admin-text: #333333;
+  --admin-text-muted: #555555;
+  --admin-text-light: #888888;
+  --admin-green: #66BB6A;
+  --admin-green-dark: #2E7D32;
+  --admin-green-bg: #E8F5E9;
+  --admin-green-nav: #D4E8D7;
+  --admin-blue: #42A5F5;
+  --admin-blue-bg: #E3F2FD;
+  --admin-amber: #FFB74D;
+  --admin-red: #EF5350;
+}
+
+/* Dash border animation for Drag & Drop Zone */
+@keyframes dash {
+  to {
+    stroke-dashoffset: -40;
+  }
+}
+
+.animate-dash {
+  stroke-dasharray: 8 4;
+  animation: dash 1s linear infinite;
+}
+
+/* Solid card panel */
+.admin-glass {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  box-shadow: 0 2px 12px #0000000F;
+  color: var(--admin-text);
+}
+
+.admin-glass-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-glass-hover:hover {
+  background: var(--admin-card-hover);
+  border-color: var(--admin-border-strong);
+  box-shadow: 0 4px 20px #00000014;
+  transform: translateY(-2px);
+}
+
+.admin-header-bar {
+  background: transparent;
+  border-bottom: none;
+}
+
+.admin-search {
+  background: rgba(245, 240, 232, 0.5);
+  border: 1px solid rgba(232, 224, 208, 0.6);
+  color: var(--admin-text);
+}
+
+.admin-search::placeholder {
+  color: var(--admin-text-light);
+}
+
+.admin-search:focus {
+  outline: none;
+  border-color: var(--admin-green);
+  box-shadow: 0 0 0 2px #E8F5E9;
+}
+
+.admin-surface {
+  background: var(--admin-card);
+}
+
+.admin-surface-inner {
+  background: var(--admin-card-inner);
+}
+
+.admin-heading {
+  color: var(--admin-text);
+}
+
+.admin-muted {
+  color: var(--admin-text-muted);
+}
+
+.admin-label {
+  color: var(--admin-text-light);
+}
+
+.admin-link {
+  color: var(--admin-green-dark);
+}
+
+.admin-link:hover {
+  color: var(--admin-green);
+}
+
+.admin-trend-up {
+  color: var(--admin-green);
+}
+
+.admin-input {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  color: var(--admin-text);
+}
+
+.admin-input:focus {
+  outline: none;
+  border-color: var(--admin-green);
+  box-shadow: 0 0 0 2px #E8F5E9;
+}
+
+.admin-btn-primary {
+  background: var(--admin-green);
+  color: #FFFFFF;
+}
+
+.admin-btn-primary:hover {
+  background: var(--admin-green-dark);
+}
+
+.admin-nav-active {
+  background: var(--admin-green-nav);
+  color: var(--admin-green-dark);
+  border: 1px solid #B8D4BC;
+}
+
+.admin-nav-item {
+  color: #4A6350;
+  border: 1px solid transparent;
+}
+
+.admin-nav-item:hover {
+  background: var(--admin-card);
+  color: var(--admin-green-dark);
+}
+
+/* Custom Scrollbar for admin panel */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #EDE8DF;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #C4B8A8;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #A89880;
+}
+
+/* Lottie Checkerboard background toggle options */
+.bg-checkered {
+  background-color: #1e1e1e;
+  background-image: 
+    linear-gradient(45deg, #2a2a2a 25%, transparent 25%), 
+    linear-gradient(-45deg, #2a2a2a 25%, transparent 25%), 
+    linear-gradient(45deg, transparent 75%, #2a2a2a 75%), 
+    linear-gradient(-45deg, transparent 75%, #2a2a2a 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.bg-checkered-light {
+  background-color: #F5F0E8;
+  background-image: 
+    linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
+    linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
+    linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
+    linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+/* Shimmer animation for loading states */
+@keyframes shimmer-slide {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shimmer-skeleton {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-skeleton::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0.3) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer-slide 1.6s infinite;
+  content: '';
+}
+
+.dark .shimmer-skeleton::after {
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 20%,
+    rgba(255, 255, 255, 0.12) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, #E3F2FD 25%, #BBDEFB 50%, #E3F2FD 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
