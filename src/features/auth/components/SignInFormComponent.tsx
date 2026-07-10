@@ -61,7 +61,7 @@ const SignInFormComponent = ({ onNextForm }: props) => {
 
       <Button
         title={t`Sign in`}
-        className="w-full rounded-[12px] mt-5 h-12"
+        className="w-full rounded-[12px] mt-5"
         isLoading={isPending}
         onPress={handleSubmit(onSignIn)}
       />
@@ -72,7 +72,7 @@ const SignInFormComponent = ({ onNextForm }: props) => {
         </View>
       </View>
       <Button
-        className="w-full rounded-[12px] mt-5 h-12 border border-placeholder"
+        className="w-full rounded-[12px] mt-5 border border-placeholder"
         onPress={() => {}}
         color="background"
         isShadow={false}
