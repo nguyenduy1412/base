@@ -5,32 +5,30 @@ import {
   BottomSheetModal,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import { forwardRef, ReactNode, useMemo } from "react";
+import { forwardRef, ReactNode } from "react";
 import { View } from "react-native";
 import { useCSSVariable } from "uniwind";
 
 export type AppBottomSheetProps = {
   title?: string;
   children: ReactNode;
-  snapPoints?: string[];
   className?: string;
   contentClassName?: string;
 };
 
 export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
   function AppBottomSheet(
-    { title, children, snapPoints = ["45%"], className, contentClassName },
+    { title, children, className, contentClassName },
     ref,
   ) {
-    const memoizedSnapPoints = useMemo(() => snapPoints, [snapPoints]);
-    const backgroundColor = useCSSVariable("--color-background") as string;
+    // const memoizedSnapPoints = useMemo(() => snapPoints, [snapPoints]);
+    const backgroundColor = useCSSVariable("--color-white") as string;
 
     return (
       <BottomSheetModal
         ref={ref}
-        snapPoints={memoizedSnapPoints}
+        // snapPoints={memoizedSnapPoints}
         enablePanDownToClose
-        handleComponent={null}
         backgroundStyle={{
           backgroundColor,
           borderTopLeftRadius: 24,
@@ -45,8 +43,6 @@ export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
         )}
       >
         <BottomSheetView>
-          <View className="mb-3.5 h-4.25 w-22 self-center rounded-full bg-border" />
-
           {title ? (
             <Text
               variant="body24Semibold"

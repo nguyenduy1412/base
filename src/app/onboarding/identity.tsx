@@ -1,4 +1,6 @@
+import { AppBottomSheet } from "@/components/BottomSheet";
 import { SelectBottomSheet } from "@/components/BottomSheet/SelectBottomSheet";
+import BreedBottomSheetContent from "@/features/onboarding/components/BreedBottomSheetContent";
 import OnboardingFooter from "@/features/onboarding/components/OnboardingFooter";
 import OnboardingScreen from "@/features/onboarding/components/OnboardingScreen";
 import OnboardingSearchField from "@/features/onboarding/components/OnboardingSearchField";
@@ -17,7 +19,7 @@ import { useOnboardingStore } from "@/store/onboardingStore";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarDays, Search } from "lucide-react-native";
-import { useMemo, useRef } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
 
@@ -51,6 +53,18 @@ export default function OnboardingIdentityScreen() {
     return birthdayOptions.find((option) => option.value === birthday);
   }, [birthday]);
 
+  const primaryBreedSheetRef = useRef<BottomSheetModal>(null);
+  const [primaryBreed1, setPrimaryBreed1] = useState("");
+
+  const openPrimaryBreedSheet = () => {
+    primaryBreedSheetRef.current?.present();
+    console.log("AAAA");
+  };
+
+  const closePrimaryBreedSheet = () => {
+    primaryBreedSheetRef.current?.dismiss();
+  };
+
   const onSubmit = (values: OnboardingFormValues) => {
     setIdentity(values);
     // router.push("/onboarding/profile");
@@ -63,7 +77,7 @@ export default function OnboardingIdentityScreen() {
       title="Your Dog: Identity"
       canGoBack={true}
       footer={
-        <OnboardingFooter disabled={true} onPress={handleSubmit(onSubmit)} />
+        <OnboardingFooter disabled={false} onPress={handleSubmit(onSubmit)} />
       }
     >
       <View className="gap-5 flex-1 ">
@@ -111,7 +125,7 @@ export default function OnboardingIdentityScreen() {
               placeholder="Search breed..."
               value={selectedBreed?.label ?? value}
               error={errors.primaryBreed?.message}
-              onFocus={() => breedSheetRef.current?.present()}
+              onFocus={openPrimaryBreedSheet}
               leftIcon={<Search />}
             />
           )}
@@ -144,7 +158,7 @@ export default function OnboardingIdentityScreen() {
               value={selectedBirthday?.label}
               error={errors.birthday?.message}
               rightIcon={<CalendarDays size={24} strokeWidth={2} />}
-              onPress={() => birthdaySheetRef.current?.present()}
+              onPress={openPrimaryBreedSheet}
             />
           )}
         />
@@ -176,6 +190,17 @@ export default function OnboardingIdentityScreen() {
             birthdaySheetRef.current?.dismiss();
           }}
         />
+
+        <AppBottomSheet
+          ref={primaryBreedSheetRef}
+          contentClassName="mt-5 bg-white"
+        >
+          <BreedBottomSheetContent
+            selectedValue={primaryBreed}
+            onSelect={setPrimaryBreed1}
+            onDone={closePrimaryBreedSheet}
+          />
+        </AppBottomSheet>
       </View>
     </OnboardingScreen>
   );

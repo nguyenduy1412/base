@@ -1,9 +1,18 @@
 import type { ComponentType } from "react";
 import type { SvgProps } from "react-native-svg";
+import AlaskanMalamute from "./AlaskanMalamute.svg";
+import GermanShepherd from "./GermanShepherd.svg";
+import GolderRetriever from "./GolderRetriever.svg";
 import GoogleIcon from "./google.svg";
-
+import Icondogs from "./Icondogs.svg";
+import Samoyed from "./Samoyed.svg";
 const icons = {
   google: GoogleIcon,
+  AlaskanMalamute: AlaskanMalamute,
+  GermanShepherd: GermanShepherd,
+  GolderRetriever: GolderRetriever,
+  Samoyed: Samoyed,
+  LabradorRetriever: Icondogs,
 } satisfies Record<string, ComponentType<SvgProps>>;
 
 export const iconNames = Object.keys(icons) as IconName[];
