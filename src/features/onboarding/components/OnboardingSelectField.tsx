@@ -29,9 +29,16 @@ const OnboardingSelectField = ({
 
   return (
     <View className="w-full gap-2">
-      <Text variant="body14Regular" className="text-[#49504D]">
-        {required ? `${label} *` : label}
-      </Text>
+      <View className="flex-row gap-1">
+        <Text variant="body14Regular" className="text-[#49504D]">
+          {label}
+        </Text>
+        {required ? (
+          <Text variant="body13Regular" className="text-error">
+            *
+          </Text>
+        ) : null}
+      </View>
 
       <Button
         color="white"

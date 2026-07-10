@@ -10,11 +10,13 @@
   --breakpoint-2xl: 1440px;
   --breakpoint-3xl: 1920px;
 
-  --font-sans: "Nunito-Regular";
-  --font-sans-medium: "Nunito-Medium";
-  --font-sans-semibold: "Nunito-SemiBold";
-  --font-sans-bold: "Nunito-Bold";
-  --font-sans-extrabold: "Nunito-ExtraBold";
+  --font-sans: "Inter-Regular";
+  --font-sans-medium: "Inter-Medium";
+  --font-sans-semibold: "Inter-SemiBold";
+  --font-sans-bold: "Inter-SemiBold";
+  --font-sans-extrabold: "Inter-SemiBold";
+  --font-serif: "CormorantGaramond-SemiBold";
+  --font-accent: "Afacad-Regular";
 }
 
 :root {
@@ -27,7 +29,7 @@
   --font-rounded:
     "SF Pro Rounded", "Hiragino Maru Gothic ProN", Meiryo, "MS PGothic",
     sans-serif;
-  --font-serif: Georgia, "Times New Roman", serif;
+  --font-serif: "CormorantGaramond-SemiBold", Georgia, "Times New Roman", serif;
 }
 
 @layer theme {

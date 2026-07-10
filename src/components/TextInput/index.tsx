@@ -8,8 +8,8 @@ import {
   View,
   type KeyboardTypeOptions,
 } from "react-native";
-import { type TextInputProps } from "./types";
 import { useCSSVariable } from "uniwind";
+import { type TextInputProps } from "./types";
 
 const inputTypeConfig: Record<
   string,
@@ -69,6 +69,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       rightIcon,
       leftIcon,
       error,
+      required,
       errorClassName,
       innerShadow = true,
       onFocus,
@@ -137,12 +138,19 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
     return (
       <View style={style} className={cn("w-full", containerClassName)}>
         {label && (
-          <Text
-            variant={labelVariant}
-            className={cn("mb-1.5 text-text-secondary", labelClassName)}
-          >
-            {label}
-          </Text>
+          <View className="flex-row gap-1">
+            <Text
+              variant={labelVariant}
+              className={cn("mb-1.5 text-text-secondary", labelClassName)}
+            >
+              {label}
+            </Text>
+            {required ? (
+              <Text variant="body13Regular" className="text-error">
+                *
+              </Text>
+            ) : null}
+          </View>
         )}
         <View
           className={cn(
@@ -154,7 +162,6 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
                 : "border-input-border",
           )}
         >
-      
           {leftIcon && (
             <View className="mr-2">
               {renderIconWithColor(leftIcon, iconColor)}

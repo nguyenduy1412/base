@@ -20,7 +20,8 @@ const OnboardingTextField = ({
 }: OnboardingTextFieldProps) => {
   return (
     <TextInput
-      label={required ? `${label} *` : label}
+      label={label}
+      required={required}
       labelVariant="body14Regular"
       labelClassName="mb-2 text-[#49504D]"
       containerClassName="w-full"

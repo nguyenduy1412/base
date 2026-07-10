@@ -12,7 +12,7 @@ const OnboardingProgress = ({
 }: OnboardingProgressProps) => {
   useEffect(() => {}, []);
   return (
-    <View>
+    <View className="flex-row gap-2 w-full mb-7">
       {Array.from({ length: totalSteps }).map((item, index) => {
         const isActive = index < currentStep;
 

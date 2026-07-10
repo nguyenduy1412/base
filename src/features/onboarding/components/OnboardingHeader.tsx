@@ -1,4 +1,5 @@
 import { Button } from "@/components/Button";
+import CheckBox from "@/components/CheckBox";
 import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import { memo } from "react";
@@ -22,16 +23,16 @@ const OnboardingHeader = ({
   };
 
   return (
-    <View className="h-19 flex-row items-center justify-between">
+    <View className=" flex-row items-center justify-between mb-6 ">
       {canGoBack ? (
         <Button
-          color="white"
           isShadow
           activeOpacity={0.85}
-          className="h-9 w-9 rounded-full px-0 py-0"
-          onPress={() => handleNavigationBack}
+          onPress={handleNavigationBack}
+          className="h-9 w-9 rounded-full px-0 py-0 "
+          color="background"
         >
-          <ArrowLeft size={24} color="#49504D" strokeWidth={2} />
+          <ArrowLeft size={24} color="primary" strokeWidth={2} />
         </Button>
       ) : (
         <View className="h-9 w-9" />
@@ -42,6 +43,8 @@ const OnboardingHeader = ({
       </Text>
 
       <View className="h-9 w-9" />
+
+      <CheckBox isSelected={true} isCircle={true} />
     </View>
   );
 };

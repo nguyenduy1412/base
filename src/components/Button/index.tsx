@@ -6,10 +6,7 @@ import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { useCSSVariable } from "uniwind";
 import LottieView from "../Lottie";
-import {
-  fallbackColors,
-  getShadowClass,
-} from "./helpers";
+import { fallbackColors, getShadowClass } from "./helpers";
 import { type ButtonProps } from "./types";
 
 export const Button = React.forwardRef<
@@ -44,7 +41,7 @@ export const Button = React.forwardRef<
   const bgColorHex = resolvedBgColor ?? fallbackColors[color] ?? "#E23A36";
 
   const shadowClass = isShadow
-    ? cn("shadow-lg", getShadowClass(color, isDark, bgColorHex))
+    ? cn("shadow-md", getShadowClass(color, isDark, bgColorHex))
     : "";
 
   return (
@@ -60,7 +57,6 @@ export const Button = React.forwardRef<
         shadowClass,
         bgClass,
         className,
-        "bg-primary",
       )}
       {...props}
     >
