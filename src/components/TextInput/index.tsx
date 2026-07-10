@@ -80,6 +80,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       keyboardType,
       autoComplete,
       textContentType,
+      iconError,
       ...props
     },
     ref,
@@ -156,7 +157,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
           className={cn(
             "flex-row items-center border rounded-lg px-4 overflow-hidden relative bg-input-background",
             error
-              ? "border-primary"
+              ? "border-error"
               : isFocused
                 ? "border-input-focused-border"
                 : "border-input-border",
@@ -196,12 +197,15 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
           )}
         </View>
         {error && (
-          <Text
-            variant="body10Regular"
-            className={cn("mt-1 text-primary", errorClassName)}
-          >
-            {error}
-          </Text>
+          <View className="flex-row items-center gap-1 pt-2">
+            {iconError}
+            <Text
+              variant="body12Regular"
+              className={cn("mt-1 text-error", errorClassName)}
+            >
+              {error}
+            </Text>
+          </View>
         )}
       </View>
     );

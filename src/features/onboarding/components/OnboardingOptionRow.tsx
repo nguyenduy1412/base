@@ -43,7 +43,11 @@ const OnboardingOptionRow = ({
 
         {selected ? (
           <View className="h-6 w-6 items-center justify-center rounded-full bg-primary">
-            <CheckIcon size={16} colorClassName="accent-white" strokeWidth={2.5} />
+            <CheckIcon
+              size={16}
+              colorClassName="accent-white"
+              strokeWidth={2.5}
+            />
           </View>
         ) : null}
       </View>

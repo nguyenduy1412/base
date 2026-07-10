@@ -39,7 +39,7 @@ export const SelectBottomSheet = forwardRef<
               isShadow={false}
               activeOpacity={0.85}
               onPress={() => onSelect(option)}
-              className={`h-11.25 rounded-xl border px-4 py-0 ${
+              className={`w-full h-11.25 rounded-xl border px-4 py-0 ${
                 selected
                   ? "border-primary bg-secondary-soft"
                   : "border-input-border bg-white"

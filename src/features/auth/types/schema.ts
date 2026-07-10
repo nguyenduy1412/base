@@ -2,33 +2,27 @@ import type { I18n } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { z } from "zod";
 
-export const createLoginSchema = (translate: I18n["_"]) =>
+export const defaultSignInValues = {
+  email: "",
+};
+
+export const defaultSignUpValues = {
+  email: "",
+  name: "",
+};
+export const signInSchema = (translate: I18n["_"]) =>
   z.object({
-    email: z.email(translate(msg`Email không hợp lệ`)),
-    password: z
-      .string()
-      .min(1, translate(msg`Vui lòng nhập mật khẩu`))
-      .min(6, translate(msg`Mật khẩu phải có ít nhất 6 ký tự`)),
+    email: z.email(translate(msg`Please enter a valid email address.`)),
   });
 
-export const createRegisterSchema = (translate: I18n["_"]) =>
-  z
-    .object({
-      email: z.email(translate(msg`Email không hợp lệ`)),
-      password: z
-        .string()
-        .min(1, translate(msg`Vui lòng nhập mật khẩu`))
-        .min(6, translate(msg`Mật khẩu phải có ít nhất 6 ký tự`)),
-      confirmPassword: z
-        .string()
-        .min(1, translate(msg`Vui lòng nhập lại mật khẩu`)),
-    })
-    .refine((values) => values.password === values.confirmPassword, {
-      message: translate(msg`Mật khẩu nhập lại không khớp`),
-      path: ["confirmPassword"],
-    });
+export const signUpSchema = (translate: I18n["_"]) =>
+  z.object({
+    email: z.email(translate(msg`Please enter a valid email address.`)),
+    name: z.string().min(1, translate(msg`Please enter your name.`)),
+  });
 
-export type LoginFormValues = z.infer<ReturnType<typeof createLoginSchema>>;
-export type RegisterFormValues = z.infer<
-  ReturnType<typeof createRegisterSchema>
+export type SignInFormValues = z.infer<ReturnType<typeof signInSchema>>;
+export type SignUpFormValues = z.infer<
+  ReturnType<typeof signUpSchema>
 >;
+
