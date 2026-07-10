@@ -1,5 +1,5 @@
-import { memo, ReactNode } from "react";
 import { Text } from "@/components/Text";
+import { memo, ReactNode } from "react";
 import { Platform, ScrollView, View } from "react-native";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import OnboardingHeader from "./OnboardingHeader";

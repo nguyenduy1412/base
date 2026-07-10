@@ -75,7 +75,8 @@ export type TextVariant =
   | "body24Medium"
   | "body24Semibold"
   | "body24Bold"
-  | "body24ExtraBold";
+  | "body24ExtraBold"
+  | "body32ExtraBold";
 
 export interface TextProps extends RNTextProps {
   className?: string;
