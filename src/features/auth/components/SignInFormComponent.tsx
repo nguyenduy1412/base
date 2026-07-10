@@ -1,5 +1,5 @@
 import { Pressable, View } from "react-native";
-import React, { memo, useCallback, useMemo } from "react";
+import React, { memo, useCallback, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { TextInput } from "@/components/TextInput";
 import { t } from "@lingui/core/macro";
@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useLingui } from "@lingui/react";
 import { useLogin } from "../hooks/useLogin";
 import { defaultSignInValues, SignInFormValues, signInSchema } from "../types";
+import CheckBox from "@/components/CheckBox";
 
 type props = {
   onNextForm: () => void;
@@ -18,6 +19,7 @@ type props = {
 const SignInFormComponent = ({ onNextForm }: props) => {
   const { _ } = useLingui();
   const schema = useMemo(() => signInSchema(_), [_]);
+  const [isCheckBoxSelected, setIsCheckBoxSelected] = useState(true);
   const {
     control,
     handleSubmit,
@@ -31,6 +33,11 @@ const SignInFormComponent = ({ onNextForm }: props) => {
   const onSignIn = useCallback(async (data: SignInFormValues) => {
     console.log(data);
   }, []);
+
+  const handleCheckBox = useCallback(() => {
+    setIsCheckBoxSelected((prev) => !prev);
+  }, []);
+
   return (
     <View>
       <Controller
@@ -73,7 +80,7 @@ const SignInFormComponent = ({ onNextForm }: props) => {
         </View>
       </Button>
       <View className="pt-5 flex-row items-center gap-3">
-        <View className="w-4 h-4 bg-primary"></View>
+        <CheckBox isSelected={isCheckBoxSelected} onPress={handleCheckBox} className="w-10 h-10"  />
         <Text variant="body12Regular">
           {t`I confirm I am 13 years of age or older (16+ if located in the EU or UK).`}
         </Text>
