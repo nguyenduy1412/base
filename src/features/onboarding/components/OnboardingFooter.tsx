@@ -24,6 +24,7 @@ const OnboardingFooter = ({
           variant="body14Semibold"
           onPress={onPress}
           isShadow={false}
+          className="w-full"
         />
       </View>
     </>

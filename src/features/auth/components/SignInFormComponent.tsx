@@ -12,6 +12,8 @@ import { useLingui } from "@lingui/react";
 import { useLogin } from "../hooks/useLogin";
 import { defaultSignInValues, SignInFormValues, signInSchema } from "../types";
 import CheckBox from "@/components/CheckBox";
+import { router } from "expo-router";
+import { AUTH_ROUTES } from "@/constants/routes";
 
 type props = {
   onNextForm: () => void;
@@ -32,6 +34,7 @@ const SignInFormComponent = ({ onNextForm }: props) => {
 
   const onSignIn = useCallback(async (data: SignInFormValues) => {
     console.log(data);
+    router.push(AUTH_ROUTES.CHECK_YOUR_EMAIL);
   }, []);
 
   const handleCheckBox = useCallback(() => {
@@ -58,7 +61,7 @@ const SignInFormComponent = ({ onNextForm }: props) => {
 
       <Button
         title={t`Sign in`}
-        className="rounded-[12px] mt-5 h-12"
+        className="w-full rounded-[12px] mt-5 h-12"
         isLoading={isPending}
         onPress={handleSubmit(onSignIn)}
       />
@@ -69,7 +72,7 @@ const SignInFormComponent = ({ onNextForm }: props) => {
         </View>
       </View>
       <Button
-        className="rounded-[12px] mt-5 h-12 border border-placeholder"
+        className="w-full rounded-[12px] mt-5 h-12 border border-placeholder"
         onPress={() => {}}
         color="background"
         isShadow={false}
@@ -79,16 +82,16 @@ const SignInFormComponent = ({ onNextForm }: props) => {
           <Text variant="body14Regular">{t`Continue with Google`}</Text>
         </View>
       </Button>
-      <View className="pt-5 flex-row items-center gap-3">
-        <CheckBox isSelected={isCheckBoxSelected} onPress={handleCheckBox} className="w-10 h-10"  />
-        <Text variant="body12Regular">
+      <View className="pt-5 flex-row items-start gap-3">
+        <CheckBox isSelected={isCheckBoxSelected} onPress={handleCheckBox} />
+        <Text variant="body12Regular" className="flex-1 shrink">
           {t`I confirm I am 13 years of age or older (16+ if located in the EU or UK).`}
         </Text>
       </View>
       <Pressable onPress={onNextForm} className="pt-16 items-center">
         <Text>
           <Text variant="body12Regular">{t`Don't have an account?`}</Text>
-          <Text variant="body12Regular" className="text-yellow-300">
+          <Text variant="body12Regular" className="text-yellow">
             {t` Sign up`}
           </Text>
         </Text>

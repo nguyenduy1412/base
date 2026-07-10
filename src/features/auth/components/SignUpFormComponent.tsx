@@ -1,5 +1,5 @@
 import { Pressable, View } from "react-native";
-import React, { memo, useCallback, useMemo } from "react";
+import React, { memo, useCallback, useMemo, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { TextInput } from "@/components/TextInput";
 import { t } from "@lingui/core/macro";
@@ -11,6 +11,7 @@ import { defaultSignUpValues, SignUpFormValues, signUpSchema } from "../types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLingui } from "@lingui/react";
 import { useLogin } from "../hooks/useLogin";
+import TermsOfServiceModal from "./TermsOfServiceModal";
 
 type props = {
   onNextForm: () => void;
@@ -27,9 +28,15 @@ const SignUpFormComponent = ({ onNextForm }: props) => {
     defaultValues: defaultSignUpValues,
   });
   const { mutateAsync: login, isPending } = useLogin();
-
+  const [isTermsOfServiceModalVisible, setIsTermsOfServiceModalVisible] = useState(false);
   const onSignUp = useCallback(async (data: SignUpFormValues) => {
     console.log(data);
+  }, []);
+  const handleShowTermsOfServiceModal = useCallback(() => {
+    setIsTermsOfServiceModalVisible(true);
+  }, []);
+  const handleHideTermsOfServiceModal = useCallback(() => {
+    setIsTermsOfServiceModalVisible(false);
   }, []);
   return (
     <View>
@@ -65,21 +72,37 @@ const SignUpFormComponent = ({ onNextForm }: props) => {
           )}
         />
       </View>
-
+      <View className="pt-5 flex-row items-start gap-3">
+        <View className="w-4 h-4 bg-primary" />
+        <Text onPress={handleShowTermsOfServiceModal} className="flex-1 shrink">
+          <Text variant="body12Regular">
+            {t`I am at least 13 years old and agree to the`}
+          </Text>
+          <Text
+            variant="body12Regular"
+            className="text-yellow"
+          >{t` Termsof Service`}</Text>
+          <Text variant="body12Regular">{t` and`}</Text>
+          <Text
+            variant="body12Semibold"
+            className="text-yellow"
+          >{t` Privacy Policy`}</Text>
+        </Text>
+      </View>
       <Button
         title={t`Continue`}
-        className="rounded-[12px] mt-5 h-12"
+        className="w-full rounded-[12px] mt-5 h-12"
         isLoading={isPending}
         onPress={handleSubmit(onSignUp)}
       />
       <View className="h-4.5 w-full items-center mt-5 justify-center">
         <View className="bg-placeholder h-0.25 w-full" />
         <View className="absolute px-5 bg-background">
-          <Text variant="body14Regular">{t`Or`}</Text>
+          <Text variant="body14Regular">{t`Or sign in with`}</Text>
         </View>
       </View>
       <Button
-        className="rounded-[12px] mt-5 h-12 border border-placeholder"
+        className="w-full rounded-[12px] mt-5 h-12 border border-placeholder"
         onPress={() => {}}
         color="background"
         isShadow={false}
@@ -89,20 +112,16 @@ const SignUpFormComponent = ({ onNextForm }: props) => {
           <Text variant="body14Regular">{t`Continue with Google`}</Text>
         </View>
       </Button>
-      <View className="pt-5 flex-row items-center gap-3">
-        <View className="w-4 h-4 bg-primary"></View>
-        <Text variant="body12Regular">
-          {t`I confirm I am 13 years of age or older (16+ if located in the EU or UK).`}
-        </Text>
-      </View>
+
       <Pressable onPress={onNextForm} className="pt-16 items-center">
         <Text>
           <Text variant="body12Regular">{t`Already have an account?`}</Text>
-          <Text variant="body12Regular" className="text-yellow-300">
+          <Text variant="body12Semibold" className="text-yellow">
             {t` Sign in`}
           </Text>
         </Text>
       </Pressable>
+      <TermsOfServiceModal isVisible={isTermsOfServiceModalVisible} onClose={handleHideTermsOfServiceModal} />
     </View>
   );
 };

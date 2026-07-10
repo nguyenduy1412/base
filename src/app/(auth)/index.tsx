@@ -4,23 +4,27 @@ import { Text } from "@/components/Text";
 import SignInFormComponent from "@/features/auth/components/SignInFormComponent";
 import SignUpFormComponent from "@/features/auth/components/SignUpFormComponent";
 import { t } from "@lingui/core/macro";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { LayoutChangeEvent, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-  withTiming,
+  withSpring,
 } from "react-native-reanimated";
 
-const HEIGHT_DURATION = 100;
+const HEIGHT_SPRING = {
+  damping: 18,
+  stiffness: 180,
+  mass: 0.8,
+};
 
 const AuthScreen = () => {
   const [form, setForm] = useState<"sign-in" | "sign-up">("sign-in");
   const contentHeight = useSharedValue(0);
 
-  const handleNextForm = () => {
+  const handleNextForm = useCallback(() => {
     setForm((prev) => (prev === "sign-in" ? "sign-up" : "sign-in"));
-  };
+  }, []);
 
   const handleContentLayout = (event: LayoutChangeEvent) => {
     const height = event.nativeEvent.layout.height;
@@ -30,7 +34,7 @@ const AuthScreen = () => {
       return;
     }
 
-    contentHeight.value = withTiming(height, { duration: HEIGHT_DURATION });
+    contentHeight.value = withSpring(height, HEIGHT_SPRING);
   };
 
   const containerStyle = useAnimatedStyle(() => ({
@@ -60,7 +64,7 @@ const AuthScreen = () => {
         </View>
       </View>
 
-      <View className="flex-1 justify-center px-5">
+      <View className="absolute inset-x-0 top-1/4 bottom-0 px-5 pb-8">
         <View className="rounded-[20px] py-7 px-5 bg-background shadow-md">
           <Animated.View style={containerStyle}>
             <View onLayout={handleContentLayout}>

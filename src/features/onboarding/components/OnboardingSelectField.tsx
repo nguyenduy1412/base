@@ -45,7 +45,7 @@ const OnboardingSelectField = ({
         isShadow={false}
         activeOpacity={0.85}
         onPress={onPress}
-        className={`h-12 rounded-xl border px-4 py-0 ${
+        className={`w-full h-12 rounded-xl border px-4 py-0 ${
           error ? "border-[#DC2626]" : "border-[#D7DAD9]"
         }`}
       >

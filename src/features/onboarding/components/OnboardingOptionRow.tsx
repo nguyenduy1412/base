@@ -22,7 +22,7 @@ const OnboardingOptionRow = ({
       isShadow={false}
       activeOpacity={0.85}
       onPress={onPress}
-      className={`h-11.25 rounded-xl border px-4 py-0 
+      className={`w-full h-11.25 rounded-xl border px-4 py-0 
                 ${selected ? "border-[#3B7A57] bg-[#EBF2EE]" : "border-[#D7DAD9] bg-white"}
                 `}
     >

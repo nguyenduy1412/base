@@ -53,7 +53,7 @@ export const Button = React.forwardRef<
       activeOpacity={activeOpacity}
       style={style}
       className={cn(
-        "w-full rounded-full flex-row items-center justify-center px-6 py-3 android:disabled:opacity-60 ios:disabled:opacity-80 web:disabled:opacity-80 transition-all overflow-hidden relative",
+        "w-auto shrink rounded-full flex-row items-center justify-center px-6 py-3 android:disabled:opacity-60 ios:disabled:opacity-80 web:disabled:opacity-80 transition-all overflow-hidden relative",
         shadowClass,
         bgClass,
         className,
@@ -62,7 +62,7 @@ export const Button = React.forwardRef<
     >
       <View
         className={cn(
-          "flex-row items-center justify-center w-full",
+          "flex-row items-center justify-center",
           isLoading && "opacity-0",
         )}
       >
