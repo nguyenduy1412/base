@@ -44,7 +44,7 @@ const AuthScreen = () => {
 
   return (
     <View className="flex-1 bg-background">
-      <View className="absolute inset-x-0 top-0 h-1/2 w-full overflow-hidden">
+      <View className="absolute inset-x-0 top-0 h-1/2 w-full">
         <ImageComponent
           source={BACKGROUND_RUN}
           className="h-full w-full"
