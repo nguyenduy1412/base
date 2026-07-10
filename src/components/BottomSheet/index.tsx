@@ -1,3 +1,4 @@
+import { Text } from "@/components/Text";
 import { cn } from "@/utils/cn";
 import {
   BottomSheetBackdrop,
@@ -5,7 +6,8 @@ import {
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
 import { forwardRef, ReactNode, useMemo } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { useCSSVariable } from "uniwind";
 
 export type AppBottomSheetProps = {
   title?: string;
@@ -21,6 +23,7 @@ export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
     ref,
   ) {
     const memoizedSnapPoints = useMemo(() => snapPoints, [snapPoints]);
+    const backgroundColor = useCSSVariable("--color-background") as string;
 
     return (
       <BottomSheetModal
@@ -29,7 +32,7 @@ export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
         enablePanDownToClose
         handleComponent={null}
         backgroundStyle={{
-          backgroundColor: "#FAF8F5",
+          backgroundColor,
           borderTopLeftRadius: 24,
           borderTopRightRadius: 24,
         }}
@@ -42,12 +45,12 @@ export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
         )}
       >
         <BottomSheetView>
-          <View className="mb-3.5 h-4.25 w-22 self-center rounded-full bg-[#D7DAD9]" />
+          <View className="mb-3.5 h-4.25 w-22 self-center rounded-full bg-border" />
 
           {title ? (
             <Text
-              //   variant="body24Semibold"
-              className="text-[32px] leading-9.5 text-[#313533]"
+              variant="body24Semibold"
+              className="font-serif text-[32px] leading-9.5 text-text-heading"
             >
               {title}
             </Text>

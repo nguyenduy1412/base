@@ -63,10 +63,10 @@ export default function OnboardingIdentityScreen() {
       title="Your Dog: Identity"
       canGoBack={true}
       footer={
-        <OnboardingFooter disabled={true} onPress={handleSubmit(onSubmit)} />
+        <OnboardingFooter disabled={false} onPress={handleSubmit(onSubmit)} />
       }
     >
-      <View className="gap-5 flex-1">
+      <View className="gap-5 flex-1 ">
         <Controller
           control={control}
           name="dogName"

@@ -23,6 +23,7 @@ const OnboardingFooter = ({
           variant="body14Semibold"
           onPress={onPress}
           isShadow={false}
+          className="h-12 rounded-xl"
         />
       </View>
     </>

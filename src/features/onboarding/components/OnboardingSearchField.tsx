@@ -1,4 +1,6 @@
 import TextInput, { TextInputProps } from "@/components/TextInput";
+import { cn } from "@/utils/cn";
+import { Search } from "lucide-react-native";
 import { memo } from "react";
 
 export interface OnboardingSearchFieldProps extends TextInputProps {
@@ -11,23 +13,33 @@ const OnboardingSearchField = ({
   label,
   required,
   error,
+  className,
+  inputContainerClassName,
+  labelClassName,
+  errorClassName,
+  leftIcon,
   ...props
 }: OnboardingSearchFieldProps) => {
   return (
     <TextInput
+      {...props}
       label={label}
       required={required}
       labelVariant="body14Regular"
-      labelClassName="mb-2 text-[#49504D]"
+      labelClassName={cn("mb-2 text-label", labelClassName)}
       containerClassName="w-full"
-      className="h-full flex-1 py-0 text-[15px] leading-5.5 text-[#313533]"
+      className={cn(
+        "h-full flex-1 py-0 text-[15px] leading-5.5 text-text-heading",
+        className,
+      )}
       inputStyle={{ height: 48 }}
-      placeholderTextColorClassName="accent-[#AFB6B3]"
+      placeholderTextColorClassName="accent-placeholder"
+      leftIcon={leftIcon ?? <Search size={24} strokeWidth={2} />}
       error={error}
-      errorClassName="mt-1 text-[#DC2626]"
+      errorClassName={cn("mt-1 text-error", errorClassName)}
       innerShadow={false}
+      inputContainerClassName={cn("h-12 rounded-xl", inputContainerClassName)}
       type="search"
-      {...props}
     />
   );
 };

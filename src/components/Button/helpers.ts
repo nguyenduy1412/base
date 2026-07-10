@@ -40,8 +40,7 @@ export const getShadowClass = (
   isDark: boolean,
   colorHex?: string,
 ): string => {
-  const hex = colorHex || fallbackColors[color] || "#ffffff";
-  if (isCloseToWhite(hex)) {
+  if (colorHex && isCloseToWhite(colorHex)) {
     return "shadow-black/20";
   }
 
@@ -71,18 +70,6 @@ export const getShadowClass = (
   };
 
   return shadowOpacityMap[color];
-};
-
-export const fallbackColors: Record<ButtonColor, string> = {
-  primary: "#3B7A57",
-  text: "#313533",
-  background: "#FAF8F5",
-  "background-element": "#FFFFFF",
-  "background-selected": "#D0DFD7",
-  "text-secondary": "#49504D",
-  "login-button": "#3B7A57",
-  white: "#ffffff",
-  blue: "#5a87e0",
 };
 
 export const darkenColor = (hex: string, percent: number = 0.25): string => {
