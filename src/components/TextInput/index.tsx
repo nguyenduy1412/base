@@ -8,8 +8,8 @@ import {
   View,
   type KeyboardTypeOptions,
 } from "react-native";
-import { type TextInputProps } from "./types";
 import { useCSSVariable } from "uniwind";
+import { type TextInputProps } from "./types";
 
 const inputTypeConfig: Record<
   string,
@@ -69,6 +69,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       rightIcon,
       leftIcon,
       error,
+      required,
       errorClassName,
       innerShadow = true,
       onFocus,
@@ -78,6 +79,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       keyboardType,
       autoComplete,
       textContentType,
+      iconError,
       ...props
     },
     ref,
@@ -137,43 +139,30 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
     return (
       <View style={style} className={cn("w-full", containerClassName)}>
         {label && (
-          <Text
-            variant={labelVariant}
-            className={cn("mb-1.5 text-text-secondary", labelClassName)}
-          >
-            {label}
-          </Text>
+          <View className="flex-row gap-1">
+            <Text
+              variant={labelVariant}
+              className={cn("mb-1.5 text-text-secondary", labelClassName)}
+            >
+              {label}
+            </Text>
+            {required ? (
+              <Text variant="body13Regular" className="text-error">
+                *
+              </Text>
+            ) : null}
+          </View>
         )}
         <View
           className={cn(
             "flex-row items-center border rounded-lg px-4 overflow-hidden relative bg-input-background",
             error
-              ? "border-primary"
+              ? "border-error"
               : isFocused
                 ? "border-input-focused-border"
                 : "border-input-border",
           )}
         >
-          {innerShadow && (
-            <>
-              <View
-                pointerEvents="none"
-                className="absolute top-0 left-0 right-0 h-1 bg-linear-to-b from-text-field-inner-shadow to-text-field-inner-shadow-transparent pointer-events-none"
-              />
-              <View
-                pointerEvents="none"
-                className="absolute top-0 bottom-0 left-0 w-[5px] bg-linear-to-r from-text-field-inner-shadow-soft to-text-field-inner-shadow-transparent pointer-events-none"
-              />
-              <View
-                pointerEvents="none"
-                className="absolute bottom-0 left-0 right-0 h-1 bg-linear-to-b from-text-field-inner-highlight-transparent to-text-field-inner-highlight pointer-events-none"
-              />
-              <View
-                pointerEvents="none"
-                className="absolute top-0 bottom-0 right-0 w-1 bg-linear-to-r from-text-field-inner-highlight-transparent to-text-field-inner-highlight-soft pointer-events-none"
-              />
-            </>
-          )}
           {leftIcon && (
             <View className="mr-2">
               {renderIconWithColor(leftIcon, iconColor)}
@@ -207,12 +196,15 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
           )}
         </View>
         {error && (
-          <Text
-            variant="body10Regular"
-            className={cn("mt-1 text-primary", errorClassName)}
-          >
-            {error}
-          </Text>
+          <View className="flex-row items-center gap-1 pt-2">
+            {iconError}
+            <Text
+              variant="body12Regular"
+              className={cn("mt-1 text-error", errorClassName)}
+            >
+              {error}
+            </Text>
+          </View>
         )}
       </View>
     );

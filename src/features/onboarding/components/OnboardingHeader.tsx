@@ -1,0 +1,52 @@
+import { Button } from "@/components/Button";
+import CheckBox from "@/components/CheckBox";
+import { useRouter } from "expo-router";
+import { ArrowLeft } from "lucide-react-native";
+import { memo } from "react";
+import { Text, View } from "react-native";
+
+export interface OnboardingHeaderProps {
+  currentStep: number;
+  totalSteps: number;
+  canGoBack?: boolean;
+}
+
+const OnboardingHeader = ({
+  currentStep,
+  totalSteps,
+  canGoBack,
+}: OnboardingHeaderProps) => {
+  const router = useRouter();
+
+  const handleNavigationBack = () => {
+    router.back();
+  };
+
+  return (
+    <View className=" flex-row items-center justify-between mb-6 ">
+      {canGoBack ? (
+        <Button
+          isShadow
+          activeOpacity={0.85}
+          onPress={handleNavigationBack}
+          className="h-9 w-9 rounded-full px-0 py-0 "
+          color="background"
+        >
+          <ArrowLeft size={24} color="primary" strokeWidth={2} />
+        </Button>
+      ) : (
+        <View className="h-9 w-9" />
+      )}
+
+      <Text className="text-[24px] leading-7.25 text-[#313533]">
+        Step {currentStep} of {totalSteps}
+      </Text>
+
+      <View className="h-9 w-9" />
+
+      <CheckBox isSelected={true} isCircle={true} />
+    </View>
+  );
+};
+
+export default memo(OnboardingHeader);

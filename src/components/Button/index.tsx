@@ -6,12 +6,7 @@ import React from "react";
 import { TouchableOpacity, View } from "react-native";
 import { useCSSVariable } from "uniwind";
 import LottieView from "../Lottie";
-import {
-  colorClassMap,
-  darkenColor,
-  fallbackColors,
-  getShadowClass,
-} from "./helpers";
+import { fallbackColors, getShadowClass } from "./helpers";
 import { type ButtonProps } from "./types";
 
 export const Button = React.forwardRef<
@@ -39,17 +34,15 @@ export const Button = React.forwardRef<
   const isDisabled = disabled || isLoading;
   const isDark = theme$.mode.get() === "dark";
 
-  const bgClass = colorClassMap[color];
+  const bgClass = `bg-${color}`;
 
   const cssVarName = `--color-${color}`;
   const resolvedBgColor = useCSSVariable(cssVarName) as string;
   const bgColorHex = resolvedBgColor ?? fallbackColors[color] ?? "#E23A36";
 
   const shadowClass = isShadow
-    ? cn("shadow-lg", getShadowClass(color, isDark, bgColorHex))
+    ? cn("shadow-md", getShadowClass(color, isDark, bgColorHex))
     : "";
-
-  const bottomBorderColor = darkenColor(bgColorHex, 0.25);
 
   return (
     <TouchableOpacity
@@ -60,41 +53,16 @@ export const Button = React.forwardRef<
       activeOpacity={activeOpacity}
       style={style}
       className={cn(
-        "w-full rounded-full flex-row items-center justify-center px-6 py-3 android:disabled:opacity-60 ios:disabled:opacity-80 web:disabled:opacity-80 transition-all overflow-hidden relative",
+        "w-auto shrink rounded-full flex-row items-center justify-center px-6 py-3 android:disabled:opacity-60 ios:disabled:opacity-80 web:disabled:opacity-80 transition-all overflow-hidden relative",
         shadowClass,
+        bgClass,
         className,
       )}
       {...props}
     >
       <View
-        pointerEvents="none"
-        style={{ backgroundColor: bottomBorderColor }}
-        className="absolute inset-0 rounded-full"
-      />
-
-      <View
-        pointerEvents="none"
         className={cn(
-          "absolute top-px left-[1.5px] right-[1.5px] bottom-[3px] rounded-full overflow-hidden",
-          bgClass,
-        )}
-      >
-        <View
-          pointerEvents="none"
-          className="absolute inset-0 bg-linear-to-b from-transparent to-black/20 pointer-events-none"
-        />
-      </View>
-
-      <View
-        pointerEvents="none"
-        className="absolute top-px left-px right-px h-6 overflow-hidden pointer-events-none"
-      >
-        <View className="absolute top-0 left-0 right-0 h-[46px] rounded-full border border-white/35" />
-      </View>
-
-      <View
-        className={cn(
-          "flex-row items-center justify-center w-full",
+          "flex-row items-center justify-center",
           isLoading && "opacity-0",
         )}
       >

@@ -5,11 +5,11 @@ import { Redirect } from "expo-router";
 const RootIndex = () => {
   const user = useSelector(auth$.user);
 
-  if (user) {
+  if (!user) {
     return <Redirect href="/(tabs)" />;
   }
 
-  return <Redirect href="/login" />;
+  return <Redirect href="/onboarding/identity" />;
 };
 
 export default RootIndex;
