@@ -1,5 +1,9 @@
 import { cn } from "@/utils/cn";
-import { Image as ExpoImage, ImageContentFit } from "expo-image";
+import {
+  Image as ExpoImage,
+  ImageContentFit,
+  ImageContentPosition,
+} from "expo-image";
 import { memo } from "react";
 import { ImageSourcePropType, StyleProp, ImageStyle } from "react-native";
 import { withUniwind } from "uniwind";
@@ -11,6 +15,7 @@ type Props = {
   className?: string;
   source?: ImageSourcePropType | string;
   contentFit?: ImageContentFit;
+  contentPosition?: ImageContentPosition;
   style?: StyleProp<ImageStyle>;
 };
 
@@ -19,6 +24,7 @@ const ImageComponent = ({
   className,
   source,
   contentFit = "contain",
+  contentPosition,
   style,
 }: Props) => {
   return (
@@ -28,6 +34,7 @@ const ImageComponent = ({
       cachePolicy="memory-disk"
       priority="normal"
       contentFit={contentFit}
+      contentPosition={contentPosition}
       style={style}
     />
   );

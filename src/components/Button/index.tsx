@@ -44,7 +44,7 @@ export const Button = React.forwardRef<
   const bgColorHex = resolvedBgColor ?? fallbackColors[color] ?? "#E23A36";
 
   const shadowClass = isShadow
-    ? cn("shadow-lg", getShadowClass(color, isDark, bgColorHex))
+    ? cn("shadow-md", getShadowClass(color, isDark, bgColorHex))
     : "";
 
   return (

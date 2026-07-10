@@ -1,3 +1,4 @@
+import { ROUTE_GROUPS } from "@/constants/routes";
 import { auth$ } from "@/store/auth";
 import { useSelector } from "@legendapp/state/react";
 import { Redirect } from "expo-router";
@@ -7,7 +8,7 @@ const TabsLayout = () => {
   const user = useSelector(auth$.user);
 
   if (!user) {
-    return <Redirect href="/login" />;
+    return <Redirect href={ROUTE_GROUPS.AUTH} />;
   }
 
   return (

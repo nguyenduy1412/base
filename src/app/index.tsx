@@ -5,7 +5,7 @@ import { Redirect } from "expo-router";
 const RootIndex = () => {
   const user = useSelector(auth$.user);
 
-  if (user) {
+  if (!user) {
     return <Redirect href="/(tabs)" />;
   }
 
