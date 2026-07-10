@@ -15,6 +15,7 @@ export interface TextInputProps extends Omit<RNTextInputProps, "style"> {
   style?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<TextStyle>;
   placeholderTextColorClassName?: string;
+  inputContainerClassName?: string;
   rightIcon?: React.ReactNode;
   leftIcon?: React.ReactNode;
   error?: string;

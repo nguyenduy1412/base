@@ -2,36 +2,68 @@ import { cn } from "@/utils/cn";
 import { Check } from "lucide-react-native";
 import { memo } from "react";
 import { Pressable, View } from "react-native";
+import { withUniwind } from "uniwind";
+
+const CheckIcon = withUniwind(Check);
 
 export interface CheckBoxProps {
   isSelected: boolean;
   isCircle?: boolean;
-  onPress: () => void;
+  size?: number;
   className?: string;
+  disabled?: boolean;
+  iconClassName?: string;
+  onPress?: () => void;
 }
 
-const CheckBox = ({ isSelected, isCircle, onPress, className }: CheckBoxProps) => {
+const CheckBox = ({
+  isSelected,
+  isCircle,
+  size = 20,
+  className,
+  disabled,
+  iconClassName,
+  onPress,
+}: CheckBoxProps) => {
   const isRadio = Boolean(isCircle);
+  const boxSize = size;
+  const radioDotSize = boxSize * 0.72;
+  const checkSize = boxSize * 0.6;
+  const borderWidth = isRadio
+    ? Math.max(1, boxSize * 0.07)
+    : Math.max(2, boxSize * 0.1);
+  const checkStrokeWidth = Math.max(3, boxSize * 0.2);
 
   const boxClassName = isRadio
     ? isSelected
-      ? "h-[15px] w-[15px] rounded-full border border-primary"
-      : "h-[16.5px] w-[16.5px] rounded-full border border-text-strong"
+      ? "rounded-full border-primary"
+      : "rounded-full border-text-strong"
     : isSelected
-      ? "h-[15px] w-[15px] rounded-[4px] border-2 border-primary bg-primary"
-      : "h-[15px] w-[15px] rounded-[4px] border-2 border-border bg-white";
+      ? "rounded-[4px] border-primary bg-primary"
+      : "rounded-[4px] border-border bg-white";
+  const isDisabled = Boolean(disabled);
 
   return (
-    <Pressable className={ cn(`h-5 w-5 items-center justify-center`, className)} onPress={onPress}>
-      <View className={`items-center justify-center ${boxClassName}`}>
-        {isSelected && isRadio ? (
-          <View className="h-[11px] w-[11px] rounded-full bg-primary" />
-        ) : null}
+    <Pressable
+      disabled={isDisabled}
+      hitSlop={8}
+      style={{ borderWidth, height: boxSize, width: boxSize }}
+      className={cn("items-center justify-center", boxClassName, className)}
+    >
+      {isSelected && isRadio ? (
+        <View
+          style={{ height: radioDotSize, width: radioDotSize }}
+          className={cn("rounded-full bg-primary", iconClassName)}
+        />
+      ) : null}
 
-        {isSelected && !isRadio ? (
-          <Check size={8} color="#FFFFFF" strokeWidth={5} />
-        ) : null}
-      </View>
+      {isSelected && !isRadio ? (
+        <CheckIcon
+          size={checkSize}
+          colorClassName="accent-white"
+          strokeWidth={checkStrokeWidth}
+        />
+      ) : null}
     </Pressable>
   );
 };

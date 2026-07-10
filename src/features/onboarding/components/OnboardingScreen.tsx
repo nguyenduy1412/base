@@ -1,5 +1,6 @@
+import { Text } from "@/components/Text";
 import { memo, ReactNode } from "react";
-import { Platform, ScrollView, Text, View } from "react-native";
+import { Platform, ScrollView, View } from "react-native";
 import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import OnboardingHeader from "./OnboardingHeader";
 import OnboardingProgress from "./OnboardingProgress";
@@ -22,7 +23,7 @@ const OnboardingScreen = ({
   canGoBack,
 }: OnboardingScreenProps) => {
   return (
-    <View className={"flex-1 px-5 pt-safe pb-safe"}>
+    <View className={"flex-1 px-5 pt-safe pb-safe bg-background"}>
       <OnboardingHeader
         currentStep={currentStep}
         totalSteps={totalSteps}
@@ -30,7 +31,10 @@ const OnboardingScreen = ({
       />
 
       <OnboardingProgress currentStep={currentStep} totalSteps={totalSteps} />
-      <Text className="text-[32px] leading-9.5 text-[#313533] mb-5">
+      <Text
+        variant="body24Semibold"
+        className="mb-5 font-serif text-[32px] leading-9.5 text-text-heading"
+      >
         {title}
       </Text>
 

@@ -64,6 +64,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       labelVariant = "body14Medium",
       placeholder,
       placeholderTextColorClassName,
+      inputContainerClassName,
       style,
       inputStyle,
       rightIcon,
@@ -107,9 +108,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       [onBlur],
     );
 
-    const placeholderColor =
-      (useCSSVariable("--color-placeholder") as string) ?? "#A9826A";
-    const iconColor = (useCSSVariable("--color-icon") as string) ?? "#7D4E3A";
+    const placeholderColor = useCSSVariable("--color-placeholder") as string;
+    const iconColor = useCSSVariable("--color-icon") as string;
 
     const showPasswordToggle = type === "password";
 
@@ -161,10 +161,11 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
               : isFocused
                 ? "border-input-focused-border"
                 : "border-input-border",
+            inputContainerClassName,
           )}
         >
           {leftIcon && (
-            <View className="mr-2">
+            <View className="mr-2 ">
               {renderIconWithColor(leftIcon, iconColor)}
             </View>
           )}
@@ -176,7 +177,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
             }
             style={inputStyle}
             className={cn(
-              "py-4 flex-1 outline-none text-text-primary",
+              "py-4 flex-1 outline-none text-text-primary ",
               className,
             )}
             onFocus={handleFocus}

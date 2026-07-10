@@ -1,22 +1,43 @@
+import { cn } from "@/utils/cn";
 import React from "react";
 import { Text as RNText } from "react-native";
-import { cn } from "@/utils/cn";
 import { type TextProps } from "./types";
 
-const createRegularTypography = (size: number) =>
-  `text-[${size}px] sm:text-[${Math.round(size * 1.08)}px] md:text-[${Math.round(size * 1.15)}px] font-sans`;
+const TEXT_SIZE_CLASSES = {
+  10: "text-[10px]",
+  11: "text-[11px]",
+  12: "text-[12px]",
+  13: "text-[13px]",
+  14: "text-[14px]",
+  15: "text-[15px]",
+  16: "text-[16px]",
+  17: "text-[17px]",
+  18: "text-[18px]",
+  19: "text-[19px]",
+  20: "text-[20px]",
+  21: "text-[21px]",
+  22: "text-[22px]",
+  23: "text-[23px]",
+  24: "text-[24px]",
+  32: "text-[32px]",
+} as const;
 
-const createMediumTypography = (size: number) =>
-  `text-[${size}px] sm:text-[${Math.round(size * 1.08)}px] md:text-[${Math.round(size * 1.15)}px] font-sans-medium`;
+type TextSize = keyof typeof TEXT_SIZE_CLASSES;
 
-const createSemiboldTypography = (size: number) =>
-  `text-[${size}px] sm:text-[${Math.round(size * 1.08)}px] md:text-[${Math.round(size * 1.15)}px] font-sans-semibold`;
+const createRegularTypography = (size: TextSize) =>
+  `${TEXT_SIZE_CLASSES[size]} font-sans`;
 
-const createBoldTypography = (size: number) =>
-  `text-[${size}px] sm:text-[${Math.round(size * 1.08)}px] md:text-[${Math.round(size * 1.15)}px] font-sans-bold`;
+const createMediumTypography = (size: TextSize) =>
+  `${TEXT_SIZE_CLASSES[size]} font-sans-medium`;
 
-const createExtraBoldTypography = (size: number) =>
-  `text-[${size}px] sm:text-[${Math.round(size * 1.08)}px] md:text-[${Math.round(size * 1.15)}px] font-sans-extrabold`;
+const createSemiboldTypography = (size: TextSize) =>
+  `${TEXT_SIZE_CLASSES[size]} font-sans-semibold`;
+
+const createBoldTypography = (size: TextSize) =>
+  `${TEXT_SIZE_CLASSES[size]} font-sans-bold`;
+
+const createExtraBoldTypography = (size: TextSize) =>
+  `${TEXT_SIZE_CLASSES[size]} font-sans-extrabold`;
 
 export const TEXT_VARIANTS = {
   body10Regular: createRegularTypography(10),
@@ -108,6 +129,12 @@ export const TEXT_VARIANTS = {
   body24Semibold: createSemiboldTypography(24),
   body24Bold: createBoldTypography(24),
   body24ExtraBold: createExtraBoldTypography(24),
+
+  body32Regular: createRegularTypography(32),
+  body32Medium: createMediumTypography(32),
+  body32Semibold: createSemiboldTypography(32),
+  body32Bold: createBoldTypography(32),
+  body32ExtraBold: createExtraBoldTypography(32),
 } as const;
 
 export const Text = React.forwardRef<RNText, TextProps>(

@@ -1,10 +1,12 @@
 import { Button } from "@/components/Button";
-import CheckBox from "@/components/CheckBox";
+import { Text } from "@/components/Text";
 import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
 import { memo } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { withUniwind } from "uniwind";
 
+const ArrowLeftIcon = withUniwind(ArrowLeft);
 export interface OnboardingHeaderProps {
   currentStep: number;
   totalSteps: number;
@@ -32,19 +34,24 @@ const OnboardingHeader = ({
           className="h-9 w-9 rounded-full px-0 py-0 "
           color="background"
         >
-          <ArrowLeft size={24} color="primary" strokeWidth={2} />
+          <ArrowLeftIcon
+            size={24}
+            colorClassName="accent-icon"
+            strokeWidth={2}
+          />
         </Button>
       ) : (
         <View className="h-9 w-9" />
       )}
 
-      <Text className="text-[24px] leading-7.25 text-[#313533]">
+      <Text
+        className="font-serif leading-7.25 text-text-heading"
+        variant="body24Semibold"
+      >
         Step {currentStep} of {totalSteps}
       </Text>
 
       <View className="h-9 w-9" />
-
-      <CheckBox isSelected={true} isCircle={true} />
     </View>
   );
 };

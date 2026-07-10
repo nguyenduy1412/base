@@ -113,6 +113,8 @@
       --color-surface: #1a1919;
       --color-card: #1a1919;
       --color-card-background: #1a1919;
+      --color-background-element: #1a1919;
+      --color-background-selected: #26382f;
       --color-input-background: #181818;
       --color-warm-background: #181818;
       --color-on-primary: #fffdfd;

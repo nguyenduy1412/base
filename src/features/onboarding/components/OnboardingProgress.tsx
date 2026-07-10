@@ -1,4 +1,4 @@
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import { View } from "react-native";
 
 export interface OnboardingProgressProps {
@@ -10,7 +10,6 @@ const OnboardingProgress = ({
   currentStep,
   totalSteps,
 }: OnboardingProgressProps) => {
-  useEffect(() => {}, []);
   return (
     <View className="flex-row gap-2 w-full mb-7">
       {Array.from({ length: totalSteps }).map((item, index) => {
@@ -19,7 +18,9 @@ const OnboardingProgress = ({
         return (
           <View
             key={index}
-            className={`h-1 flex-1 rounded-full ${isActive ? "bg-[#3B7A57]" : "bg-[#EBF2EE]"}`}
+            className={`h-1 flex-1 rounded-full ${
+              isActive ? "bg-primary" : "bg-secondary-soft"
+            }`}
           ></View>
         );
       })}

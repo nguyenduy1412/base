@@ -1,6 +1,7 @@
 import { ReactNode, memo } from "react";
 
 import { TextInput, type TextInputProps } from "@/components/TextInput";
+import { cn } from "@/utils/cn";
 
 export interface OnboardingTextFieldProps extends TextInputProps {
   label: string;
@@ -16,24 +17,32 @@ const OnboardingTextField = ({
   error,
   leftIcon,
   rightIcon,
+  className,
+  inputContainerClassName,
+  labelClassName,
+  errorClassName,
   ...props
 }: OnboardingTextFieldProps) => {
   return (
     <TextInput
+      {...props}
       label={label}
       required={required}
       labelVariant="body14Regular"
-      labelClassName="mb-2 text-[#49504D]"
+      labelClassName={cn("mb-2 text-label", labelClassName)}
       containerClassName="w-full"
-      className="h-full flex-1 py-0 text-[15px] leading-5.5 text-[#313533]"
+      className={cn(
+        "h-full flex-1 py-0 text-[15px] leading-5.5 text-text-heading",
+        className,
+      )}
       inputStyle={{ height: 48 }}
-      placeholderTextColorClassName="accent-[#AFB6B3]"
+      placeholderTextColorClassName="accent-placeholder"
       leftIcon={leftIcon}
       rightIcon={rightIcon}
       error={error}
-      errorClassName="mt-1 text-[#DC2626]"
+      errorClassName={cn("mt-1 text-error", errorClassName)}
       innerShadow={false}
-      {...props}
+      inputContainerClassName={cn("h-12 rounded-xl", inputContainerClassName)}
     />
   );
 };
