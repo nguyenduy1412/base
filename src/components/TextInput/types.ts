@@ -19,6 +19,7 @@ export interface TextInputProps extends Omit<RNTextInputProps, "style"> {
   leftIcon?: React.ReactNode;
   error?: string;
   errorClassName?: string;
+  required?: boolean;
   innerShadow?: boolean;
   iconError?: React.ReactNode;
   type?:

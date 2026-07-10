@@ -1,4 +1,5 @@
 import { Button } from "@/components/Button";
+import { t } from "@lingui/core/macro";
 import { memo } from "react";
 import { View } from "react-native";
 
@@ -17,7 +18,7 @@ const OnboardingFooter = ({
     <>
       <View className="pb-3">
         <Button
-          title={label ?? "Continue"}
+          title={label ?? t`Continue`}
           color={"primary"}
           disabled={disabled}
           variant="body14Semibold"
@@ -25,7 +26,6 @@ const OnboardingFooter = ({
           isShadow={false}
         />
       </View>
-      <View className="bg-primary h-10 w-full"></View>
     </>
   );
 };

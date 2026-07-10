@@ -1,5 +1,9 @@
+import { SelectBottomSheet } from "@/components/BottomSheet/SelectBottomSheet";
 import OnboardingFooter from "@/features/onboarding/components/OnboardingFooter";
 import OnboardingScreen from "@/features/onboarding/components/OnboardingScreen";
+import OnboardingSearchField from "@/features/onboarding/components/OnboardingSearchField";
+import OnboardingSelectField from "@/features/onboarding/components/OnboardingSelectField";
+import OnboardingTextField from "@/features/onboarding/components/OnboardingTextField";
 import {
   birthdayOptions,
   breedOptions,
@@ -12,8 +16,9 @@ import {
 import { useOnboardingStore } from "@/store/onboardingStore";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { CalendarDays, Search } from "lucide-react-native";
 import { useMemo, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
 
 export default function OnboardingIdentityScreen() {
@@ -53,16 +58,16 @@ export default function OnboardingIdentityScreen() {
 
   return (
     <OnboardingScreen
-      currentStep={1}
+      currentStep={3}
       totalSteps={ONBOARDING_TOTAL_STEPS}
       title="Your Dog: Identity"
-      canGoBack={false}
+      canGoBack={true}
       footer={
-        <OnboardingFooter disabled={false} onPress={handleSubmit(onSubmit)} />
+        <OnboardingFooter disabled={true} onPress={handleSubmit(onSubmit)} />
       }
     >
-      <View className="gap-5">
-        {/* <Controller
+      <View className="gap-5 flex-1">
+        <Controller
           control={control}
           name="dogName"
           render={({ field: { onBlur, onChange, value } }) => (
@@ -77,8 +82,8 @@ export default function OnboardingIdentityScreen() {
               autoCapitalize="words"
             />
           )}
-        /> */}
-        {/* 
+        />
+
         <Controller
           control={control}
           name="username"
@@ -107,6 +112,7 @@ export default function OnboardingIdentityScreen() {
               value={selectedBreed?.label ?? value}
               error={errors.primaryBreed?.message}
               onFocus={() => breedSheetRef.current?.present()}
+              leftIcon={<Search />}
             />
           )}
         />
@@ -122,6 +128,7 @@ export default function OnboardingIdentityScreen() {
               onBlur={onBlur}
               onChangeText={onChange}
               error={errors.secondaryBreed?.message}
+              leftIcon={<Search />}
             />
           )}
         />
@@ -168,7 +175,7 @@ export default function OnboardingIdentityScreen() {
             });
             birthdaySheetRef.current?.dismiss();
           }}
-        /> */}
+        />
       </View>
     </OnboardingScreen>
   );

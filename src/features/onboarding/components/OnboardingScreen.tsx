@@ -1,5 +1,6 @@
 import { memo, ReactNode } from "react";
-import { Text, View } from "react-native";
+import { Platform, ScrollView, Text, View } from "react-native";
+import { KeyboardAvoidingView } from "react-native-keyboard-controller";
 import OnboardingHeader from "./OnboardingHeader";
 import OnboardingProgress from "./OnboardingProgress";
 
@@ -21,7 +22,7 @@ const OnboardingScreen = ({
   canGoBack,
 }: OnboardingScreenProps) => {
   return (
-    <View>
+    <View className={"flex-1 px-5 pt-safe pb-safe"}>
       <OnboardingHeader
         currentStep={currentStep}
         totalSteps={totalSteps}
@@ -29,11 +30,25 @@ const OnboardingScreen = ({
       />
 
       <OnboardingProgress currentStep={currentStep} totalSteps={totalSteps} />
-      <Text className="mt-36 text-[32px] leading-9.5 text-[#313533]">
+      <Text className="text-[32px] leading-9.5 text-[#313533] mb-5">
         {title}
       </Text>
 
-      <View className="mt-8.5 flex-1">{children}</View>
+      <KeyboardAvoidingView
+        className="flex-1 "
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 20}
+      >
+        <ScrollView
+          className="flex-1"
+          contentContainerStyle={{ flexGrow: 1 }}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+        >
+          {children}
+        </ScrollView>
+      </KeyboardAvoidingView>
 
       {footer}
     </View>
