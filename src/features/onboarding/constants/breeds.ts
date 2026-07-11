@@ -13,7 +13,7 @@ export const BREEDS: BreedItem[] = [
   {
     label: "Golden Retriever",
     value: "golden-retriever",
-    iconName: "GoldenRetriever",
+    iconName: "GolderRetriever",
   },
   {
     label: "German Shepherd",

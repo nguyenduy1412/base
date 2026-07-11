@@ -10,7 +10,7 @@ export interface BottomSheetContentItemProps {
   matchedIndices?: number[];
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
-  onPress?: () => void;
+  onPress: (value: string) => void;
 }
 
 const BottomSheetContentItem = ({
@@ -20,12 +20,16 @@ const BottomSheetContentItem = ({
   rightIcon,
   onPress,
 }: BottomSheetContentItemProps) => {
+  const handleSelect = () => {
+    onPress(item?.value);
+  };
+
   return (
     <Button
       color="white"
       isShadow={false}
       activeOpacity={0.85}
-      onPress={onPress}
+      onPress={handleSelect}
       className="h-14 rounded-none border-b border-border px-0 py-0"
     >
       <View className="w-full flex-row items-center justify-between">

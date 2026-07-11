@@ -15,7 +15,7 @@ export type AppBottomSheetProps = {
 
 export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
   function AppBottomSheet(
-    { title, children, className, snapPoints = ["50%"], contentClassName },
+    { title, children, className, snapPoints = ["55%"], contentClassName },
     ref,
   ) {
     const memoizedSnapPoints = useMemo(() => snapPoints, [snapPoints]);

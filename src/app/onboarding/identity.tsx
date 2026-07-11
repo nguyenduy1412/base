@@ -1,14 +1,13 @@
 import { AppBottomSheet } from "@/components/BottomSheet";
-import { SelectBottomSheet } from "@/components/BottomSheet/SelectBottomSheet";
 import BreedBottomSheetContent from "@/features/onboarding/components/BreedBottomSheetContent";
 import OnboardingFooter from "@/features/onboarding/components/OnboardingFooter";
 import OnboardingScreen from "@/features/onboarding/components/OnboardingScreen";
 import OnboardingSearchField from "@/features/onboarding/components/OnboardingSearchField";
 import OnboardingSelectField from "@/features/onboarding/components/OnboardingSelectField";
 import OnboardingTextField from "@/features/onboarding/components/OnboardingTextField";
+import { BREEDS } from "@/features/onboarding/constants/breeds";
 import {
   birthdayOptions,
-  breedOptions,
   ONBOARDING_TOTAL_STEPS,
 } from "@/features/onboarding/constants/onboarding";
 import {
@@ -20,34 +19,33 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarDays, Search } from "lucide-react-native";
 import { useMemo, useRef } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { View } from "react-native";
 
 export default function OnboardingIdentityScreen() {
   // const router = useRouter();
-  const breedSheetRef = useRef<BottomSheetModal>(null);
-  const birthdaySheetRef = useRef<BottomSheetModal>(null);
   const identity = useOnboardingStore((state) => state.identity);
   const setIdentity = useOnboardingStore((state) => state.setIdentity);
 
   const {
     control,
-    formState: { errors, isValid },
+    formState: { errors },
     handleSubmit,
     setValue,
-    watch,
   } = useForm<OnboardingFormValues>({
     defaultValues: identity,
     mode: "onChange",
     resolver: zodResolver(onboardingSchema),
   });
 
-  const primaryBreed = watch("primaryBreed");
-  const birthday = watch("birthday");
+  const primaryBreed = useWatch({ control, name: "primaryBreed" });
+  const birthday = useWatch({ control, name: "birthday" });
 
   const selectedBreed = useMemo(() => {
-    return breedOptions.find((option) => option.value === primaryBreed);
+    return BREEDS.find((option) => option.value === primaryBreed);
   }, [primaryBreed]);
+
+  console.log();
 
   const selectedBirthday = useMemo(() => {
     return birthdayOptions.find((option) => option.value === birthday);
@@ -66,6 +64,13 @@ export default function OnboardingIdentityScreen() {
   const onSubmit = (values: OnboardingFormValues) => {
     setIdentity(values);
     // router.push("/onboarding/profile");
+  };
+
+  const handleSetPrimaryBreed = (value: string) => {
+    setValue("primaryBreed", value, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
   };
 
   return (
@@ -117,14 +122,14 @@ export default function OnboardingIdentityScreen() {
           control={control}
           name="primaryBreed"
           render={({ field: { value } }) => (
-            <OnboardingSearchField
+            <OnboardingSelectField
               label="Primary breed"
               required
               placeholder="Search breed..."
               value={selectedBreed?.label ?? value}
               error={errors.primaryBreed?.message}
-              onFocus={openPrimaryBreedSheet}
-              leftIcon={<Search />}
+              onPress={openPrimaryBreedSheet}
+              leftIcon={<Search className="text-icon" strokeWidth={2} />}
             />
           )}
         />
@@ -132,15 +137,14 @@ export default function OnboardingIdentityScreen() {
         <Controller
           control={control}
           name="secondaryBreed"
-          render={({ field: { onBlur, onChange, value } }) => (
-            <OnboardingSearchField
+          render={({ field: { value } }) => (
+            <OnboardingSelectField
               label="Secondary breed"
               placeholder="Search breed..."
               value={value}
-              onBlur={onBlur}
-              onChangeText={onChange}
+              onPress={openPrimaryBreedSheet}
               error={errors.secondaryBreed?.message}
-              leftIcon={<Search />}
+              leftIcon={<Search className="text-icon" strokeWidth={2} />}
             />
           )}
         />
@@ -161,43 +165,10 @@ export default function OnboardingIdentityScreen() {
           )}
         />
 
-        <SelectBottomSheet
-          ref={breedSheetRef}
-          title="Primary breed"
-          options={breedOptions}
-          selectedValue={primaryBreed}
-          onSelect={(option) => {
-            setValue("primaryBreed", option.value, {
-              shouldValidate: true,
-              shouldDirty: true,
-            });
-            breedSheetRef.current?.dismiss();
-          }}
-        />
-
-        <SelectBottomSheet
-          ref={birthdaySheetRef}
-          title="Birthday"
-          options={birthdayOptions}
-          selectedValue={birthday}
-          onSelect={(option) => {
-            setValue("birthday", option.value, {
-              shouldValidate: true,
-              shouldDirty: true,
-            });
-            birthdaySheetRef.current?.dismiss();
-          }}
-        />
-
         <AppBottomSheet ref={primaryBreedSheetRef}>
           <BreedBottomSheetContent
             selectedValue={primaryBreed}
-            onSelect={(value) => {
-              setValue("primaryBreed", value, {
-                shouldValidate: true,
-                shouldDirty: true,
-              });
-            }}
+            onSelect={handleSetPrimaryBreed}
             onDone={closePrimaryBreedSheet}
           />
         </AppBottomSheet>

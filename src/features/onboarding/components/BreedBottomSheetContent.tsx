@@ -26,6 +26,10 @@ const BreedBottomSheetContent = ({
     onDone();
   };
 
+  const handleSelect = (value: string) => {
+    onSelect(value);
+  };
+
   return (
     <View className="px-5 pb-safe flex-1">
       <OnboardingSearchField
@@ -64,7 +68,7 @@ const BreedBottomSheetContent = ({
             <BottomSheetContentItem
               item={item}
               matchedIndices={item.matchedIndices}
-              onPress={() => onSelect(item.value)}
+              onPress={handleSelect}
               leftIcon={<Icon name={item.iconName} />}
               rightIcon={
                 <CheckBox isCircle isSelected={isSelected} size={18} />
