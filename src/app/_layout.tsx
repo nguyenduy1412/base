@@ -43,12 +43,9 @@ function SplashFallback() {
 
 const TabLayout = () => {
   const colorScheme = useSelector(theme$.mode);
-  const handleSafeAreaChange = useCallback(
-    ({ insets }: { insets: EdgeInsets }) => {
-      Uniwind.updateInsets(insets);
-    },
-    [],
-  );
+  const handleSafeAreaChange = useCallback(({ insets }: { insets: EdgeInsets }) => {
+    Uniwind.updateInsets(insets);
+  }, []);
 
   return (
     <Suspense fallback={<SplashFallback />}>
@@ -59,9 +56,7 @@ const TabLayout = () => {
         <GestureHandlerRootView style={styles.container}>
           <QueryClientProvider client={queryClient}>
             <I18nProvider i18n={i18n}>
-              <ThemeProvider
-                value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-              >
+              <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
                 <PortalProvider>
                   <KeyboardProvider>
                     <BottomSheetModalProvider>

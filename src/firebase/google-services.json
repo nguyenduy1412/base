@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "852241553978",
+    "project_id": "dogspotting-f1ea8",
+    "storage_bucket": "dogspotting-f1ea8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:852241553978:android:102bda0ddfbd967513f303",
+        "android_client_info": {
+          "package_name": "com.teaserdeveloper.base"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "852241553978-3ac1pm3jv848eaeeoc3m0lb0ll5k5jf3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGp-Lpbmh9JwQmrs-oc4KxlK0pZewxA58"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "852241553978-3ac1pm3jv848eaeeoc3m0lb0ll5k5jf3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

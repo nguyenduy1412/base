@@ -1,6 +1,7 @@
 import { type TextProps as RNTextProps } from "react-native";
 
 export type TextVariant =
+  | "heading32Semibold"
   | "body10Regular"
   | "body10Medium"
   | "body10Semibold"
@@ -76,9 +77,12 @@ export type TextVariant =
   | "body24Semibold"
   | "body24Bold"
   | "body24ExtraBold"
-  | "body32ExtraBold";
+  | "body32ExtraBold"
+  | "caption14Regular"
+  | "caption14Semibold";
 
 export interface TextProps extends RNTextProps {
   className?: string;
   variant?: TextVariant;
+  color?: string;
 }

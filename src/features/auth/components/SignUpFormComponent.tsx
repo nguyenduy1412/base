@@ -10,8 +10,10 @@ import { TriangleAlert } from "lucide-react-native";
 import { defaultSignUpValues, SignUpFormValues, signUpSchema } from "../types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLingui } from "@lingui/react";
-import { useLogin } from "../hooks/useLogin";
+import { useRegister } from "../hooks/useRegister";
 import TermsOfServiceModal from "./TermsOfServiceModal";
+import { router } from "expo-router";
+import { AUTH_ROUTES } from "@/constants/routes";
 
 type props = {
   onNextForm: () => void;
@@ -27,11 +29,19 @@ const SignUpFormComponent = ({ onNextForm }: props) => {
     resolver: zodResolver(schema),
     defaultValues: defaultSignUpValues,
   });
-  const { mutateAsync: login, isPending } = useLogin();
+  const { mutateAsync: register, isPending } = useRegister();
   const [isTermsOfServiceModalVisible, setIsTermsOfServiceModalVisible] = useState(false);
-  const onSignUp = useCallback(async (data: SignUpFormValues) => {
-    console.log(data);
-  }, []);
+  const onSignUp = useCallback(
+    async (data: SignUpFormValues) => {
+      const respose = await register(data);
+      console.log("response", respose);
+      router.push({
+        pathname: AUTH_ROUTES.VERIFY_EMAIL,
+        params: { email: data.email, name: data.name },
+      });
+    },
+    [register],
+  );
   const handleShowTermsOfServiceModal = useCallback(() => {
     setIsTermsOfServiceModalVisible(true);
   }, []);
@@ -62,11 +72,15 @@ const SignUpFormComponent = ({ onNextForm }: props) => {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               value={value}
+              type="email"
               onChangeText={onChange}
               onBlur={onBlur}
               label={t`Email`}
               placeholder={t`Enter your email`}
               error={errors.email?.message}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="email-address"
               iconError={<TriangleAlert color="red" size={16} />}
             />
           )}
@@ -75,18 +89,10 @@ const SignUpFormComponent = ({ onNextForm }: props) => {
       <View className="pt-5 flex-row items-start gap-3">
         <View className="w-4 h-4 bg-primary" />
         <Text onPress={handleShowTermsOfServiceModal} className="flex-1 shrink">
-          <Text variant="body12Regular">
-            {t`I am at least 13 years old and agree to the`}
-          </Text>
-          <Text
-            variant="body12Regular"
-            className="text-yellow"
-          >{t` Termsof Service`}</Text>
+          <Text variant="body12Regular">{t`I am at least 13 years old and agree to the`}</Text>
+          <Text variant="body12Regular" className="text-yellow">{t` Termsof Service`}</Text>
           <Text variant="body12Regular">{t` and`}</Text>
-          <Text
-            variant="body12Semibold"
-            className="text-yellow"
-          >{t` Privacy Policy`}</Text>
+          <Text variant="body12Semibold" className="text-yellow">{t` Privacy Policy`}</Text>
         </Text>
       </View>
       <Button

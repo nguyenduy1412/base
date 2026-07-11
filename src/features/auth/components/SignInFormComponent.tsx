@@ -14,14 +14,17 @@ import { defaultSignInValues, SignInFormValues, signInSchema } from "../types";
 import CheckBox from "@/components/CheckBox";
 import { router } from "expo-router";
 import { AUTH_ROUTES } from "@/constants/routes";
+import { useGoogleLogin } from "../hooks/useGoogleLogin";
 
 type props = {
   onNextForm: () => void;
-}
+};
 const SignInFormComponent = ({ onNextForm }: props) => {
   const { _ } = useLingui();
   const schema = useMemo(() => signInSchema(_), [_]);
   const [isCheckBoxSelected, setIsCheckBoxSelected] = useState(true);
+  const { mutateAsync: googleLogin, isPending: googleLoginLoading } =
+    useGoogleLogin();
   const {
     control,
     handleSubmit,
@@ -32,10 +35,20 @@ const SignInFormComponent = ({ onNextForm }: props) => {
   });
   const { mutateAsync: login, isPending } = useLogin();
 
-  const onSignIn = useCallback(async (data: SignInFormValues) => {
-    console.log(data);
-    router.push(AUTH_ROUTES.CHECK_YOUR_EMAIL);
-  }, []);
+  const onSignIn = useCallback(
+    async (data: SignInFormValues) => {
+      await login(data);
+      router.push({
+        pathname: AUTH_ROUTES.CHECK_YOUR_EMAIL,
+        params: { email: data.email },
+      });
+    },
+    [login],
+  );
+
+  const handleSignInWithGoogle = useCallback(async () => {
+    await googleLogin();
+  }, [googleLogin]);
 
   const handleCheckBox = useCallback(() => {
     setIsCheckBoxSelected((prev) => !prev);
@@ -72,8 +85,8 @@ const SignInFormComponent = ({ onNextForm }: props) => {
         </View>
       </View>
       <Button
-        className="w-full rounded-[12px] mt-5 border border-placeholder"
-        onPress={() => {}}
+        className="w-full rounded-xl mt-5 border border-placeholder"
+        onPress={handleSignInWithGoogle}
         color="background"
         isShadow={false}
       >

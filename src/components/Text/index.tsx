@@ -24,22 +24,19 @@ const TEXT_SIZE_CLASSES = {
 
 type TextSize = keyof typeof TEXT_SIZE_CLASSES;
 
-const createRegularTypography = (size: TextSize) =>
-  `${TEXT_SIZE_CLASSES[size]} font-sans`;
+const createRegularTypography = (size: TextSize) => `${TEXT_SIZE_CLASSES[size]} font-sans`;
 
-const createMediumTypography = (size: TextSize) =>
-  `${TEXT_SIZE_CLASSES[size]} font-sans-medium`;
+const createMediumTypography = (size: TextSize) => `${TEXT_SIZE_CLASSES[size]} font-sans-medium`;
 
-const createSemiboldTypography = (size: TextSize) =>
-  `${TEXT_SIZE_CLASSES[size]} font-sans-semibold`;
+const createSemiboldTypography = (size: TextSize) => `${TEXT_SIZE_CLASSES[size]} font-sans-semibold`;
 
-const createBoldTypography = (size: TextSize) =>
-  `${TEXT_SIZE_CLASSES[size]} font-sans-bold`;
+const createBoldTypography = (size: TextSize) => `${TEXT_SIZE_CLASSES[size]} font-sans-bold`;
 
-const createExtraBoldTypography = (size: TextSize) =>
-  `${TEXT_SIZE_CLASSES[size]} font-sans-extrabold`;
+const createExtraBoldTypography = (size: TextSize) => `${TEXT_SIZE_CLASSES[size]} font-sans-extrabold`;
 
 export const TEXT_VARIANTS = {
+  heading32Semibold: createSemiboldTypography(32),
+
   body10Regular: createRegularTypography(10),
   body10Medium: createMediumTypography(10),
   body10Semibold: createSemiboldTypography(10),
@@ -135,17 +132,20 @@ export const TEXT_VARIANTS = {
   body32Semibold: createSemiboldTypography(32),
   body32Bold: createBoldTypography(32),
   body32ExtraBold: createExtraBoldTypography(32),
+
+  caption14Regular: createRegularTypography(14),
+  caption14Semibold: createSemiboldTypography(14),
 } as const;
 
 export const Text = React.forwardRef<RNText, TextProps>(
-  ({ className, variant = "body14Regular", style, ...props }, ref) => {
+  ({ className, variant = "body14Regular", color, style, ...props }, ref) => {
     const variantClass = TEXT_VARIANTS[variant] || TEXT_VARIANTS.body14Regular;
 
     return (
       <RNText
         ref={ref}
         className={cn("text-text", variantClass, className)}
-        style={style}
+        // style={[style, { color: color }]}
         {...props}
       />
     );

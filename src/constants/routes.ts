@@ -12,4 +12,5 @@ export const TAB_ROUTES = {
 
 export const AUTH_ROUTES = {
   CHECK_YOUR_EMAIL: `${ROUTE_GROUPS.AUTH}/check-your-email`,
+  VERIFY_EMAIL: `${ROUTE_GROUPS.AUTH}/verify-email`,
 } as const;

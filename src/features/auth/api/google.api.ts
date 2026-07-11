@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import * as WebBrowser from "expo-web-browser";
 import { Platform } from "react-native";
+import { AUTH_REDIRECT_URL } from "../constants";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -22,7 +23,7 @@ function parseUrlParams(url: string) {
 
 export const loginWithGoogle = async () => {
   const isNative = Platform.OS !== "web";
-  const redirectTo = isNative ? "kaizerapp://" : window.location.origin;
+  const redirectTo = isNative ? AUTH_REDIRECT_URL : window.location.origin;
 
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
@@ -45,11 +46,10 @@ export const loginWithGoogle = async () => {
       const { access_token, refresh_token } = params;
 
       if (access_token && refresh_token) {
-        const { data: sessionData, error: sessionError } =
-          await supabase.auth.setSession({
-            access_token,
-            refresh_token,
-          });
+        const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
+          access_token,
+          refresh_token,
+        });
 
         if (sessionError) {
           throw sessionError;
