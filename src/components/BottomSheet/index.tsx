@@ -1,11 +1,7 @@
 import { Text } from "@/components/Text";
 import { cn } from "@/utils/cn";
-import {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
-import { forwardRef, ReactNode } from "react";
+import { BottomSheetBackdrop, BottomSheetModal } from "@gorhom/bottom-sheet";
+import { forwardRef, ReactNode, useMemo } from "react";
 import { View } from "react-native";
 import { useCSSVariable } from "uniwind";
 
@@ -14,21 +10,23 @@ export type AppBottomSheetProps = {
   children: ReactNode;
   className?: string;
   contentClassName?: string;
+  snapPoints?: string[];
 };
 
 export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
   function AppBottomSheet(
-    { title, children, className, contentClassName },
+    { title, children, className, snapPoints = ["50%"], contentClassName },
     ref,
   ) {
-    // const memoizedSnapPoints = useMemo(() => snapPoints, [snapPoints]);
+    const memoizedSnapPoints = useMemo(() => snapPoints, [snapPoints]);
     const backgroundColor = useCSSVariable("--color-white") as string;
 
     return (
       <BottomSheetModal
         ref={ref}
-        // snapPoints={memoizedSnapPoints}
+        snapPoints={memoizedSnapPoints}
         enablePanDownToClose
+        enableDynamicSizing={false}
         backgroundStyle={{
           backgroundColor,
           borderTopLeftRadius: 24,
@@ -42,7 +40,7 @@ export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
           />
         )}
       >
-        <BottomSheetView>
+        <View style={{ flex: 1 }} className={cn(className)}>
           {title ? (
             <Text
               variant="body24Semibold"
@@ -51,9 +49,12 @@ export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
               {title}
             </Text>
           ) : null}
-
-          <View className={cn("mt-4.5", contentClassName)}>{children}</View>
-        </BottomSheetView>
+          <View
+            className={cn("flex-1", title ? "mt-4.5" : "", contentClassName)}
+          >
+            {children}
+          </View>
+        </View>
       </BottomSheetModal>
     );
   },

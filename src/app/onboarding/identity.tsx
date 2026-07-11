@@ -19,7 +19,7 @@ import { useOnboardingStore } from "@/store/onboardingStore";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarDays, Search } from "lucide-react-native";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
 
@@ -54,11 +54,9 @@ export default function OnboardingIdentityScreen() {
   }, [birthday]);
 
   const primaryBreedSheetRef = useRef<BottomSheetModal>(null);
-  const [primaryBreed1, setPrimaryBreed1] = useState("");
 
   const openPrimaryBreedSheet = () => {
     primaryBreedSheetRef.current?.present();
-    console.log("AAAA");
   };
 
   const closePrimaryBreedSheet = () => {
@@ -191,13 +189,15 @@ export default function OnboardingIdentityScreen() {
           }}
         />
 
-        <AppBottomSheet
-          ref={primaryBreedSheetRef}
-          contentClassName="mt-5 bg-white"
-        >
+        <AppBottomSheet ref={primaryBreedSheetRef}>
           <BreedBottomSheetContent
             selectedValue={primaryBreed}
-            onSelect={setPrimaryBreed1}
+            onSelect={(value) => {
+              setValue("primaryBreed", value, {
+                shouldValidate: true,
+                shouldDirty: true,
+              });
+            }}
             onDone={closePrimaryBreedSheet}
           />
         </AppBottomSheet>
