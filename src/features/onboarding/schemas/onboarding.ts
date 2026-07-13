@@ -9,8 +9,9 @@ export const onboardingSchema = z.object({
     .regex(/^[a-zA-Z0-9_]+$/, "Use letters, numbers, or underscores."),
   primaryBreed: z.string().min(1, "Primary breed is required"),
   secondaryBreed: z.string().optional(),
-  birthday: z.string().min(1, "Birthday is required"),
-  gotchaday: z.string().min(1, "Gotcha Day is required"),
+  birthday: z.string(),
+  gotchaday: z.string(),
+  // gotchaday: z.string().min(1, "Gotcha Day is required"),
 });
 
 export type OnboardingFormValues = z.infer<typeof onboardingSchema>;

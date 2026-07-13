@@ -3,10 +3,11 @@ import { memo, ReactNode } from "react";
 import { View } from "react-native";
 
 import type { BreedItem } from "../constants/breeds";
+import type { BirthdayItem } from "../constants/birthdays";
 import HighlightedBreedLabel from "./HighlightedBreedLabel";
 
 export interface BottomSheetContentItemProps {
-  item: BreedItem;
+  item: BreedItem | BirthdayItem;
   matchedIndices?: number[];
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;

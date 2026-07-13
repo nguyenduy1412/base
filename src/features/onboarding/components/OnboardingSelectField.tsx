@@ -66,7 +66,7 @@ const OnboardingSelectField = ({
         )}
       >
         <View className="w-full flex-row items-center gap-3">
-          {leftIcon ? <View className="h-6 w-6">{leftIcon}</View> : null}
+          {leftIcon ? leftIcon : null}
 
           <Text
             variant="body15Regular"

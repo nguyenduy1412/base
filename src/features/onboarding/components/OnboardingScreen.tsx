@@ -13,6 +13,7 @@ export interface OnboardingScreenProps {
   totalSteps: number;
   footer?: ReactNode;
   canGoBack?: boolean;
+  onBack?: () => void;
 }
 
 const OnboardingScreen = ({
@@ -21,6 +22,7 @@ const OnboardingScreen = ({
   totalSteps,
   footer,
   canGoBack,
+  onBack,
 }: OnboardingScreenProps) => {
   const ptsValue = 0;
   const insets = useSafeAreaInsets();
