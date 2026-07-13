@@ -1,8 +1,9 @@
+import Avatar from "@/components/Avatar";
 import { AppBottomSheet } from "@/components/BottomSheet";
+import Text from "@/components/Text";
 import BreedBottomSheetContent from "@/features/onboarding/components/BreedBottomSheetContent";
 import OnboardingFooter from "@/features/onboarding/components/OnboardingFooter";
 import OnboardingScreen from "@/features/onboarding/components/OnboardingScreen";
-import OnboardingSearchField from "@/features/onboarding/components/OnboardingSearchField";
 import OnboardingSelectField from "@/features/onboarding/components/OnboardingSelectField";
 import OnboardingTextField from "@/features/onboarding/components/OnboardingTextField";
 import { BREEDS } from "@/features/onboarding/constants/breeds";
@@ -17,7 +18,7 @@ import {
 import { useOnboardingStore } from "@/store/onboardingStore";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarDays, Search } from "lucide-react-native";
+import { ChevronDown, Search } from "lucide-react-native";
 import { useMemo, useRef } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { View } from "react-native";
@@ -29,7 +30,7 @@ export default function OnboardingIdentityScreen() {
 
   const {
     control,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
     setValue,
   } = useForm<OnboardingFormValues>({
@@ -39,13 +40,13 @@ export default function OnboardingIdentityScreen() {
   });
 
   const primaryBreed = useWatch({ control, name: "primaryBreed" });
+  const secondaryBreed = useWatch({ control, name: "secondaryBreed" });
   const birthday = useWatch({ control, name: "birthday" });
+  const gotchaday = useWatch({ control, name: "gotchaday" });
 
   const selectedBreed = useMemo(() => {
     return BREEDS.find((option) => option.value === primaryBreed);
   }, [primaryBreed]);
-
-  console.log();
 
   const selectedBirthday = useMemo(() => {
     return birthdayOptions.find((option) => option.value === birthday);
@@ -75,15 +76,33 @@ export default function OnboardingIdentityScreen() {
 
   return (
     <OnboardingScreen
-      currentStep={3}
+      currentStep={1}
       totalSteps={ONBOARDING_TOTAL_STEPS}
-      title="Your Dog: Identity"
       canGoBack={true}
       footer={
-        <OnboardingFooter disabled={false} onPress={handleSubmit(onSubmit)} />
+        <OnboardingFooter
+          disabled={!isValid}
+          onPress={handleSubmit(onSubmit)}
+        />
       }
     >
       <View className="gap-5 flex-1 ">
+        <View className="h-3"></View>
+
+        <Text
+          variant="body32Semibold"
+          className="mb-5 font-serif text-[32px] leading-9.5 text-text-heading"
+        >
+          {`Time to meet the real star!`}
+        </Text>
+
+        <Controller
+          control={control}
+          name="avatarUri"
+          render={({ field: { onChange, value } }) => (
+            <Avatar size={140} url={value} onChange={onChange} />
+          )}
+        />
         <Controller
           control={control}
           name="dogName"
@@ -129,7 +148,7 @@ export default function OnboardingIdentityScreen() {
               value={selectedBreed?.label ?? value}
               error={errors.primaryBreed?.message}
               onPress={openPrimaryBreedSheet}
-              leftIcon={<Search className="text-icon" strokeWidth={2} />}
+              rightIcon={<Search className="text-icon" strokeWidth={2} />}
             />
           )}
         />
@@ -144,7 +163,7 @@ export default function OnboardingIdentityScreen() {
               value={value}
               onPress={openPrimaryBreedSheet}
               error={errors.secondaryBreed?.message}
-              leftIcon={<Search className="text-icon" strokeWidth={2} />}
+              rightIcon={<Search className="text-icon" strokeWidth={2} />}
             />
           )}
         />
@@ -155,11 +174,24 @@ export default function OnboardingIdentityScreen() {
           render={() => (
             <OnboardingSelectField
               label="Birthday"
-              required
               placeholder="Select birthday"
               value={selectedBirthday?.label}
               error={errors.birthday?.message}
-              rightIcon={<CalendarDays size={24} strokeWidth={2} />}
+              rightIcon={<ChevronDown size={24} strokeWidth={2} />}
+              onPress={openPrimaryBreedSheet}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="gotchaday"
+          render={({ field: { value } }) => (
+            <OnboardingSelectField
+              label="Gotcha Day"
+              placeholder="Select Gotcha Day"
+              value={value}
+              error={errors.gotchaday?.message}
+              rightIcon={<ChevronDown size={24} strokeWidth={2} />}
               onPress={openPrimaryBreedSheet}
             />
           )}
@@ -172,6 +204,8 @@ export default function OnboardingIdentityScreen() {
             onDone={closePrimaryBreedSheet}
           />
         </AppBottomSheet>
+
+        <View className="h-14"></View>
       </View>
     </OnboardingScreen>
   );

@@ -1,3 +1,5 @@
+import { animations } from "@/assets/animation";
+import LottieView from "lottie-react-native";
 import { memo } from "react";
 import { View } from "react-native";
 
@@ -6,14 +8,31 @@ export interface OnboardingProgressProps {
   totalSteps: number;
 }
 
+const CorgiLottie = memo(function CorgiLottie() {
+  return (
+    <LottieView
+      source={animations.CorgiRunning}
+      autoPlay
+      loop
+      speed={1}
+      style={{
+        width: "150%",
+        aspectRatio: 1,
+        transform: [{ scaleX: -1 }],
+      }}
+    />
+  );
+});
+
 const OnboardingProgress = ({
   currentStep,
   totalSteps,
 }: OnboardingProgressProps) => {
   return (
-    <View className="flex-row gap-2 w-full mb-7">
-      {Array.from({ length: totalSteps }).map((item, index) => {
+    <View className="mt-5 mb-2 w-full flex-row gap-1">
+      {Array.from({ length: totalSteps }).map((_, index) => {
         const isActive = index < currentStep;
+        const isCorgiRunning = index === currentStep - 1;
 
         return (
           <View
@@ -21,7 +40,16 @@ const OnboardingProgress = ({
             className={`h-1 flex-1 rounded-full ${
               isActive ? "bg-primary" : "bg-secondary-soft"
             }`}
-          ></View>
+          >
+            {isCorgiRunning ? (
+              <View
+                pointerEvents="none"
+                className="absolute bottom-1 left-0 right-0 items-center"
+              >
+                <CorgiLottie />
+              </View>
+            ) : null}
+          </View>
         );
       })}
     </View>

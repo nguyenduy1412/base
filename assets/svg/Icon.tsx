@@ -5,6 +5,7 @@ import GermanShepherd from "./GermanShepherd.svg";
 import GolderRetriever from "./GolderRetriever.svg";
 import GoogleIcon from "./google.svg";
 import Icondogs from "./Icondogs.svg";
+import PointIcon from "./PointIcon.svg";
 import Samoyed from "./Samoyed.svg";
 const icons = {
   google: GoogleIcon,
@@ -12,6 +13,7 @@ const icons = {
   GermanShepherd: GermanShepherd,
   GolderRetriever: GolderRetriever,
   Samoyed: Samoyed,
+  PointIcon: PointIcon,
   LabradorRetriever: Icondogs,
 } satisfies Record<string, ComponentType<SvgProps>>;
 

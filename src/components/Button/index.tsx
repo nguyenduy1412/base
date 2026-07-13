@@ -53,7 +53,7 @@ export const Button = React.forwardRef<
       activeOpacity={activeOpacity}
       style={style}
       className={cn(
-        "w-auto shrink rounded-full flex-row items-center justify-center px-6 py-3 android:disabled:opacity-60 ios:disabled:opacity-80 web:disabled:opacity-80 transition-all overflow-hidden relative",
+        "w-auto shrink rounded-full flex-row items-center justify-center px-6 py-3 android:disabled:opacity-30 ios:disabled:opacity-30 web:disabled:opacity-30 transition-all overflow-hidden relative",
         shadowClass,
         bgClass,
         className,
