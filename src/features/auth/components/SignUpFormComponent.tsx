@@ -17,8 +17,16 @@ import { AUTH_ROUTES } from "@/constants/routes";
 
 type props = {
   onNextForm: () => void;
+  onInputFocus?: (text: string) => void;
+  onInputBlur?: () => void;
+  onInputChange?: (text: string) => void;
 };
-const SignUpFormComponent = ({ onNextForm }: props) => {
+const SignUpFormComponent = ({
+  onNextForm,
+  onInputFocus,
+  onInputBlur,
+  onInputChange,
+}: props) => {
   const { _ } = useLingui();
   const schema = useMemo(() => signUpSchema(_), [_]);
   const {
@@ -57,8 +65,15 @@ const SignUpFormComponent = ({ onNextForm }: props) => {
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               value={value}
-              onChangeText={onChange}
-              onBlur={onBlur}
+              onChangeText={(text) => {
+                onChange(text);
+                onInputChange?.(text);
+              }}
+              onFocus={() => onInputFocus?.(value)}
+              onBlur={() => {
+                onBlur();
+                onInputBlur?.();
+              }}
               label={t`Name`}
               placeholder={t`Enter your name`}
               error={errors.name?.message}
@@ -73,8 +88,15 @@ const SignUpFormComponent = ({ onNextForm }: props) => {
             <TextInput
               value={value}
               type="email"
-              onChangeText={onChange}
-              onBlur={onBlur}
+              onChangeText={(text) => {
+                onChange(text);
+                onInputChange?.(text);
+              }}
+              onFocus={() => onInputFocus?.(value)}
+              onBlur={() => {
+                onBlur();
+                onInputBlur?.();
+              }}
               label={t`Email`}
               placeholder={t`Enter your email`}
               error={errors.email?.message}

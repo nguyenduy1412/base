@@ -18,8 +18,16 @@ import { useGoogleLogin } from "../hooks/useGoogleLogin";
 
 type props = {
   onNextForm: () => void;
+  onInputFocus?: (text: string) => void;
+  onInputBlur?: () => void;
+  onInputChange?: (text: string) => void;
 };
-const SignInFormComponent = ({ onNextForm }: props) => {
+const SignInFormComponent = ({
+  onNextForm,
+  onInputFocus,
+  onInputBlur,
+  onInputChange,
+}: props) => {
   const { _ } = useLingui();
   const schema = useMemo(() => signInSchema(_), [_]);
   const [isCheckBoxSelected, setIsCheckBoxSelected] = useState(true);
@@ -62,8 +70,15 @@ const SignInFormComponent = ({ onNextForm }: props) => {
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             value={value}
-            onChangeText={onChange}
-            onBlur={onBlur}
+            onChangeText={(text) => {
+              onChange(text);
+              onInputChange?.(text);
+            }}
+            onFocus={() => onInputFocus?.(value)}
+            onBlur={() => {
+              onBlur();
+              onInputBlur?.();
+            }}
             label={t`Email`}
             placeholder={t`Enter your email`}
             error={errors.email?.message}
