@@ -3,8 +3,6 @@ import { useRouter } from "expo-router";
 import IdentityStep from "@/features/onboarding/components/steps/IdentityStep";
 import TellUsAboutStep from "@/features/onboarding/components/steps/TellUsAboutStep";
 
-// import TellUsAboutStep from "@/features/onboarding/steps/TellUsAboutStep";
-
 export default function OnboardingFlow() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);

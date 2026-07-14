@@ -1,71 +1,86 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import { Check } from "lucide-react-native";
-import { forwardRef } from "react";
-import { View } from "react-native";
-import { withUniwind } from "uniwind";
-
 import { AppBottomSheet } from "@/components/BottomSheet";
-import { Button } from "@/components/Button";
-import { Text } from "@/components/Text";
-
-const CheckIcon = withUniwind(Check);
-
-export type SelectBottomSheetOption = {
-  label: string;
-  value: string;
-};
+import CheckBox from "@/components/CheckBox";
+import Text from "@/components/Text";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { forwardRef, useCallback, useState } from "react";
+import { View } from "react-native";
+import { SelectOption } from "@/features/onboarding/constants/onboarding";
+import BottomSheetItem from "@/features/onboarding/components/BottomSheetItem";
+import OnboardingFooter from "@/features/onboarding/components/OnboardingFooter";
 
 type SelectBottomSheetProps = {
-  title: string;
-  options: SelectBottomSheetOption[];
+  title?: string;
+  options: SelectOption[];
   selectedValue?: string;
-  onSelect: (option: SelectBottomSheetOption) => void;
+  onConfirm: (value: string) => void;
+  onDone: () => void;
 };
 
 export const SelectBottomSheet = forwardRef<
   BottomSheetModal,
   SelectBottomSheetProps
->(function SelectBottomSheet({ title, options, selectedValue, onSelect }, ref) {
+>(function SelectBottomSheet(
+  { title, options, selectedValue, onConfirm, onDone },
+  ref,
+) {
+  const [pendingValue, setPendingValue] = useState<string | undefined>(
+    selectedValue,
+  );
+
+  const handlePresent = useCallback(() => {
+    setPendingValue(selectedValue);
+  }, [selectedValue]);
+
+  const handleDone = () => {
+    if (pendingValue !== undefined) {
+      onConfirm(pendingValue);
+    }
+    onDone();
+  };
+
+  const handleSetPendingValue = useCallback((value: string) => {
+    setPendingValue(value);
+  }, []);
+
   return (
-    <AppBottomSheet ref={ref} title={title}>
-      <View className="gap-3">
-        {options.map((option) => {
-          const selected = option.value === selectedValue;
+    <AppBottomSheet
+      ref={ref}
+      enableDynamicSizing={true}
+      onPresent={handlePresent}
+    >
+      <View className="px-5 pb-safe">
+        {title ? (
+          <View className="py-2.5">
+            <Text variant="body32Semibold">{title}</Text>
+          </View>
+        ) : null}
+        <View className="h-3" />
 
-          return (
-            <Button
-              key={option.value}
-              color="white"
-              isShadow={false}
-              activeOpacity={0.85}
-              onPress={() => onSelect(option)}
-              className={`w-full h-11.25 rounded-xl border px-4 py-0 ${
-                selected
-                  ? "border-primary bg-secondary-soft"
-                  : "border-input-border bg-white"
-              }`}
-            >
-              <View className="w-full flex-row items-center justify-between">
-                <Text
-                  variant="body15Regular"
-                  className="leading-5.5 text-label"
-                >
-                  {option.label}
-                </Text>
+        <View className="pb-4">
+          {options.map((item) => {
+            const isSelected = item.value === pendingValue;
 
-                {selected ? (
-                  <View className="h-6 w-6 items-center justify-center rounded-full bg-primary">
-                    <CheckIcon
-                      size={16}
-                      colorClassName="accent-white"
-                      strokeWidth={2.5}
-                    />
+            return (
+              <BottomSheetItem
+                key={item.value}
+                item={item}
+                isSelected={isSelected}
+                isLasted={true}
+                onPress={handleSetPendingValue}
+                leftElement={
+                  <CheckBox isCircle isSelected={isSelected} size={18} />
+                }
+                centerElement={
+                  <View>
+                    <Text variant="body16Regular">{item.label}</Text>
                   </View>
-                ) : null}
-              </View>
-            </Button>
-          );
-        })}
+                }
+              />
+            );
+          })}
+        </View>
+
+        <OnboardingFooter label="Done" disabled={false} onPress={handleDone} />
       </View>
     </AppBottomSheet>
   );

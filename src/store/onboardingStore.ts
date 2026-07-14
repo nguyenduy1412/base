@@ -1,22 +1,35 @@
 import {
-  onboardingDefaultValues,
-  OnboardingFormValues,
+  identityDefaultValues,
+  identityFormValues,
+  tellUsAboutDefaultValues,
+  tellUsAboutFormValues,
 } from "@/features/onboarding/schemas/onboarding";
 import { create } from "zustand";
 type OnboardingStore = {
-  identity: OnboardingFormValues;
-  setIdentity: (identity: OnboardingFormValues) => void;
+  identity: identityFormValues;
+  setIdentity: (identity: identityFormValues) => void;
   resetIdentity: () => void;
+
+  tellUsAbout: tellUsAboutFormValues;
+  setTellUsAbout: (value: tellUsAboutFormValues) => void;
+  resetTellUsAbout: () => void;
 };
 
 export const useOnboardingStore = create<OnboardingStore>((set) => ({
-  identity: onboardingDefaultValues,
+  identity: identityDefaultValues,
+  tellUsAbout: tellUsAboutDefaultValues,
 
-  setIdentity: (identity: OnboardingFormValues) => {
+  setIdentity: (identity: identityFormValues) => {
     set({ identity });
+  },
+  setTellUsAbout: (tellUsAbout: tellUsAboutFormValues) => {
+    set({ tellUsAbout });
   },
 
   resetIdentity: () => {
-    set({ identity: onboardingDefaultValues });
+    set({ identity: identityDefaultValues });
+  },
+  resetTellUsAbout: () => {
+    set({ tellUsAbout: tellUsAboutDefaultValues });
   },
 }));

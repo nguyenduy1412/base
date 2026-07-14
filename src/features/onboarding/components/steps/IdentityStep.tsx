@@ -1,6 +1,6 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronDown, Search } from "lucide-react-native";
+import { Bitcoin, ChevronDown, Search } from "lucide-react-native";
 import { useMemo, useRef } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { View } from "react-native";
@@ -11,21 +11,22 @@ import OnboardingScreen from "@/features/onboarding/components/OnboardingScreen"
 import OnboardingSelectField from "@/features/onboarding/components/OnboardingSelectField";
 import OnboardingTextField from "@/features/onboarding/components/OnboardingTextField";
 
+import { useBottomSheetField } from "@/features/onboarding/hooks/useBottomSheetField";
 import Icon from "@/assets/svg/Icon";
-import { BREEDS } from "@/features/onboarding/constants/breeds";
+
 import {
-  birthdayOptions,
+  BIRTHDAYS,
+  BREEDS,
   ONBOARDING_TOTAL_STEPS,
 } from "@/features/onboarding/constants/onboarding";
 import {
-  OnboardingFormValues,
-  onboardingSchema,
+  identityFormValues,
+  identitySchema,
 } from "@/features/onboarding/schemas/onboarding";
 import { useOnboardingStore } from "@/store/onboardingStore";
 import BreedBottomSheet from "../BreedBottomSheet";
 import OnboardingFooter from "../OnboardingFooter";
 import DayBottomSheet from "../DayBottomSheet";
-import { BIRTHDAYS } from "../../constants/birthdays";
 
 interface IdentityStepProps {
   onContinue: () => void;
@@ -44,64 +45,69 @@ export default function IdentityStep({
     formState: { errors, isValid },
     handleSubmit,
     setValue,
-  } = useForm<OnboardingFormValues>({
+  } = useForm<identityFormValues>({
     defaultValues: identity,
     mode: "onChange",
-    resolver: zodResolver(onboardingSchema),
+    resolver: zodResolver(identitySchema),
   });
 
-  const primaryBreed = useWatch({ control, name: "primaryBreed" });
-  const selectedPrimaryBreed = useMemo(() => {
-    return BREEDS.find((option) => option.value === primaryBreed);
-  }, [primaryBreed]);
-  const primaryBreedSheetRef = useRef<BottomSheetModal>(null);
-  const openPrimaryBreedSheet = () => primaryBreedSheetRef.current?.present();
-  const closePrimaryBreedSheet = () => primaryBreedSheetRef.current?.dismiss();
-  const handleSetPrimaryBreed = (value: string) => {
-    setValue("primaryBreed", value, {
-      shouldValidate: true,
-      shouldDirty: true,
-    });
-  };
+  const {
+    value: primaryBreed,
+    selectedOption: selectedPrimaryBreed,
+    sheetRef: primaryBreedSheetRef,
+    openSheet: openPrimaryBreedSheet,
+    closeSheet: closePrimaryBreedSheet,
+    handleSetValue: handleSetPrimaryBreed,
+  } = useBottomSheetField({
+    control,
+    setValue,
+    name: "primaryBreed",
+    options: BREEDS,
+  });
 
-  const secondaryBreed = useWatch({ control, name: "secondaryBreed" });
-  const secondaryBreedSheetRef = useRef<BottomSheetModal>(null);
-  const selectedSecondaryBreed = useMemo(() => {
-    return BREEDS.find((option) => option.value === secondaryBreed);
-  }, [secondaryBreed]);
-  const openSecondaryBreedSheet = () =>
-    secondaryBreedSheetRef.current?.present();
-  const closeSecondaryBreedSheet = () =>
-    secondaryBreedSheetRef.current?.dismiss();
-  const handleSetSecondaryBreed = (value: string) => {
-    setValue("secondaryBreed", value, {
-      shouldValidate: true,
-      shouldDirty: true,
-    });
-  };
+  const {
+    value: secondaryBreed,
+    selectedOption: selectedSecondaryBreed,
+    sheetRef: secondaryBreedSheetRef,
+    openSheet: openSecondaryBreedSheet,
+    closeSheet: closeSecondaryBreedSheet,
+    handleSetValue: handleSetSecondaryBreed,
+  } = useBottomSheetField({
+    control,
+    setValue,
+    name: "secondaryBreed",
+    options: BREEDS,
+  });
 
-  const birthday = useWatch({ control, name: "birthday" });
-  const selectedbirthday = useMemo(() => {
-    return BIRTHDAYS.find((option) => option.value === birthday);
-  }, [birthday]);
-  const birthdaySheetRef = useRef<BottomSheetModal>(null);
-  const openBirthdaySheet = () => {
-    birthdaySheetRef.current?.present();
-  };
-  const closeBirthdaySheet = () => {
-    birthdaySheetRef.current?.close();
-  };
-  const handleSetBirthDay = (value: string) => {
-    setValue("birthday", value, {
-      shouldValidate: true,
-    });
-  };
+  const {
+    value: birthday,
+    selectedOption: selectedBirthday,
+    sheetRef: birthdaySheetRef,
+    openSheet: openBirthdaySheet,
+    closeSheet: closeBirthdaySheet,
+    handleSetValue: handleSetBirthDay,
+  } = useBottomSheetField({
+    control,
+    setValue,
+    name: "birthday",
+    options: BIRTHDAYS,
+  });
 
-  const selectedBirthday = useMemo(() => {
-    return birthdayOptions.find((option) => option.value === birthday);
-  }, [birthday]);
+  const {
+    value: gotchaday,
+    selectedOption: selectedGotchaday,
+    sheetRef: gotchadaySheetRef,
+    openSheet: openGotchadaySheet,
+    closeSheet: closeGotchadaySheet,
+    handleSetValue: handleSelectGotchaday,
+  } = useBottomSheetField({
+    control,
+    setValue,
+    name: "gotchaday",
+    options: BIRTHDAYS,
+  });
 
-  const onSubmit = (values: OnboardingFormValues) => {
+  const onSubmit = (values: identityFormValues) => {
     setIdentity(values);
     onContinue();
   };
@@ -220,6 +226,7 @@ export default function IdentityStep({
               label="Birthday"
               placeholder="Select birthday"
               value={selectedBirthday?.label ?? value}
+
               error={errors.birthday?.message}
               rightIcon={<ChevronDown size={24} strokeWidth={2} />}
               onPress={openBirthdaySheet}
@@ -233,10 +240,10 @@ export default function IdentityStep({
             <OnboardingSelectField
               label="Gotcha Day"
               placeholder="Select Gotcha Day"
-              value={value}
+              value={selectedGotchaday?.label ?? value}
               error={errors.gotchaday?.message}
               rightIcon={<ChevronDown size={24} strokeWidth={2} />}
-              onPress={openPrimaryBreedSheet}
+              onPress={openGotchadaySheet}
             />
           )}
         />
@@ -258,9 +265,16 @@ export default function IdentityStep({
         <DayBottomSheet
           ref={birthdaySheetRef}
           title="Birthday"
-          selectedValue={selectedbirthday?.value}
+          selectedValue={birthday}
           onSelect={handleSetBirthDay}
           onDone={closeBirthdaySheet}
+        />
+        <DayBottomSheet
+          ref={gotchadaySheetRef}
+          title="Gotcha Day"
+          selectedValue={selectedGotchaday?.value}
+          onSelect={handleSelectGotchaday}
+          onDone={closeGotchadaySheet}
         />
 
         <View className="h-14" />

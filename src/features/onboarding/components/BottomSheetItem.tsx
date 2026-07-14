@@ -5,10 +5,10 @@ import { View } from "react-native";
 import Text from "@/components/Text";
 import { cn } from "@/utils/cn";
 import { Calendar } from "lucide-react-native";
-import type { BirthdayItem } from "../constants/birthdays";
+import type { SelectOption } from "../constants/onboarding";
 
 export interface BottomSheetItemProps {
-  item: BirthdayItem;
+  item: SelectOption;
   isSelected?: boolean;
   isLasted?: boolean;
   matchedIndices?: number[];

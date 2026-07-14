@@ -2,9 +2,8 @@ import Button from "@/components/Button";
 import { memo, ReactNode } from "react";
 import { View } from "react-native";
 
-import type { BreedItem } from "../constants/breeds";
-import type { BirthdayItem } from "../constants/birthdays";
 import HighlightedBreedLabel from "./HighlightedBreedLabel";
+import { BirthdayItem, BreedItem } from "../constants/onboarding";
 
 export interface BottomSheetContentItemProps {
   item: BreedItem | BirthdayItem;

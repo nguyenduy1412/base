@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef, memo } from "react";
 import { BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
 import { AppBottomSheet } from "@/components/BottomSheet";
 import BottomSheetContentItem from "./BottomSheetContentItem";
@@ -91,4 +91,4 @@ const BreedBottomSheet = forwardRef<BottomSheetModal, BreedBottomSheetProps>(
 
 BreedBottomSheet.displayName = "BreedBottomSheet";
 
-export default BreedBottomSheet;
+export default memo(BreedBottomSheet);

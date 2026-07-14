@@ -1,30 +1,24 @@
+// components/SelectBottomSheet.tsx
 import { AppBottomSheet } from "@/components/BottomSheet";
 import Text from "@/components/Text";
-import { BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
+import CheckBox from "@/components/CheckBox";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { forwardRef, memo } from "react";
 import { View } from "react-native";
-import CheckBox from "@/components/CheckBox";
+import { SelectOption } from "../constants/onboarding";
 import BottomSheetItem from "./BottomSheetItem";
 import OnboardingFooter from "./OnboardingFooter";
-import { BIRTHDAYS } from "../constants/onboarding";
 
-export interface DayBottomSheetProps {
+interface SelectBottomSheetProps {
   title?: string;
+  options: SelectOption[]; // nhận từ ngoài, không hardcode
   selectedValue?: string;
   onSelect: (value: string) => void;
   onDone: () => void;
 }
 
-const DayBottomSheet = forwardRef<BottomSheetModal, DayBottomSheetProps>(
-  ({ title, selectedValue, onSelect, onDone }, ref) => {
-    const handleSetBirthDay = (birthdayValue: string) => {
-      onSelect(birthdayValue);
-    };
-
-    const handleDone = () => {
-      onDone();
-    };
-
+const SelectBottomSheet = forwardRef<BottomSheetModal, SelectBottomSheetProps>(
+  ({ title, options, selectedValue, onSelect, onDone }, ref) => {
     return (
       <AppBottomSheet ref={ref} enableDynamicSizing={true}>
         <View className="px-5 pb-safe">
@@ -34,17 +28,16 @@ const DayBottomSheet = forwardRef<BottomSheetModal, DayBottomSheetProps>(
           <View className="h-3" />
 
           <View className="pb-4">
-            {BIRTHDAYS.map((item, index) => {
+            {options.map((item, index) => {
               const isSelected = item.value === selectedValue;
-              const isLasted = index === BIRTHDAYS.length - 1;
-
+              const isLasted = index === options.length - 1;
               return (
                 <BottomSheetItem
                   key={item.value}
                   item={item}
                   isSelected={isSelected}
                   isLasted={isLasted}
-                  onPress={handleSetBirthDay}
+                  onPress={onSelect}
                   leftElement={
                     <CheckBox isCircle isSelected={isSelected} size={18} />
                   }
@@ -58,17 +51,12 @@ const DayBottomSheet = forwardRef<BottomSheetModal, DayBottomSheetProps>(
             })}
           </View>
 
-          <OnboardingFooter
-            label="Done"
-            disabled={false}
-            onPress={handleDone}
-          />
+          <OnboardingFooter label="Done" disabled={false} onPress={onDone} />
         </View>
       </AppBottomSheet>
     );
   },
 );
 
-DayBottomSheet.displayName = "DayBottomSheet";
-
-export default memo(DayBottomSheet);
+SelectBottomSheet.displayName = "SelectBottomSheet";
+export default memo(SelectBottomSheet);

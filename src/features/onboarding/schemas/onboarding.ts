@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { size, z } from "zod";
 
-export const onboardingSchema = z.object({
+export const identitySchema = z.object({
   avatarUri: z.string().optional(),
   dogName: z.string().min(2, "Dog name must be at least 2 characters"),
   username: z
@@ -14,9 +14,9 @@ export const onboardingSchema = z.object({
   // gotchaday: z.string().min(1, "Gotcha Day is required"),
 });
 
-export type OnboardingFormValues = z.infer<typeof onboardingSchema>;
+export type identityFormValues = z.infer<typeof identitySchema>;
 
-export const onboardingDefaultValues: OnboardingFormValues = {
+export const identityDefaultValues: identityFormValues = {
   avatarUri: undefined,
   dogName: "",
   username: "",
@@ -24,4 +24,22 @@ export const onboardingDefaultValues: OnboardingFormValues = {
   secondaryBreed: "",
   birthday: "",
   gotchaday: "",
+};
+
+export const tellUsAboutSchema = z.object({
+  age: z.string(),
+  size: z.string(),
+  foodType: z.string(),
+  vibe: z.string(),
+  home: z.string(),
+});
+
+export type tellUsAboutFormValues = z.infer<typeof tellUsAboutSchema>;
+
+export const tellUsAboutDefaultValues: tellUsAboutFormValues = {
+  age: "",
+  size: "",
+  foodType: "",
+  vibe: "",
+  home: "",
 };

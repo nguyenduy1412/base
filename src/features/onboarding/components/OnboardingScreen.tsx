@@ -39,6 +39,7 @@ const OnboardingScreen = ({
           </View>
         }
       />
+      <View className="h-3"></View>
 
       <OnboardingProgress currentStep={currentStep} totalSteps={totalSteps} />
 

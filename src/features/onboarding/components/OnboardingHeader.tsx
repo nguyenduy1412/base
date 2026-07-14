@@ -33,7 +33,7 @@ const OnboardingHeader = ({
           activeOpacity={0.85}
           onPress={handleNavigationBack}
           className="h-9 w-9 rounded-full px-0 py-0 "
-          color="background"
+          color="white"
         >
           <ArrowLeftIcon
             size={24}

@@ -1,4 +1,4 @@
-import { BREEDS, type BreedItem } from "../constants/breeds";
+import { BreedItem, BREEDS } from "../constants/onboarding";
 
 export const getBreeds = async (): Promise<BreedItem[]> => {
   return BREEDS;
