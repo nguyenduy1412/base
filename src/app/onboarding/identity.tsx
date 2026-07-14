@@ -30,7 +30,7 @@ export default function OnboardingIdentityScreen() {
 
   const {
     control,
-    formState: { errors, isValid },
+    formState: { errors },
     handleSubmit,
     setValue,
     watch,

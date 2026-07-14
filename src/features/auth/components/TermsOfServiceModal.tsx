@@ -19,7 +19,6 @@ const TermsOfServiceModal = ({
   isVisible,
   onClose,
 }: TermsOfServiceModalProps) => {
-
   return (
     <Modal
       visible={isVisible}
@@ -37,9 +36,7 @@ const TermsOfServiceModal = ({
 
         <View className="rounded-[24px] pb-10 bg-background shadow-md overflow-hidden max-h-[78%]">
           <View className="px-6 pt-7 pb-4">
-            <Text variant="body24Semibold">
-              {t`Terms of Service`}
-            </Text>
+            <Text variant="body24Semibold">{t`Terms of Service`}</Text>
             <Text variant="body12Regular" className="text-text-secondary mt-1">
               {t`Last Updated: 08/07/2026`}
             </Text>

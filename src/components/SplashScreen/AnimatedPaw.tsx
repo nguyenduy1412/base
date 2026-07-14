@@ -1,6 +1,4 @@
 import Icon from "@/assets/svg/Icon";
-import MaskedView from "@react-native-masked-view/masked-view";
-import { LinearGradient } from "expo-linear-gradient";
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, {
@@ -12,7 +10,6 @@ import Animated, {
 } from "react-native-reanimated";
 
 const PAW_EASING = Easing.bezier(0.22, 0.61, 0.36, 1);
-const FEATHER = 0.35;
 
 export type AnimatedPawProps = {
   width: number;
@@ -37,7 +34,6 @@ const AnimatedPaw = ({
 }: AnimatedPawProps) => {
   const progress = useSharedValue(0);
   const box = Math.ceil(Math.sqrt(width * width + height * height));
-  const revealFull = box / (1 - FEATHER);
 
   useEffect(() => {
     progress.value = withDelay(
@@ -50,7 +46,7 @@ const AnimatedPaw = ({
   }, [delay, duration, progress]);
 
   const revealStyle = useAnimatedStyle(() => ({
-    height: Math.max(revealFull * progress.value, 1),
+    height: Math.max(box * progress.value, 1),
   }));
 
   return (
@@ -65,34 +61,23 @@ const AnimatedPaw = ({
         },
       ]}
     >
-      <Animated.View style={[{ width: box }, revealStyle]}>
-        <MaskedView
-          style={styles.mask}
-          maskElement={
-            <LinearGradient
-              colors={["#FFFFFF", "#FFFFFF", "transparent"]}
-              locations={[0, 1 - FEATHER, 1]}
-              style={styles.mask}
+      <Animated.View style={[styles.reveal, { width: box }, revealStyle]}>
+        <View style={[styles.pawContent, { width: box, height: box }]}>
+          <View
+            style={{
+              width,
+              height,
+              transform: [{ rotate: `${-rotate}deg` }],
+            }}
+          >
+            <Icon
+              name="paw"
+              width={width}
+              height={height}
+              colorClassName="accent-white"
             />
-          }
-        >
-          <View style={[styles.pawContent, { width: box, height: box }]}>
-            <View
-              style={{
-                width,
-                height,
-                transform: [{ rotate: `${-rotate}deg` }],
-              }}
-            >
-              <Icon
-                name="paw"
-                width={width}
-                height={height}
-                colorClassName="accent-white"
-              />
-            </View>
           </View>
-        </MaskedView>
+        </View>
       </Animated.View>
     </View>
   );
@@ -105,12 +90,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     overflow: "hidden",
   },
+  reveal: {
+    overflow: "hidden",
+  },
   pawContent: {
     alignItems: "center",
     justifyContent: "center",
-  },
-  mask: {
-    flex: 1,
-    width: "100%",
   },
 });

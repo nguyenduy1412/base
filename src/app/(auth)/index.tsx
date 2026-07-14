@@ -6,7 +6,12 @@ import SignInFormComponent from "@/features/auth/components/SignInFormComponent"
 import SignUpFormComponent from "@/features/auth/components/SignUpFormComponent";
 import { t } from "@lingui/core/macro";
 import { useState } from "react";
-import { LayoutChangeEvent, View } from "react-native";
+import {
+  Keyboard,
+  LayoutChangeEvent,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -77,54 +82,56 @@ const AuthScreen = () => {
   }));
 
   return (
-    <View className="flex-1 bg-background">
-      <View className="absolute inset-x-0 top-0 h-1/2 w-full">
-        <ImageComponent
-          source={BACKGROUND_RUN}
-          className="h-full w-full"
-          contentFit="cover"
-          contentPosition="top"
-        />
-        <View className="absolute pt-25 px-5">
-          <Text className="text-white text-3xl font-bold">
-            {t`Welcome to Dogspotting`}
-          </Text>
-          <Text
-            variant="body14Regular"
-            className="text-white leading-[14.4px] mt-4"
-          >
-            {t`Log in your account to continue`}
-          </Text>
-        </View>
-      </View>
-
-      <View className="absolute inset-x-0 top-68 bottom-0 px-5 pb-8">
-        <View className="rounded-[20px] py-7 px-5 bg-background shadow-md">
-          <View className="absolute -top-31.25 right-0">
-            <AnimatedCorgi size={135} lookX={lookX} lookY={lookY} />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View className="flex-1 bg-background">
+        <View className="absolute inset-x-0 top-0 h-1/2 w-full">
+          <ImageComponent
+            source={BACKGROUND_RUN}
+            className="h-full w-full"
+            contentFit="cover"
+            contentPosition="top"
+          />
+          <View className="absolute pt-25 px-5">
+            <Text className="text-white text-3xl font-bold">
+              {t`Welcome to Dogspotting`}
+            </Text>
+            <Text
+              variant="body14Regular"
+              className="text-white leading-[14.4px] mt-4"
+            >
+              {t`Log in your account to continue`}
+            </Text>
           </View>
-          <Animated.View style={containerStyle}>
-            <View onLayout={handleContentLayout}>
-              {form === "sign-in" ? (
-                <SignInFormComponent
-                  onNextForm={handleNextForm}
-                  onInputFocus={handleInputFocus}
-                  onInputBlur={handleInputBlur}
-                  onInputChange={handleInputChange}
-                />
-              ) : (
-                <SignUpFormComponent
-                  onNextForm={handleNextForm}
-                  onInputFocus={handleInputFocus}
-                  onInputBlur={handleInputBlur}
-                  onInputChange={handleInputChange}
-                />
-              )}
+        </View>
+
+        <View className="absolute inset-x-0 top-68 bottom-0 px-5 pb-8">
+          <View className="rounded-[20px] py-7 px-5 bg-background shadow-md">
+            <View className="absolute -top-31.25 right-0">
+              <AnimatedCorgi size={135} lookX={lookX} lookY={lookY} />
             </View>
-          </Animated.View>
+            <Animated.View style={containerStyle}>
+              <View onLayout={handleContentLayout}>
+                {form === "sign-in" ? (
+                  <SignInFormComponent
+                    onNextForm={handleNextForm}
+                    onInputFocus={handleInputFocus}
+                    onInputBlur={handleInputBlur}
+                    onInputChange={handleInputChange}
+                  />
+                ) : (
+                  <SignUpFormComponent
+                    onNextForm={handleNextForm}
+                    onInputFocus={handleInputFocus}
+                    onInputBlur={handleInputBlur}
+                    onInputChange={handleInputChange}
+                  />
+                )}
+              </View>
+            </Animated.View>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 

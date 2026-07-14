@@ -33,7 +33,7 @@ SplashScreen.preventAutoHideAsync();
 const optionStack = {
   headerShown: false,
   animation: "fade",
-}as const;
+} as const;
 const RootLayout = () => {
   const colorScheme = useSelector(theme$.mode);
 
@@ -62,24 +62,15 @@ const RootLayout = () => {
               >
                 <PortalProvider>
                   <KeyboardProvider>
-                  <StatusBar style="light" />
+                    <StatusBar style="light" />
                     <BottomSheetModalProvider>
                       <Stack
                         screenOptions={optionStack}
                         initialRouteName="index"
                       >
-                        <Stack.Screen
-                          name="index"
-                          options={optionStack}
-                        />
-                        <Stack.Screen
-                          name="(auth)"
-                          options={optionStack}
-                        />
-                        <Stack.Screen
-                          name="(tabs)"
-                          options={optionStack}
-                        />
+                        <Stack.Screen name="index" options={optionStack} />
+                        <Stack.Screen name="(auth)" options={optionStack} />
+                        <Stack.Screen name="(tabs)" options={optionStack} />
                         <Stack.Screen
                           name="onboarding/identity"
                           options={optionStack}

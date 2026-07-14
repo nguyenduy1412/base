@@ -22,7 +22,4 @@ export const signUpSchema = (translate: I18n["_"]) =>
   });
 
 export type SignInFormValues = z.infer<ReturnType<typeof signInSchema>>;
-export type SignUpFormValues = z.infer<
-  ReturnType<typeof signUpSchema>
->;
-
+export type SignUpFormValues = z.infer<ReturnType<typeof signUpSchema>>;

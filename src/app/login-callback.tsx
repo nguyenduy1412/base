@@ -1,70 +1,33 @@
-import { Text } from "@/components/Text";
-import { supabase } from "@/lib/supabase";
-import * as QueryParams from "expo-auth-session/build/QueryParams";
+import { ROUTE_GROUPS } from "@/constants/routes";
+import { useAuthCallback } from "@/features/auth/hooks/useAuthCallback";
+import { auth$ } from "@/store/auth";
 import * as Linking from "expo-linking";
 import { router } from "expo-router";
-import { useCallback, useEffect, useRef } from "react";
-import { ActivityIndicator, Alert, Linking as NativeLinking, View } from "react-native";
+import { useEffect, useRef } from "react";
+import { Alert, View } from "react-native";
 
 export default function LoginCallback() {
   const url = Linking.useLinkingURL();
   const handledUrls = useRef(new Set<string>());
-
-  const createSessionFromUrl = useCallback(async (callbackUrl: string | null) => {
-    const isAuthCallback = callbackUrl?.startsWith("base://login-callback");
-    if (!callbackUrl || !isAuthCallback || handledUrls.current.has(callbackUrl)) return;
-    handledUrls.current.add(callbackUrl);
-
-    try {
-      const { params, errorCode } = QueryParams.getQueryParams(callbackUrl);
-      if (errorCode) throw new Error(params.error_description ?? errorCode);
-
-      const { access_token, refresh_token, code } = params;
-
-      if (access_token && refresh_token) {
-        const { error } = await supabase.auth.setSession({
-          access_token,
-          refresh_token,
-        });
-        if (error) throw error;
-      } else if (code) {
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
-        if (error) throw error;
-      } else {
-        throw new Error("No authentication token was found in the callback URL.");
-      }
-
-      router.replace("/(tabs)");
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Unable to complete login.";
-      Alert.alert("Login failed", message);
-      router.replace("/(auth)");
-    }
-  }, []);
+  const { mutateAsync: createSession } = useAuthCallback();
 
   useEffect(() => {
-    void createSessionFromUrl(url);
-  }, [createSessionFromUrl, url]);
+    if (!url || handledUrls.current.has(url)) return;
+    handledUrls.current.add(url);
 
-  useEffect(() => {
-    const readInitialUrl = async () => {
-      const initialUrl = await NativeLinking.getInitialURL();
-      await createSessionFromUrl(initialUrl);
-    };
+    createSession(url)
+      .then(() => {
+        router.replace(
+          auth$.user.get()?.id ? ROUTE_GROUPS.TABS : ROUTE_GROUPS.AUTH,
+        );
+      })
+      .catch((error) => {
+        const message =
+          error instanceof Error ? error.message : "Unable to complete login.";
+        Alert.alert("Login failed", message);
+        router.replace(ROUTE_GROUPS.AUTH);
+      });
+  }, [createSession, url]);
 
-    void readInitialUrl();
-
-    const subscription = NativeLinking.addEventListener("url", ({ url: incomingUrl }) => {
-      void createSessionFromUrl(incomingUrl);
-    });
-
-    return () => subscription.remove();
-  }, [createSessionFromUrl]);
-
-  return (
-    <View className="flex-1 items-center justify-center gap-3 bg-background">
-      <ActivityIndicator size="large" />
-      <Text variant="body14Regular">Signing you in...</Text>
-    </View>
-  );
+  return <View className="flex-1 items-center justify-center bg-primary" />;
 }

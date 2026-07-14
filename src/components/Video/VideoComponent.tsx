@@ -129,8 +129,7 @@ const FocusedVideoComponent = ({
   const pauseVideo = useCallback(() => {
     try {
       player.pause();
-    } catch {
-    }
+    } catch {}
   }, [player]);
 
   useFocusEffect(

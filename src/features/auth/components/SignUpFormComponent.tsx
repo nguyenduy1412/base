@@ -14,6 +14,11 @@ import { useRegister } from "../hooks/useRegister";
 import TermsOfServiceModal from "./TermsOfServiceModal";
 import { router } from "expo-router";
 import { AUTH_ROUTES } from "@/constants/routes";
+import CheckBox from "@/components/CheckBox";
+import { useGoogleLogin } from "../hooks/useGoogleLogin";
+import { withUniwind } from "uniwind";
+
+const ErrorIcon = withUniwind(TriangleAlert);
 
 type props = {
   onNextForm: () => void;
@@ -21,6 +26,7 @@ type props = {
   onInputBlur?: () => void;
   onInputChange?: (text: string) => void;
 };
+
 const SignUpFormComponent = ({
   onNextForm,
   onInputFocus,
@@ -29,6 +35,7 @@ const SignUpFormComponent = ({
 }: props) => {
   const { _ } = useLingui();
   const schema = useMemo(() => signUpSchema(_), [_]);
+  const [isCheckBoxSelected, setIsCheckBoxSelected] = useState(true);
   const {
     control,
     handleSubmit,
@@ -38,24 +45,61 @@ const SignUpFormComponent = ({
     defaultValues: defaultSignUpValues,
   });
   const { mutateAsync: register, isPending } = useRegister();
-  const [isTermsOfServiceModalVisible, setIsTermsOfServiceModalVisible] = useState(false);
+  const { mutateAsync: googleLogin, isPending: googleLoginLoading } =
+    useGoogleLogin();
+  const [isTermsOfServiceModalVisible, setIsTermsOfServiceModalVisible] =
+    useState(false);
+
   const onSignUp = useCallback(
     async (data: SignUpFormValues) => {
-      const respose = await register(data);
-      console.log("response", respose);
-      router.push({
+      await register(data);
+      router.navigate({
         pathname: AUTH_ROUTES.VERIFY_EMAIL,
         params: { email: data.email, name: data.name },
       });
     },
     [register],
   );
+
+  const handleSignUpWithGoogle = useCallback(async () => {
+    await googleLogin();
+  }, [googleLogin]);
+
+  const handleCheckBox = useCallback(() => {
+    setIsCheckBoxSelected((prev) => !prev);
+  }, []);
+
   const handleShowTermsOfServiceModal = useCallback(() => {
     setIsTermsOfServiceModalVisible(true);
   }, []);
+
   const handleHideTermsOfServiceModal = useCallback(() => {
     setIsTermsOfServiceModalVisible(false);
   }, []);
+
+  const handleInputFocus = useCallback(
+    (value: string) => () => {
+      onInputFocus?.(value);
+    },
+    [onInputFocus],
+  );
+
+  const handleInputBlur = useCallback(
+    (onBlur: () => void) => () => {
+      onBlur();
+      onInputBlur?.();
+    },
+    [onInputBlur],
+  );
+
+  const handleInputChange = useCallback(
+    (onChange: (text: string) => void) => (text: string) => {
+      onChange(text);
+      onInputChange?.(text);
+    },
+    [onInputChange],
+  );
+
   return (
     <View>
       <View className="gap-4">
@@ -65,19 +109,13 @@ const SignUpFormComponent = ({
           render={({ field: { onChange, onBlur, value } }) => (
             <TextInput
               value={value}
-              onChangeText={(text) => {
-                onChange(text);
-                onInputChange?.(text);
-              }}
-              onFocus={() => onInputFocus?.(value)}
-              onBlur={() => {
-                onBlur();
-                onInputBlur?.();
-              }}
+              onChangeText={handleInputChange(onChange)}
+              onFocus={handleInputFocus(value)}
+              onBlur={handleInputBlur(onBlur)}
               label={t`Name`}
               placeholder={t`Enter your name`}
               error={errors.name?.message}
-              iconError={<TriangleAlert color="red" size={16} />}
+              iconError={<ErrorIcon colorClassName="accent-error" size={16} />}
             />
           )}
         />
@@ -88,60 +126,66 @@ const SignUpFormComponent = ({
             <TextInput
               value={value}
               type="email"
-              onChangeText={(text) => {
-                onChange(text);
-                onInputChange?.(text);
-              }}
-              onFocus={() => onInputFocus?.(value)}
-              onBlur={() => {
-                onBlur();
-                onInputBlur?.();
-              }}
+              onChangeText={handleInputChange(onChange)}
+              onFocus={handleInputFocus(value)}
+              onBlur={handleInputBlur(onBlur)}
               label={t`Email`}
               placeholder={t`Enter your email`}
               error={errors.email?.message}
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="email-address"
-              iconError={<TriangleAlert color="red" size={16} />}
+              iconError={<ErrorIcon colorClassName="accent-error" size={16} />}
             />
           )}
         />
       </View>
-      <View className="pt-5 flex-row items-start gap-3">
-        <View className="w-4 h-4 bg-primary" />
-        <Text onPress={handleShowTermsOfServiceModal} className="flex-1 shrink">
+      <View className="flex-row items-start gap-3 pt-5">
+        <CheckBox isSelected={isCheckBoxSelected} onPress={handleCheckBox} />
+        <Text
+          onPress={handleShowTermsOfServiceModal}
+          className="min-w-0 flex-1 shrink"
+        >
           <Text variant="body12Regular">{t`I am at least 13 years old and agree to the`}</Text>
-          <Text variant="body12Regular" className="text-yellow">{t` Termsof Service`}</Text>
+          <Text
+            variant="body12Regular"
+            className="text-yellow"
+          >{t` Termsof Service`}</Text>
           <Text variant="body12Regular">{t` and`}</Text>
-          <Text variant="body12Semibold" className="text-yellow">{t` Privacy Policy`}</Text>
+          <Text
+            variant="body12Semibold"
+            className="text-yellow"
+          >{t` Privacy Policy`}</Text>
         </Text>
       </View>
       <Button
         title={t`Continue`}
-        className="w-full rounded-[12px] mt-5 h-12"
+        className="mt-5 h-12 w-full rounded-[12px]"
         isLoading={isPending}
+        disabled={!isCheckBoxSelected}
         onPress={handleSubmit(onSignUp)}
       />
-      <View className="h-4.5 w-full items-center mt-5 justify-center">
-        <View className="bg-placeholder h-0.25 w-full" />
-        <View className="absolute px-5 bg-background">
+      <View className="mt-5 h-4.5 w-full items-center justify-center">
+        <View className="h-0.25 w-full bg-placeholder" />
+        <View className="absolute bg-background px-5">
           <Text variant="body14Regular">{t`Or sign in with`}</Text>
         </View>
       </View>
       <Button
-        className="w-full rounded-[12px] mt-5 h-12 border border-placeholder"
-        onPress={() => {}}
+        className="mt-5 h-12 w-full rounded-[12px] border border-placeholder"
+        onPress={handleSignUpWithGoogle}
         color="background"
         isShadow={false}
+        disabled={!isCheckBoxSelected}
+        isLoading={googleLoginLoading}
       >
-        <View className="gap-2 flex-row">
+        <View className="flex-row gap-2">
           <Icon name="google" size={20} />
           <Text variant="body14Regular">{t`Continue with Google`}</Text>
         </View>
       </Button>
 
-      <Pressable onPress={onNextForm} className="pt-16 items-center">
+      <Pressable onPress={onNextForm} className="items-center pt-16">
         <Text>
           <Text variant="body12Regular">{t`Already have an account?`}</Text>
           <Text variant="body12Semibold" className="text-yellow">
@@ -149,7 +193,10 @@ const SignUpFormComponent = ({
           </Text>
         </Text>
       </Pressable>
-      <TermsOfServiceModal isVisible={isTermsOfServiceModalVisible} onClose={handleHideTermsOfServiceModal} />
+      <TermsOfServiceModal
+        isVisible={isTermsOfServiceModalVisible}
+        onClose={handleHideTermsOfServiceModal}
+      />
     </View>
   );
 };

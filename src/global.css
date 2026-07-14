@@ -93,6 +93,7 @@
       --color-text-field-inner-highlight-transparent: rgba(255, 255, 255, 0);
       --color-yellow: #f2a415;
       --color-purple: #bc48f2;
+      --color-otp-muted: #f2f3f2;
       --color-modal-background: #ffffff;
       --color-modal-text-secondary: #49504d;
     }
@@ -155,6 +156,7 @@
       --color-text-field-inner-highlight-transparent: rgba(255, 255, 255, 0);
       --color-yellow: #f2a415;
       --color-purple: #bc48f2;
+      --color-otp-muted: #2a2a2a;
       --color-modal-background: #181818;
       --color-modal-text-secondary: #999898;
     }

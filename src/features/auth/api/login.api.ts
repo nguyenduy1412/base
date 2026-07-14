@@ -7,6 +7,7 @@ export const login = async (data: SignInFormValues) => {
     email: data.email,
     options: {
       emailRedirectTo: AUTH_REDIRECT_URL,
+      shouldCreateUser: false,
     },
   });
 

@@ -9,12 +9,15 @@ import Icon from "@/assets/svg/Icon";
 import { TriangleAlert } from "lucide-react-native";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useLingui } from "@lingui/react";
-import { useLogin } from "../hooks/useLogin";
+import { getLoginErrorMessage, useLogin } from "../hooks/useLogin";
 import { defaultSignInValues, SignInFormValues, signInSchema } from "../types";
 import CheckBox from "@/components/CheckBox";
 import { router } from "expo-router";
 import { AUTH_ROUTES } from "@/constants/routes";
 import { useGoogleLogin } from "../hooks/useGoogleLogin";
+import { withUniwind } from "uniwind";
+
+const ErrorIcon = withUniwind(TriangleAlert);
 
 type props = {
   onNextForm: () => void;
@@ -22,6 +25,7 @@ type props = {
   onInputBlur?: () => void;
   onInputChange?: (text: string) => void;
 };
+
 const SignInFormComponent = ({
   onNextForm,
   onInputFocus,
@@ -36,6 +40,7 @@ const SignInFormComponent = ({
   const {
     control,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm<SignInFormValues>({
     resolver: zodResolver(schema),
@@ -45,13 +50,19 @@ const SignInFormComponent = ({
 
   const onSignIn = useCallback(
     async (data: SignInFormValues) => {
-      await login(data);
-      router.push({
-        pathname: AUTH_ROUTES.CHECK_YOUR_EMAIL,
-        params: { email: data.email },
-      });
+      try {
+        await login(data);
+        router.navigate({
+          pathname: AUTH_ROUTES.CHECK_YOUR_EMAIL,
+          params: { email: data.email },
+        });
+      } catch (error) {
+        setError("email", {
+          message: getLoginErrorMessage(error),
+        });
+      }
     },
-    [login],
+    [login, setError],
   );
 
   const handleSignInWithGoogle = useCallback(async () => {
@@ -62,6 +73,29 @@ const SignInFormComponent = ({
     setIsCheckBoxSelected((prev) => !prev);
   }, []);
 
+  const handleEmailFocus = useCallback(
+    (value: string) => () => {
+      onInputFocus?.(value);
+    },
+    [onInputFocus],
+  );
+
+  const handleEmailBlur = useCallback(
+    (onBlur: () => void) => () => {
+      onBlur();
+      onInputBlur?.();
+    },
+    [onInputBlur],
+  );
+
+  const handleEmailChange = useCallback(
+    (onChange: (text: string) => void) => (text: string) => {
+      onChange(text);
+      onInputChange?.(text);
+    },
+    [onInputChange],
+  );
+
   return (
     <View>
       <Controller
@@ -70,53 +104,54 @@ const SignInFormComponent = ({
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             value={value}
-            onChangeText={(text) => {
-              onChange(text);
-              onInputChange?.(text);
-            }}
-            onFocus={() => onInputFocus?.(value)}
-            onBlur={() => {
-              onBlur();
-              onInputBlur?.();
-            }}
+            type="email"
+            onChangeText={handleEmailChange(onChange)}
+            onFocus={handleEmailFocus(value)}
+            onBlur={handleEmailBlur(onBlur)}
             label={t`Email`}
             placeholder={t`Enter your email`}
             error={errors.email?.message}
-            iconError={<TriangleAlert color="red" size={16} />}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="email-address"
+            iconError={<ErrorIcon colorClassName="accent-error" size={16} />}
           />
         )}
       />
 
       <Button
         title={t`Sign in`}
-        className="w-full rounded-[12px] mt-5"
+        className="mt-5 w-full rounded-[12px]"
         isLoading={isPending}
+        disabled={!isCheckBoxSelected}
         onPress={handleSubmit(onSignIn)}
       />
-      <View className="h-4.5 w-full items-center mt-5 justify-center">
-        <View className="bg-placeholder h-0.25 w-full" />
-        <View className="absolute px-5 bg-background">
+      <View className="mt-5 h-4.5 w-full items-center justify-center">
+        <View className="h-0.25 w-full bg-placeholder" />
+        <View className="absolute bg-background px-5">
           <Text variant="body14Regular">{t`Or`}</Text>
         </View>
       </View>
       <Button
-        className="w-full rounded-xl mt-5 border border-placeholder"
+        className="mt-5 w-full rounded-xl border border-placeholder"
         onPress={handleSignInWithGoogle}
         color="background"
         isShadow={false}
+        disabled={!isCheckBoxSelected}
+        isLoading={googleLoginLoading}
       >
-        <View className="gap-2 flex-row">
+        <View className="flex-row gap-2">
           <Icon name="google" size={20} />
           <Text variant="body14Regular">{t`Continue with Google`}</Text>
         </View>
       </Button>
-      <View className="pt-5 flex-row items-start gap-3">
+      <View className="flex-row items-start gap-3 pt-5">
         <CheckBox isSelected={isCheckBoxSelected} onPress={handleCheckBox} />
-        <Text variant="body12Regular" className="flex-1 shrink">
+        <Text variant="body12Regular" className="min-w-0 flex-1 shrink">
           {t`I confirm I am 13 years of age or older (16+ if located in the EU or UK).`}
         </Text>
       </View>
-      <Pressable onPress={onNextForm} className="pt-16 items-center">
+      <Pressable onPress={onNextForm} className="items-center pt-16">
         <Text>
           <Text variant="body12Regular">{t`Don't have an account?`}</Text>
           <Text variant="body12Regular" className="text-yellow">

@@ -17,12 +17,16 @@ const inputTypeConfig: Record<
     keyboardType?: KeyboardTypeOptions;
     autoComplete?: any;
     textContentType?: any;
+    autoCapitalize?: "none" | "sentences" | "words" | "characters";
+    autoCorrect?: boolean;
   }
 > = {
   email: {
     keyboardType: "email-address",
     autoComplete: "email",
     textContentType: "emailAddress",
+    autoCapitalize: "none",
+    autoCorrect: false,
   },
   phone: {
     keyboardType: "phone-pad",
@@ -80,6 +84,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       keyboardType,
       autoComplete,
       textContentType,
+      autoCapitalize,
+      autoCorrect,
       iconError,
       ...props
     },
@@ -133,6 +139,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
     const resolvedKeyboardType = keyboardType ?? config?.keyboardType;
     const resolvedAutoComplete = autoComplete ?? config?.autoComplete;
     const resolvedTextContentType = textContentType ?? config?.textContentType;
+    const resolvedAutoCapitalize = autoCapitalize ?? config?.autoCapitalize;
+    const resolvedAutoCorrect = autoCorrect ?? config?.autoCorrect;
     const resolvedSecureTextEntry =
       type === "password" ? isSecure : secureTextEntry;
 
@@ -185,6 +193,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
             keyboardType={resolvedKeyboardType}
             autoComplete={resolvedAutoComplete}
             textContentType={resolvedTextContentType}
+            autoCapitalize={resolvedAutoCapitalize}
+            autoCorrect={resolvedAutoCorrect}
             secureTextEntry={resolvedSecureTextEntry}
             {...props}
           />
