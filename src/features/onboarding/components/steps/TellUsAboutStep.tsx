@@ -1,15 +1,14 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ChevronDown } from "lucide-react-native";
-import { Controller, useForm } from "react-hook-form";
-import { Pressable, View } from "react-native";
-import Tooltip, { Placement } from "react-native-tooltip-2";
-import { t } from "@lingui/core/macro";
-import Text from "@/components/Text";
+import { SelectBottomSheet } from "@/components/BottomSheet/SelectBottomSheet";
+import { Text } from "@/components/Text";
 import OnboardingScreen from "@/features/onboarding/components/OnboardingScreen";
 import OnboardingSelectField from "@/features/onboarding/components/OnboardingSelectField";
-import { SelectBottomSheet } from "@/components/BottomSheet/SelectBottomSheet";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { t } from "@lingui/core/macro";
+import { ChevronDown } from "lucide-react-native";
+import { Controller, useForm } from "react-hook-form";
+import { View } from "react-native";
 
 import {
   AGES,
@@ -24,11 +23,11 @@ import {
   tellUsAboutSchema,
 } from "@/features/onboarding/schemas/onboarding";
 import { useOnboardingStore } from "@/store/onboardingStore";
-import OnboardingFooter from "../OnboardingFooter";
 import {
   FieldConfig,
   useSharedBottomSheet,
 } from "../../hooks/useSharedBottomSheet";
+import OnboardingFooter from "../OnboardingFooter";
 
 export interface TellUsAboutStepProps {
   onBack?: () => void;
@@ -44,13 +43,12 @@ const FIELD_CONFIGS: FieldConfig<tellUsAboutFormValues>[] = [
 ];
 
 const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
-  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
   const tellUsAbout = useOnboardingStore((state) => state.tellUsAbout);
   const setTellUsAbout = useOnboardingStore((state) => state.setTellUsAbout);
 
   const {
     control,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
     setValue,
   } = useForm<tellUsAboutFormValues>({
@@ -82,7 +80,7 @@ const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
       onBack={onBack}
       footer={
         <OnboardingFooter
-          // disabled={!isValid}
+          disabled={!isValid}
           onPress={handleSubmit(onSubmit)}
         />
       }
@@ -90,41 +88,12 @@ const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
       <View className="gap-5 flex-1">
         <View className="h-0" />
 
-        <Tooltip
-          isVisible={isTooltipVisible}
-          onClose={() => setIsTooltipVisible(false)}
-          placement={Placement.TOP}
-          backgroundColor="transparent"
-          disableShadow
-          arrowSize={{ width: 28, height: 14 }}
-          childContentSpacing={6}
-          contentStyle={{
-            backgroundColor: "#72B7BA",
-            borderColor: "#FFFFFF",
-            borderRadius: 22,
-            borderWidth: 3,
-            paddingHorizontal: 28,
-            paddingVertical: 14,
-          }}
-          content={
-            <Text variant="body16Regular" className="text-white">
-              Personalise rewards and alerts
-            </Text>
-          }
+        <Text
+          variant="body32Semibold"
+          className="mb-2 font-serif text-[32px] leading-9.5 text-text-heading"
         >
-          <Pressable
-            accessibilityRole="button"
-            accessibilityLabel="Show information about Bella"
-            onPress={() => setIsTooltipVisible((visible) => !visible)}
-          >
-            <Text
-              variant="body32Semibold"
-              className="mb-2 font-serif text-[32px] leading-9.5 text-text-heading"
-            >
-              Tell us about Bella
-            </Text>
-          </Pressable>
-        </Tooltip>
+          {t`Tell us about Bella`}
+        </Text>
 
         <Controller
           control={control}
@@ -133,8 +102,10 @@ const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
           render={() => (
             <OnboardingSelectField
               required
+              requireInformation
+              tooltipContent={t`Match with similar dogs nearby`}
               label={t`Age`}
-              placeholder="Select age"
+              placeholder={t`Select age`}
               value={getSelectedLabel("age")}
               error={errors.age?.message}
               onPress={() => openSheet("age")}
@@ -149,8 +120,10 @@ const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
           render={() => (
             <OnboardingSelectField
               required
-              label="Size"
-              placeholder="Select size"
+              requireInformation
+              tooltipContent={t`Recommend parks and events`}
+              label={t`Size`}
+              placeholder={t`Select size`}
               value={getSelectedLabel("size")}
               error={errors.size?.message}
               onPress={() => openSheet("size")}
@@ -158,15 +131,17 @@ const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
             />
           )}
         />
-
+        {/*  */}
         <Controller
           control={control}
           name="foodType"
           render={() => (
             <OnboardingSelectField
               required
-              label="Food Type"
-              placeholder="Select food type"
+              requireInformation
+              tooltipContent={t`Personalise rewards and alerts`}
+              label={t`Food Type`}
+              placeholder={t`Select food type`}
               value={getSelectedLabel("foodType")}
               error={errors.foodType?.message}
               onPress={() => openSheet("foodType")}
@@ -181,8 +156,10 @@ const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
           render={() => (
             <OnboardingSelectField
               required
-              label="Vibe"
-              placeholder="Select vibe"
+              requireInformation
+              tooltipContent={t`Match compatible dogs`}
+              label={t`Vibe`}
+              placeholder={t`Select vibe`}
               value={getSelectedLabel("vibe")}
               error={errors.vibe?.message}
               onPress={() => openSheet("vibe")}
@@ -197,8 +174,10 @@ const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
           render={() => (
             <OnboardingSelectField
               required
-              label="Home"
-              placeholder="Select home"
+              requireInformation
+              tooltipContent={t`Show relevant content`}
+              label={t`Home`}
+              placeholder={t`Select home`}
               value={getSelectedLabel("home")}
               error={errors.home?.message}
               onPress={() => openSheet("home")}

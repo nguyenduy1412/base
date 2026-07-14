@@ -1,5 +1,3 @@
-import Icon from "@/assets/svg/Icon";
-import { Text } from "@/components/Text";
 import { memo, ReactNode } from "react";
 import { View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
@@ -32,12 +30,12 @@ const OnboardingScreen = ({
         currentStep={currentStep}
         totalSteps={totalSteps}
         canGoBack={canGoBack}
-        rightElement={
-          <View className="flex-row gap-2 justify-center items-center">
-            <Icon name={"PointIcon"} />
-            <Text variant="body14Semibold">{`${ptsValue} pts`}</Text>
-          </View>
-        }
+        // rightElement={
+        //   <View className="flex-row gap-2 justify-center items-center">
+        //     <Icon name={"PointIcon"} />
+        //     <Text variant="body14Semibold">{`${ptsValue} pts`}</Text>
+        //   </View>
+        // }
       />
       <View className="h-3"></View>
 

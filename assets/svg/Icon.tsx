@@ -7,6 +7,7 @@ import GoogleIcon from "./google.svg";
 import Icondogs from "./Icondogs.svg";
 import PointIcon from "./PointIcon.svg";
 import Samoyed from "./Samoyed.svg";
+import Infomation from "./Infomation.svg";
 const icons = {
   google: GoogleIcon,
   AlaskanMalamute: AlaskanMalamute,
@@ -15,6 +16,7 @@ const icons = {
   Samoyed: Samoyed,
   PointIcon: PointIcon,
   LabradorRetriever: Icondogs,
+  Infomation: Infomation,
 } satisfies Record<string, ComponentType<SvgProps>>;
 
 export const iconNames = Object.keys(icons) as IconName[];

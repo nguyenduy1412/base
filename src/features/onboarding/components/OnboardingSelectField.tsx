@@ -1,15 +1,18 @@
 import { ReactNode, memo } from "react";
 import { View } from "react-native";
 
+import Icon from "@/assets/svg/Icon";
 import { Button } from "@/components/Button";
 import { Text } from "@/components/Text";
+import Tooltip from "@/components/Tooltip";
 import { cn } from "@/utils/cn";
-
 export interface OnboardingSelectFieldProps {
   label: string;
+  tooltipContent?: string;
   placeholder: string;
   value?: string;
   required?: boolean;
+  requireInformation?: boolean;
   error?: string;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
@@ -23,9 +26,11 @@ export interface OnboardingSelectFieldProps {
 
 const OnboardingSelectField = ({
   label,
+  tooltipContent = "",
   placeholder,
   value,
   required,
+  requireInformation = false,
   error,
   leftIcon,
   rightIcon,
@@ -51,6 +56,16 @@ const OnboardingSelectField = ({
           <Text variant="body13Regular" className="text-error">
             *
           </Text>
+        ) : null}
+        {requireInformation ? (
+          <Tooltip
+            content={tooltipContent}
+            placement="auto"
+            arrowAlignment="auto"
+            accessibilityLabel="Show information about Bella"
+          >
+            <Icon name={"Infomation"} size={16} />
+          </Tooltip>
         ) : null}
       </View>
 

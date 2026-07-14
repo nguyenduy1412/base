@@ -1,4 +1,4 @@
-import { size, z } from "zod";
+import { z } from "zod";
 
 export const identitySchema = z.object({
   avatarUri: z.string().optional(),
@@ -27,11 +27,11 @@ export const identityDefaultValues: identityFormValues = {
 };
 
 export const tellUsAboutSchema = z.object({
-  age: z.string(),
-  size: z.string(),
-  foodType: z.string(),
-  vibe: z.string(),
-  home: z.string(),
+  age: z.string().min(1, "Age is required"),
+  size: z.string().min(1, "Size is required"),
+  foodType: z.string().min(1, "Foodtype is required"),
+  vibe: z.string().min(1, "Vibe is required"),
+  home: z.string().min(1, "Home is required"),
 });
 
 export type tellUsAboutFormValues = z.infer<typeof tellUsAboutSchema>;
