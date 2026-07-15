@@ -6,7 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
 
 import Avatar from "@/components/Avatar";
-import Text from "@/components/Text";
+import { Text } from "@/components/Text";
 import OnboardingScreen from "@/features/onboarding/components/OnboardingScreen";
 import OnboardingSelectField from "@/features/onboarding/components/OnboardingSelectField";
 import OnboardingTextField from "@/features/onboarding/components/OnboardingTextField";
@@ -131,7 +131,7 @@ export default function IdentityStep({
         <View className="h-3" />
 
         <Text
-          variant="body32Semibold"
+          variant="heading32Semibold"
           className="mb-5 font-serif text-[32px] leading-9.5 text-text-heading"
         >
           Time to meet the real star!
@@ -274,7 +274,7 @@ export default function IdentityStep({
         <DayBottomSheet
           ref={gotchadaySheetRef}
           title="Gotcha Day"
-          selectedValue={selectedGotchaday?.value}
+          selectedValue={gotchaday}
           onSelect={handleSelectGotchaday}
           onDone={closeGotchadaySheet}
         />

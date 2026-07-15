@@ -1,6 +1,6 @@
 import { AppBottomSheet } from "@/components/BottomSheet";
-import Text from "@/components/Text";
-import { BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
+import { Text } from "@/components/Text";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { forwardRef, memo } from "react";
 import { View } from "react-native";
 import CheckBox from "@/components/CheckBox";
@@ -29,7 +29,7 @@ const DayBottomSheet = forwardRef<BottomSheetModal, DayBottomSheetProps>(
       <AppBottomSheet ref={ref} enableDynamicSizing={true}>
         <View className="px-5 pb-safe">
           <View className="py-2.5">
-            <Text variant="body32Semibold">{title}</Text>
+            <Text variant="heading32Semibold">{title}</Text>
           </View>
           <View className="h-3" />
 

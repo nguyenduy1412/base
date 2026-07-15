@@ -22,7 +22,6 @@ const OnboardingScreen = ({
   canGoBack,
   onBack,
 }: OnboardingScreenProps) => {
-  const ptsValue = 0;
   const insets = useSafeAreaInsets();
   return (
     <View className={"flex-1 px-5 pt-safe pb-safe bg-background"}>

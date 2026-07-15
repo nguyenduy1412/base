@@ -445,7 +445,7 @@ const Tooltip = ({
       ]}
     >
       {typeof content === "string" ? (
-        <Text variant="body14Regular" style={styles.text}>
+        <Text variant="caption14Regular" style={styles.text}>
           {content}
         </Text>
       ) : (

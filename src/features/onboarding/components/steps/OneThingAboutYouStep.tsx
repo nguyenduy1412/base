@@ -105,12 +105,12 @@ const OneThingAboutYouStep = ({
 
         <View>
           <Text
-            variant="body32Semibold"
+            variant="heading32Regular"
             className="mb-2.5 font-serif text-[32px] leading-9.5 text-text-heading"
           >
             {t`One tiny thing about you`}
           </Text>
-          <Text variant="body14Regular" className="mb-2.5 text-description">
+          <Text variant="caption14Regular" className="mb-2.5 text-description">
             {t`Everything else in Dogspotting belongs to ${identity.dogName}. This is the only question that's about you. `}
           </Text>
         </View>

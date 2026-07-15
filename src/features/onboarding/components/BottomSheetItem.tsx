@@ -1,8 +1,8 @@
-import Button from "@/components/Button";
+import { Button } from "@/components/Button";
 import { memo, ReactNode } from "react";
 import { View } from "react-native";
 
-import Text from "@/components/Text";
+import { Text } from "@/components/Text";
 import { cn } from "@/utils/cn";
 import { Calendar } from "lucide-react-native";
 import type { SelectOption } from "../constants/onboarding";

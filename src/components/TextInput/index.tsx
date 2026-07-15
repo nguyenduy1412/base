@@ -8,21 +8,26 @@ import {
   View,
   type KeyboardTypeOptions,
 } from "react-native";
-import { useCSSVariable } from "uniwind";
+import { useCSSVariable, withUniwind } from "uniwind";
 import { type TextInputProps } from "./types";
-
+const EyeIcon = withUniwind(Eye);
+const EyeOffIcon = withUniwind(EyeOff);
 const inputTypeConfig: Record<
   string,
   {
     keyboardType?: KeyboardTypeOptions;
     autoComplete?: any;
     textContentType?: any;
+    autoCapitalize?: "none" | "sentences" | "words" | "characters";
+    autoCorrect?: boolean;
   }
 > = {
   email: {
     keyboardType: "email-address",
     autoComplete: "email",
     textContentType: "emailAddress",
+    autoCapitalize: "none",
+    autoCorrect: false,
   },
   phone: {
     keyboardType: "phone-pad",
@@ -61,7 +66,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       containerClassName,
       label,
       labelClassName,
-      labelVariant = "body14Medium",
+      labelVariant = "caption14Medium",
       placeholder,
       placeholderTextColorClassName,
       inputContainerClassName,
@@ -80,6 +85,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       keyboardType,
       autoComplete,
       textContentType,
+      autoCapitalize,
+      autoCorrect,
       iconError,
       ...props
     },
@@ -108,7 +115,6 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
       [onBlur],
     );
 
-    const placeholderColor = useCSSVariable("--color-placeholder") as string;
     const iconColor = useCSSVariable("--color-icon") as string;
 
     const showPasswordToggle = type === "password";
@@ -120,9 +126,9 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
         className="p-1"
       >
         {isSecure ? (
-          <EyeOff color={placeholderColor} size={20} />
+          <EyeOffIcon  colorClassName="accent-placeholder" size={20} />
         ) : (
-          <Eye color={placeholderColor} size={20} />
+          <EyeIcon  colorClassName="accent-placeholder" size={20} />
         )}
       </TouchableOpacity>
     ) : (
@@ -133,6 +139,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
     const resolvedKeyboardType = keyboardType ?? config?.keyboardType;
     const resolvedAutoComplete = autoComplete ?? config?.autoComplete;
     const resolvedTextContentType = textContentType ?? config?.textContentType;
+    const resolvedAutoCapitalize = autoCapitalize ?? config?.autoCapitalize;
+    const resolvedAutoCorrect = autoCorrect ?? config?.autoCorrect;
     const resolvedSecureTextEntry =
       type === "password" ? isSecure : secureTextEntry;
 
@@ -142,12 +150,12 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
           <View className="flex-row gap-1">
             <Text
               variant={labelVariant}
-              className={cn("mb-1.5 text-text-secondary", labelClassName)}
+              className={cn("mb-1.5 text-neutral-03", labelClassName)}
             >
               {label}
             </Text>
             {required ? (
-              <Text variant="body13Regular" className="text-error">
+              <Text variant="caption13Regular" className="text-error-02">
                 *
               </Text>
             ) : null}
@@ -155,12 +163,12 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
         )}
         <View
           className={cn(
-            "flex-row items-center border rounded-lg px-4 overflow-hidden relative bg-input-background",
+            "flex-row items-center border rounded-lg px-4 overflow-hidden relative bg-neutral-12",
             error
-              ? "border-error"
+              ? "border-error-02"
               : isFocused
-                ? "border-input-focused-border"
-                : "border-input-border",
+                ? "border-primary-06"
+                : "border-neutral-10",
             inputContainerClassName,
           )}
         >
@@ -177,7 +185,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
             }
             style={inputStyle}
             className={cn(
-              "py-4 flex-1 outline-none text-text-primary ",
+              "py-4 flex-1 outline-none text-[15px] font-inter text-neutral-02",
               className,
             )}
             onFocus={handleFocus}
@@ -185,6 +193,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
             keyboardType={resolvedKeyboardType}
             autoComplete={resolvedAutoComplete}
             textContentType={resolvedTextContentType}
+            autoCapitalize={resolvedAutoCapitalize}
+            autoCorrect={resolvedAutoCorrect}
             secureTextEntry={resolvedSecureTextEntry}
             {...props}
           />
@@ -200,8 +210,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
           <View className="flex-row items-center gap-1 pt-2">
             {iconError}
             <Text
-              variant="body12Regular"
-              className={cn("mt-1 text-error", errorClassName)}
+              variant="caption12Regular"
+              className={cn("mt-1 text-error-02", errorClassName)}
             >
               {error}
             </Text>

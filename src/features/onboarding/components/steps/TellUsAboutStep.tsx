@@ -92,7 +92,7 @@ const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
         <View className="h-0" />
 
         <Text
-          variant="body32Semibold"
+          variant="heading32Semibold"
           className="mb-2 font-serif text-[32px] leading-9.5 text-text-heading"
         >
           {t`Tell us about ${identity.dogName}`}

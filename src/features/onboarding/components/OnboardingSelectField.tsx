@@ -47,13 +47,13 @@ const OnboardingSelectField = ({
     <View className={cn("w-full gap-2", containerClassName)}>
       <View className="flex-row gap-1">
         <Text
-          variant="body14Regular"
+          variant="caption14Regular"
           className={cn("text-label", labelClassName)}
         >
           {label}
         </Text>
         {required ? (
-          <Text variant="body13Regular" className="text-error">
+          <Text variant="caption13Regular" className="text-error">
             *
           </Text>
         ) : null}
@@ -84,7 +84,7 @@ const OnboardingSelectField = ({
           {leftIcon ? leftIcon : null}
 
           <Text
-            variant="body15Regular"
+            variant="caption15Regular"
             numberOfLines={1}
             className={cn(
               "flex-1 leading-5.5",
@@ -101,7 +101,7 @@ const OnboardingSelectField = ({
 
       {error ? (
         <Text
-          variant="body13Regular"
+          variant="caption13Regular"
           className={cn("text-error", errorClassName)}
         >
           {error}

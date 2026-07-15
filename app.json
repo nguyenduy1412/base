@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon",
-      "bundleIdentifier": "com.teaserdeveloper.base"
+      "bundleIdentifier": "com.teaserdeveloper.base",
+      "googleServicesFile": "./src/firebase/GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,14 +22,10 @@
       "predictiveBackGestureEnabled": false,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
-        "android.permission.ACCESS_FINE_LOCATION",
-        "android.permission.BLUETOOTH",
-        "android.permission.BLUETOOTH_ADMIN",
-        "android.permission.BLUETOOTH_SCAN",
-        "android.permission.BLUETOOTH_ADVERTISE",
-        "android.permission.BLUETOOTH_CONNECT"
+        "android.permission.ACCESS_FINE_LOCATION"
       ],
-      "package": "com.teaserdeveloper.base"
+      "package": "com.teaserdeveloper.base",
+      "googleServicesFile": "./src/firebase/google-services.json"
     },
     "web": {
       "output": "static",
@@ -39,19 +36,9 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#3B7A57",
           "image": "./assets/images/splash-icon.png",
-          "imageWidth": 76,
-          "android": {
-            "image": "./assets/images/splash-icon.png",
-            "imageWidth": 76
-          }
-        }
-      ],
-      [
-        "@rnmapbox/maps",
-        {
-          "RNMapboxMapsVersion": "11.20.1"
+          "imageWidth": 1
         }
       ],
       [
@@ -67,12 +54,6 @@
           "color": "#ffffff",
           "defaultChannel": "default",
           "enableBackgroundRemoteNotifications": false
-        }
-      ],
-      [
-        "@stripe/stripe-react-native",
-        {
-          "merchantIdentifier": "merchant.com.example"
         }
       ],
       [
@@ -121,7 +102,6 @@
           }
         }
       ],
-      "expo-sqlite",
       [
         "react-native-audio-api",
         {
@@ -137,7 +117,23 @@
           "disableFFmpeg": true
         }
       ],
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/Inter-Regular.ttf",
+            "./assets/fonts/Inter-Medium.ttf",
+            "./assets/fonts/Inter-SemiBold.ttf",
+            "./assets/fonts/CormorantGaramond-Regular.ttf",
+            "./assets/fonts/CormorantGaramond-Medium.ttf",
+            "./assets/fonts/CormorantGaramond-SemiBold.ttf",
+            "./assets/fonts/Poppins-Regular.ttf",
+            "./assets/fonts/Poppins-Medium.ttf",
+            "./assets/fonts/Afacad-Regular.ttf"
+          ]
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

@@ -1,6 +1,6 @@
 // components/SelectBottomSheet.tsx
 import { AppBottomSheet } from "@/components/BottomSheet";
-import Text from "@/components/Text";
+import { Text } from "@/components/Text";
 import CheckBox from "@/components/CheckBox";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { forwardRef, memo } from "react";
@@ -23,7 +23,7 @@ const SelectBottomSheet = forwardRef<BottomSheetModal, SelectBottomSheetProps>(
       <AppBottomSheet ref={ref} enableDynamicSizing={true}>
         <View className="px-5 pb-safe">
           <View className="py-2.5">
-            <Text variant="body32Semibold">{title}</Text>
+            <Text variant="heading32Semibold">{title}</Text>
           </View>
           <View className="h-3" />
 

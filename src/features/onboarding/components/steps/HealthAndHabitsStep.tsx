@@ -116,7 +116,7 @@ const HealthAndHabitsStep = ({
         <View className="h-0" />
 
         <Text
-          variant="body32Semibold"
+          variant="heading32Semibold"
           className="mb-2 font-serif text-[32px] leading-9.5 text-text-heading"
         >
           {t`${identity.dogName}’s Health & Habits`}
@@ -147,10 +147,10 @@ const HealthAndHabitsStep = ({
             return (
               <View className="gap-2">
                 <View className="flex-row items-center gap-1">
-                  <Text variant="body14Regular" className="text-label">
+                  <Text variant="caption14Regular" className="text-label">
                     {t`Health conditions`}
                   </Text>
-                  <Text variant="body13Regular" className="text-error">
+                  <Text variant="caption13Regular" className="text-error">
                     *
                   </Text>
                   <Tooltip
@@ -180,7 +180,7 @@ const HealthAndHabitsStep = ({
                 </View>
 
                 {fieldState.error ? (
-                  <Text variant="body13Regular" className="text-error">
+                  <Text variant="caption13Regular" className="text-error">
                     {fieldState.error.message}
                   </Text>
                 ) : null}

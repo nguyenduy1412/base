@@ -19,7 +19,6 @@ const TermsOfServiceModal = ({
   isVisible,
   onClose,
 }: TermsOfServiceModalProps) => {
-
   return (
     <Modal
       visible={isVisible}
@@ -35,24 +34,22 @@ const TermsOfServiceModal = ({
           onPress={onClose}
         />
 
-        <View className="rounded-[24px] pb-10 bg-background shadow-md overflow-hidden max-h-[78%]">
-          <View className="px-6 pt-7 pb-4">
-            <Text variant="body24Semibold">
-              {t`Terms of Service`}
-            </Text>
-            <Text variant="body12Regular" className="text-text-secondary mt-1">
+        <View className="rounded-[24px] pb-10 bg-background shadow-md overflow-hidden max-h-[80%]">
+          <View className="px-6 pt-15 pb-6">
+            <Text variant="heading24Semibold" >{t`Terms of Service`}</Text>
+            <Text variant="caption12Regular" className="text-neutral-04 mt-1">
               {t`Last Updated: 08/07/2026`}
             </Text>
           </View>
 
-          <View className="relative max-h-[80%] overflow-hidden">
+          <View className="relative max-h-[75%] overflow-hidden">
             <ScrollView
               showsVerticalScrollIndicator={false}
               contentContainerClassName="px-6 pb-10"
             >
               <Text
-                variant="body14Regular"
-                className="text-text-primary leading-[22px]"
+                variant="caption15Regular"
+                className="text-neutral-02 leading-[22px]"
               >
                 {TERMS_CONTENT}
               </Text>
@@ -69,7 +66,7 @@ const TermsOfServiceModal = ({
               title={t`Decline`}
               color="background"
               isShadow={false}
-              variant="body14Semibold"
+              variant="caption14Semibold"
               className="rounded-[12px] w-[45%]"
               onPress={onClose}
               textClassName="text-primary"
@@ -78,7 +75,7 @@ const TermsOfServiceModal = ({
             <Button
               title={t`Accept`}
               color="primary"
-              variant="body14Semibold"
+              variant="caption14Semibold"
               className="rounded-[12px] w-[45%]"
               onPress={onClose}
             />

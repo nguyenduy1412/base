@@ -1,14 +1,14 @@
-import React, { forwardRef, memo } from "react";
-import { BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
-import { AppBottomSheet } from "@/components/BottomSheet";
-import BottomSheetContentItem from "./BottomSheetContentItem";
 import Icon from "@/assets/svg/Icon";
+import { AppBottomSheet } from "@/components/BottomSheet";
 import CheckBox from "@/components/CheckBox";
+import { Text } from "@/components/Text";
+import { BottomSheetFlatList, BottomSheetModal } from "@gorhom/bottom-sheet";
+import { forwardRef, memo } from "react";
 import { View } from "react-native";
-import OnboardingFooter from "./OnboardingFooter";
-import Text from "@/components/Text";
-import OnboardingSearchField from "./OnboardingSearchField";
 import { useBreedSearch } from "../hooks/useBreedSearch";
+import BottomSheetContentItem from "./BottomSheetContentItem";
+import OnboardingFooter from "./OnboardingFooter";
+import OnboardingSearchField from "./OnboardingSearchField";
 
 interface BreedBottomSheetProps {
   selectedValue?: string;
@@ -50,7 +50,7 @@ const BreedBottomSheet = forwardRef<BottomSheetModal, BreedBottomSheetProps>(
             bounces={false}
             ListEmptyComponent={
               <View className="items-center py-8">
-                <Text variant="body14Regular" className="text-placeholder">
+                <Text variant="caption14Regular" className="text-placeholder">
                   {isLoading
                     ? "Loading breeds..."
                     : isError

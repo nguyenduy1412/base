@@ -1,12 +1,12 @@
 import { AppBottomSheet } from "@/components/BottomSheet";
 import CheckBox from "@/components/CheckBox";
-import Text from "@/components/Text";
+import { Text } from "@/components/Text";
+import BottomSheetItem from "@/features/onboarding/components/BottomSheetItem";
+import OnboardingFooter from "@/features/onboarding/components/OnboardingFooter";
+import { SelectOption } from "@/features/onboarding/constants/onboarding";
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { forwardRef, useCallback, useState } from "react";
 import { View } from "react-native";
-import { SelectOption } from "@/features/onboarding/constants/onboarding";
-import BottomSheetItem from "@/features/onboarding/components/BottomSheetItem";
-import OnboardingFooter from "@/features/onboarding/components/OnboardingFooter";
 
 type SelectBottomSheetProps = {
   title?: string;
@@ -51,7 +51,7 @@ export const SelectBottomSheet = forwardRef<
       <View className="px-5 pb-safe">
         {title ? (
           <View className="py-2.5">
-            <Text variant="body32Semibold">{title}</Text>
+            <Text variant="heading32Semibold">{title}</Text>
           </View>
         ) : null}
         <View className="h-3" />
