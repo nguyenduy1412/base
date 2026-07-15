@@ -15,8 +15,8 @@ import { PortalProvider } from "react-native-teleport";
 import { SafeAreaListener, EdgeInsets } from "react-native-safe-area-context";
 import { Uniwind } from "uniwind";
 import { StatusBar } from "expo-status-bar";
-import { AsyncFont } from "@/components/AsyncFont";
-import { fontsToLoad } from "@/theme/fonts";
+import { useFonts } from "expo-font";
+import { fontsMap } from "@/theme/fonts";
 import { theme$ } from "@/store/theme";
 import { messages as messagesEn } from "../locale/en/messages";
 import { messages as messagesVi } from "../locale/vi/messages";
@@ -36,6 +36,7 @@ const optionStack = {
 } as const;
 const RootLayout = () => {
   const colorScheme = useSelector(theme$.mode);
+  const [fontsLoaded, fontError] = useFonts(fontsMap);
 
   const handleSafeAreaChange = useCallback(
     ({ insets }: { insets: EdgeInsets }) => {
@@ -45,14 +46,17 @@ const RootLayout = () => {
   );
 
   useEffect(() => {
-    SplashScreen.hideAsync();
-  }, []);
+    if (fontsLoaded || fontError) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
 
   return (
     <Suspense fallback={<View className="flex-1 bg-primary" />}>
-      {fontsToLoad.map(({ fontFamily, src }) => (
-        <AsyncFont key={fontFamily} src={src} fontFamily={fontFamily} />
-      ))}
       <SafeAreaListener onChange={handleSafeAreaChange}>
         <GestureHandlerRootView style={styles.container}>
           <QueryClientProvider client={queryClient}>

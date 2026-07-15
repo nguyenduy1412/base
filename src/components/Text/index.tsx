@@ -4,153 +4,114 @@ import { Text as RNText } from "react-native";
 import { type TextProps } from "./types";
 
 const TEXT_SIZE_CLASSES = {
-  10: "text-[10px]",
-  11: "text-[11px]",
   12: "text-[12px]",
   13: "text-[13px]",
   14: "text-[14px]",
   15: "text-[15px]",
   16: "text-[16px]",
-  17: "text-[17px]",
   18: "text-[18px]",
-  19: "text-[19px]",
   20: "text-[20px]",
-  21: "text-[21px]",
   22: "text-[22px]",
-  23: "text-[23px]",
   24: "text-[24px]",
+  28: "text-[28px]",
   32: "text-[32px]",
+  40: "text-[40px]",
+  52: "text-[52px]",
 } as const;
 
 type TextSize = keyof typeof TEXT_SIZE_CLASSES;
 
-const createRegularTypography = (size: TextSize) =>
-  `${TEXT_SIZE_CLASSES[size]} font-sans`;
+const headingRegular = (size: TextSize) =>
+  `${TEXT_SIZE_CLASSES[size]} font-cormorant leading-[1.2] tracking-[-1px]`;
+const headingMedium = (size: TextSize) =>
+  `${TEXT_SIZE_CLASSES[size]} font-cormorant-medium leading-[1.2] tracking-[-1px]`;
+const headingSemibold = (size: TextSize) =>
+  `${TEXT_SIZE_CLASSES[size]} font-cormorant-semibold leading-[1.2] tracking-[-1px]`;
 
-const createMediumTypography = (size: TextSize) =>
-  `${TEXT_SIZE_CLASSES[size]} font-sans-medium`;
-
-const createSemiboldTypography = (size: TextSize) =>
-  `${TEXT_SIZE_CLASSES[size]} font-sans-semibold`;
-
-const createBoldTypography = (size: TextSize) =>
-  `${TEXT_SIZE_CLASSES[size]} font-sans-bold`;
-
-const createExtraBoldTypography = (size: TextSize) =>
-  `${TEXT_SIZE_CLASSES[size]} font-sans-extrabold`;
+const interRegular = (size: TextSize) =>
+  `${TEXT_SIZE_CLASSES[size]} font-inter leading-[1.3]`;
+const interMedium = (size: TextSize) =>
+  `${TEXT_SIZE_CLASSES[size]} font-inter-medium leading-[1.3]`;
+const interSemibold = (size: TextSize) =>
+  `${TEXT_SIZE_CLASSES[size]} font-inter-semibold leading-[1.3]`;
+const interBold = (size: TextSize) =>
+  `${TEXT_SIZE_CLASSES[size]} font-inter-bold leading-[1.3]`;
 
 export const TEXT_VARIANTS = {
-  heading32Semibold: createSemiboldTypography(32),
+  heading18Regular: headingRegular(18),
+  heading18Medium: headingMedium(18),
+  heading18Semibold: headingSemibold(18),
+  heading20Regular: headingRegular(20),
+  heading20Medium: headingMedium(20),
+  heading20Semibold: headingSemibold(20),
+  heading24Regular: headingRegular(24),
+  heading24Medium: headingMedium(24),
+  heading24Semibold: headingSemibold(24),
+  heading28Regular: headingRegular(28),
+  heading28Medium: headingMedium(28),
+  heading28Semibold: headingSemibold(28),
+  heading32Regular: headingRegular(32),
+  heading32Medium: headingMedium(32),
+  heading32Semibold: headingSemibold(32),
+  heading40Regular: headingRegular(40),
+  heading40Medium: headingMedium(40),
+  heading40Semibold: headingSemibold(40),
+  heading52Regular: headingRegular(52),
+  heading52Medium: headingMedium(52),
+  heading52Semibold: headingSemibold(52),
 
-  body10Regular: createRegularTypography(10),
-  body10Medium: createMediumTypography(10),
-  body10Semibold: createSemiboldTypography(10),
-  body10Bold: createBoldTypography(10),
-  body10ExtraBold: createExtraBoldTypography(10),
+  subtitle20Regular: interRegular(20),
+  subtitle20Medium: interMedium(20),
+  subtitle20Semibold: interSemibold(20),
+  subtitle20Bold: interBold(20),
+  subtitle22Regular: interRegular(22),
+  subtitle22Medium: interMedium(22),
+  subtitle22Semibold: interSemibold(22),
+  subtitle22Bold: interBold(22),
+  subtitle24Regular: interRegular(24),
+  subtitle24Medium: interMedium(24),
+  subtitle24Semibold: interSemibold(24),
+  subtitle24Bold: interBold(24),
 
-  body11Regular: createRegularTypography(11),
-  body11Medium: createMediumTypography(11),
-  body11Semibold: createSemiboldTypography(11),
-  body11Bold: createBoldTypography(11),
-  body11ExtraBold: createExtraBoldTypography(11),
+  body16Regular: interRegular(16),
+  body16Medium: interMedium(16),
+  body16Semibold: interSemibold(16),
+  body16Bold: interBold(16),
+  body18Regular: interRegular(18),
+  body18Medium: interMedium(18),
+  body18Semibold: interSemibold(18),
+  body18Bold: interBold(18),
 
-  body12Regular: createRegularTypography(12),
-  body12Medium: createMediumTypography(12),
-  body12Semibold: createSemiboldTypography(12),
-  body12Bold: createBoldTypography(12),
-  body12ExtraBold: createExtraBoldTypography(12),
-
-  body13Regular: createRegularTypography(13),
-  body13Medium: createMediumTypography(13),
-  body13Semibold: createSemiboldTypography(13),
-  body13Bold: createBoldTypography(13),
-  body13ExtraBold: createExtraBoldTypography(13),
-
-  body14Regular: createRegularTypography(14),
-  body14Medium: createMediumTypography(14),
-  body14Semibold: createSemiboldTypography(14),
-  body14Bold: createBoldTypography(14),
-  body14ExtraBold: createExtraBoldTypography(14),
-
-  body15Regular: createRegularTypography(15),
-  body15Medium: createMediumTypography(15),
-  body15Semibold: createSemiboldTypography(15),
-  body15Bold: createBoldTypography(15),
-  body15ExtraBold: createExtraBoldTypography(15),
-
-  body16Regular: createRegularTypography(16),
-  body16Medium: createMediumTypography(16),
-  body16Semibold: createSemiboldTypography(16),
-  body16Bold: createBoldTypography(16),
-  body16ExtraBold: createExtraBoldTypography(16),
-
-  body17Regular: createRegularTypography(17),
-  body17Medium: createMediumTypography(17),
-  body17Semibold: createSemiboldTypography(17),
-  body17Bold: createBoldTypography(17),
-  body17ExtraBold: createExtraBoldTypography(17),
-
-  body18Regular: createRegularTypography(18),
-  body18Medium: createMediumTypography(18),
-  body18Semibold: createSemiboldTypography(18),
-  body18Bold: createBoldTypography(18),
-  body18ExtraBold: createExtraBoldTypography(18),
-
-  body19Regular: createRegularTypography(19),
-  body19Medium: createMediumTypography(19),
-  body19Semibold: createSemiboldTypography(19),
-  body19Bold: createBoldTypography(19),
-  body19ExtraBold: createExtraBoldTypography(19),
-
-  body20Regular: createRegularTypography(20),
-  body20Medium: createMediumTypography(20),
-  body20Semibold: createSemiboldTypography(20),
-  body20Bold: createBoldTypography(20),
-  body20ExtraBold: createExtraBoldTypography(20),
-
-  body21Regular: createRegularTypography(21),
-  body21Medium: createMediumTypography(21),
-  body21Semibold: createSemiboldTypography(21),
-  body21Bold: createBoldTypography(21),
-  body21ExtraBold: createExtraBoldTypography(21),
-
-  body22Regular: createRegularTypography(22),
-  body22Medium: createMediumTypography(22),
-  body22Semibold: createSemiboldTypography(22),
-  body22Bold: createBoldTypography(22),
-  body22ExtraBold: createExtraBoldTypography(22),
-
-  body23Regular: createRegularTypography(23),
-  body23Medium: createMediumTypography(23),
-  body23Semibold: createSemiboldTypography(23),
-  body23Bold: createBoldTypography(23),
-  body23ExtraBold: createExtraBoldTypography(23),
-
-  body24Regular: createRegularTypography(24),
-  body24Medium: createMediumTypography(24),
-  body24Semibold: createSemiboldTypography(24),
-  body24Bold: createBoldTypography(24),
-  body24ExtraBold: createExtraBoldTypography(24),
-
-  body32Regular: createRegularTypography(32),
-  body32Medium: createMediumTypography(32),
-  body32Semibold: createSemiboldTypography(32),
-  body32Bold: createBoldTypography(32),
-  body32ExtraBold: createExtraBoldTypography(32),
-
-  caption14Regular: createRegularTypography(14),
-  caption14Semibold: createSemiboldTypography(14),
+  caption12Regular: interRegular(12),
+  caption12Medium: interMedium(12),
+  caption12Semibold: interSemibold(12),
+  caption12Bold: interBold(12),
+  caption13Regular: interRegular(13),
+  caption13Medium: interMedium(13),
+  caption13Semibold: interSemibold(13),
+  caption13Bold: interBold(13),
+  caption14Regular: interRegular(14),
+  caption14Medium: interMedium(14),
+  caption14Semibold: interSemibold(14),
+  caption14Bold: interBold(14),
+  caption15Regular: interRegular(15),
+  caption15Medium: interMedium(15),
+  caption15Semibold: interSemibold(15),
+  caption15Bold: interBold(15),
 } as const;
 
 export const Text = React.forwardRef<RNText, TextProps>(
-  ({ className, variant = "body14Regular", color, style, ...props }, ref) => {
-    const variantClass = TEXT_VARIANTS[variant] || TEXT_VARIANTS.body14Regular;
+  (
+    { className, variant = "caption14Regular", color, style, ...props },
+    ref,
+  ) => {
+    const variantClass =
+      TEXT_VARIANTS[variant] || TEXT_VARIANTS.caption14Regular;
 
     return (
       <RNText
         ref={ref}
-        className={cn("text-text", variantClass, className)}
-        // style={[style, { color: color }]}
+        className={cn("text-neutral-02", variantClass, className)}
         {...props}
       />
     );

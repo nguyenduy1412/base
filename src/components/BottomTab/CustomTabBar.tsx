@@ -19,6 +19,7 @@ import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import {
   useAnimatedReaction,
   useDerivedValue,
+  useFrameCallback,
   useSharedValue,
   withSequence,
   withSpring,
@@ -69,9 +70,10 @@ const SCALE_Y = 1.5;
 const BAR_PRESS_DELTA = 6;
 const MAX_PULL = 14;
 const MAX_STRETCH = 0.7;
-const SQUASH_Y = 2.2;
-const VELOCITY_DEADZONE = 280;
-const VELOCITY_REF = 2000;
+const SQUASH_X = 0;
+const SQUASH_Y = 1.2;
+const VELOCITY_DEADZONE = 650;
+const VELOCITY_REF = 2400;
 
 const SPRING_SLIDE = { duration: 650, dampingRatio: 0.85 };
 const PRESS_UP_MS = 120;
@@ -123,7 +125,7 @@ const slotFromX = (width: number, x: number) => {
 
 const bubbleSize = (press: number, stretch: number) => {
   "worklet";
-  const sx = 1 + stretch;
+  const sx = 1 + stretch * SQUASH_X;
   const sy = 1 + stretch * SQUASH_Y;
   return {
     w: IDLE_W * (1 + (SCALE_X - 1) * press) * sx,
@@ -259,6 +261,7 @@ const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
   const press = useSharedValue(0);
   const liquid = useSharedValue(0);
   const stretch = useSharedValue(0);
+  const prevBubbleX = useSharedValue(0);
   const committed = useSharedValue(false);
   const isDragging = useSharedValue(false);
   const activeSlotSV = useSharedValue(activeSlot);
@@ -368,16 +371,13 @@ const CustomTabBar = ({ state, navigation }: BottomTabBarProps) => {
     },
   );
 
-  useAnimatedReaction(
-    () => bubbleX.value,
-    (curr, prev) => {
-      if (prev === null) return;
-      stretch.value = withSpring(
-        stretchFromVelocity((curr - prev) * 60),
-        SPRING_STRETCH,
-      );
-    },
-  );
+  useFrameCallback((frame) => {
+    const dt = frame.timeSincePreviousFrame ?? 16;
+    const velocity =
+      dt > 0 ? ((bubbleX.value - prevBubbleX.value) / dt) * 1000 : 0;
+    prevBubbleX.value = bubbleX.value;
+    stretch.value = withSpring(stretchFromVelocity(velocity), SPRING_STRETCH);
+  });
 
   const bubbleRRect = useDerivedValue(() => {
     const { w, h } = bubbleSize(liquid.value, stretch.value);

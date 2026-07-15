@@ -46,7 +46,7 @@ const OnboardingHeader = ({
 
       <Text
         className="font-serif leading-7.25 text-text-heading"
-        variant="body24Semibold"
+        variant="subtitle24Semibold"
       >
         Step {currentStep} of {totalSteps}
       </Text>

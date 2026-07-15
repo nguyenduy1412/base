@@ -4,17 +4,19 @@ import Header from "@/components/Header";
 import ImageComponent from "@/components/Image/ImageComponent";
 import { Text } from "@/components/Text";
 import OtpDigit, { OTP_LENGTH } from "@/features/auth/components/OtpDigit";
+import { useResendCooldown } from "@/features/auth/hooks/useResendCooldown";
 import { useResendOtp } from "@/features/auth/hooks/useResendOtp";
 import { useVerifyOtp } from "@/features/auth/hooks/useVerifyOtp";
+import { parseRateLimitSeconds } from "@/store/otpCooldown";
 import { cn } from "@/utils/cn";
 import { t } from "@lingui/core/macro";
 import { router, useLocalSearchParams } from "expo-router";
 import { TriangleAlert } from "lucide-react-native";
 import React, { useCallback, useRef, useState } from "react";
 import {
-  Alert,
   Keyboard,
   Pressable,
+  StyleSheet,
   TextInput,
   TouchableWithoutFeedback,
   View,
@@ -34,6 +36,11 @@ const VerifyEmailScreen = () => {
   const [isFocused, setIsFocused] = useState(false);
   const { mutate: verifyOtp, isPending: isVerifying, isError } = useVerifyOtp();
   const { mutate: resendOtp, isPending: isResending } = useResendOtp();
+  const { secondsLeft, isCoolingDown, startCooldown } =
+    useResendCooldown(email);
+  const [resendErrorMessage, setResendErrorMessage] = useState<string | null>(
+    null,
+  );
 
   const handleCodeChange = useCallback((value: string) => {
     setCode(value.replace(/\D/g, "").slice(0, OTP_LENGTH));
@@ -60,21 +67,32 @@ const VerifyEmailScreen = () => {
   }, [code, email, isVerifying, verifyOtp]);
 
   const handleResend = useCallback(() => {
-    if (!email || isResending) return;
+    if (!email || isResending || isCoolingDown) return;
+    setResendErrorMessage(null);
     resendOtp(
       { email, name: name ?? "" },
       {
-        onSuccess: () =>
-          Alert.alert(
-            t`Code sent`,
-            t`A new verification code has been sent to your email.`,
-          ),
+        onSuccess: () => {
+          startCooldown();
+        },
+        onError: (error) => {
+          const seconds = parseRateLimitSeconds(error);
+          if (seconds != null) {
+            startCooldown(seconds);
+            return;
+          }
+          setResendErrorMessage(
+            error instanceof Error
+              ? error.message
+              : t`Unable to resend code. Please try again.`,
+          );
+        },
       },
     );
-  }, [email, isResending, name, resendOtp]);
+  }, [email, isResending, isCoolingDown, name, resendOtp, startCooldown]);
 
   const activeIndex = Math.min(code.length, OTP_LENGTH - 1);
-  const isResendDisabled = !email || isResending;
+  const isResendDisabled = !email || isResending || isCoolingDown;
 
   return (
     <KeyboardAwareScrollView
@@ -83,12 +101,13 @@ const VerifyEmailScreen = () => {
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
       className="flex-1 bg-background pt-safe px-5"
+      contentContainerStyle={styles.container}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View className="flex-1">
           <Header />
 
-          <View className="flex-1 justify-center pb-40">
+          <View className="flex-1 justify-center items-center -mt-20">
             <ImageComponent source={VERIFY} className="w-45 h-45 self-center" />
             <Text
               variant="heading32Semibold"
@@ -134,11 +153,11 @@ const VerifyEmailScreen = () => {
                 className="absolute inset-0 opacity-0"
               />
             </Pressable>
-            {isError && (
-              <View className="pt-5 flex-row gap-2">
+            {(isError || resendErrorMessage) && (
+              <View className="pt-5 flex-row items-center gap-2 w-full">
                 <ErrorIcon colorClassName="accent-error" size={16} />
-                <Text variant="body12Regular" className="text-error">
-                  {t`Incorrect code. Please try again.`}
+                <Text variant="caption12Regular" className="text-error">
+                  {resendErrorMessage ?? t`Incorrect code. Please try again.`}
                 </Text>
               </View>
             )}
@@ -161,10 +180,14 @@ const VerifyEmailScreen = () => {
                 <Text
                   variant="caption14Semibold"
                   className={cn(
-                    isResendDisabled ? "text-placeholder" : "text-yellow",
+                    isResendDisabled ? "text-placeholder" : "text-secondary-06",
                   )}
                 >
-                  {isResending ? t`Sending...` : t`Resend`}
+                  {isResending
+                    ? t`Sending...`
+                    : isCoolingDown
+                      ? t`Resend (${secondsLeft}s)`
+                      : t`Resend`}
                 </Text>
               </Pressable>
             </View>
@@ -176,3 +199,9 @@ const VerifyEmailScreen = () => {
 };
 
 export default VerifyEmailScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+  },
+});

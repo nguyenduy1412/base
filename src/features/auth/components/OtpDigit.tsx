@@ -85,16 +85,16 @@ const OtpDigit = ({
       className={cn(
         "h-16 w-13 items-center justify-center rounded-lg border",
         isError
-          ? "border-error bg-otp-muted"
+          ? "border-error-02 bg-neutral-11"
           : isActive
-            ? "border-primary bg-secondary-soft"
+            ? "border-primary-06 bg-primary-01"
             : digit
-              ? "border-border bg-otp-muted"
-              : "border-border bg-white",
+              ? "border-border bg-neutral-11"
+              : "border-border bg-neutral-12",
       )}
     >
       <Animated.View style={animatedStyle}>
-        <Text className={digit ? "text-[24px]" : "text-[24px] text-border"}>
+        <Text className={digit ? "text-[24px]" : "text-[24px] text-neutral-10"}>
           {digit ?? "–"}
         </Text>
       </Animated.View>

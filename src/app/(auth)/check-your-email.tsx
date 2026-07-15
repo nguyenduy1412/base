@@ -7,13 +7,20 @@ import { login } from "@/features/auth/api/login.api";
 import { cn } from "@/utils/cn";
 import { t } from "@lingui/core/macro";
 import { useLocalSearchParams } from "expo-router";
+import { TriangleAlert } from "lucide-react-native";
 import React, { useCallback, useState } from "react";
 import { Alert, Linking, Pressable, View } from "react-native";
+import { withUniwind } from "uniwind";
+
+const ErrorIcon = withUniwind(TriangleAlert);
 
 const CheckYourEmailScreen = () => {
   const { email: emailParam } = useLocalSearchParams<{ email?: string }>();
   const email = Array.isArray(emailParam) ? emailParam[0] : emailParam;
   const [isResending, setIsResending] = useState(false);
+  const [resendErrorMessage, setResendErrorMessage] = useState<string | null>(
+    null,
+  );
 
   const handleOpenEmail = useCallback(async () => {
     try {
@@ -29,17 +36,14 @@ const CheckYourEmailScreen = () => {
   const handleResend = useCallback(async () => {
     if (!email || isResending) return;
 
+    setResendErrorMessage(null);
     try {
       setIsResending(true);
       await login({ email });
-      Alert.alert(
-        t`Email sent`,
-        t`A new secure login link has been sent to your email.`,
-      );
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : t`Please try again.`;
-      Alert.alert(t`Unable to resend email`, message);
+      setResendErrorMessage(
+        error instanceof Error ? error.message : t`Please try again.`,
+      );
     } finally {
       setIsResending(false);
     }
@@ -59,7 +63,7 @@ const CheckYourEmailScreen = () => {
           {t`Check Your Email`}
         </Text>
 
-        <Text variant="caption14Regular" className="text-center">
+        <Text variant="caption14Regular" className="text-center mt-2">
           {t`A secure login link is on its way to `}
           {email ? (
             <Text variant="caption14Semibold">{email}</Text>
@@ -74,7 +78,7 @@ const CheckYourEmailScreen = () => {
           variant="caption14Semibold"
           onPress={handleOpenEmail}
           className="mt-8 h-12 w-full rounded-xl"
-          textClassName="text-white"
+          textClassName="text-neutral-12"
         />
 
         <View className="mt-3 flex-row items-center justify-center">
@@ -87,13 +91,21 @@ const CheckYourEmailScreen = () => {
             <Text
               variant="caption14Semibold"
               className={cn(
-                isResendDisabled ? "text-placeholder" : "text-yellow",
+                isResendDisabled ? "text-placeholder" : "text-secondary-06",
               )}
             >
               {isResending ? t`Sending...` : t`Resend`}
             </Text>
           </Pressable>
         </View>
+        {resendErrorMessage && (
+          <View className="mt-2 flex-row items-center justify-center gap-2">
+            <ErrorIcon colorClassName="accent-error" size={16} />
+            <Text variant="caption12Regular" className="text-error">
+              {resendErrorMessage}
+            </Text>
+          </View>
+        )}
       </View>
     </View>
   );

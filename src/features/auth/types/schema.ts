@@ -1,5 +1,4 @@
-import type { I18n } from "@lingui/core";
-import { msg } from "@lingui/core/macro";
+import { t } from "@lingui/core/macro";
 import { z } from "zod";
 
 export const defaultSignInValues = {
@@ -10,15 +9,16 @@ export const defaultSignUpValues = {
   email: "",
   name: "",
 };
-export const signInSchema = (translate: I18n["_"]) =>
+
+export const signInSchema = () =>
   z.object({
-    email: z.email(translate(msg`Please enter a valid email address.`)),
+    email: z.email(t`Please enter a valid email address.`),
   });
 
-export const signUpSchema = (translate: I18n["_"]) =>
+export const signUpSchema = () =>
   z.object({
-    email: z.email(translate(msg`Please enter a valid email address.`)),
-    name: z.string().min(1, translate(msg`Please enter your name.`)),
+    email: z.email(t`Please enter a valid email address.`),
+    name: z.string().min(1, t`Please enter your name.`),
   });
 
 export type SignInFormValues = z.infer<ReturnType<typeof signInSchema>>;

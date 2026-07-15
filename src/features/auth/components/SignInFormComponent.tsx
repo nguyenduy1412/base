@@ -32,11 +32,15 @@ const SignInFormComponent = ({
   onInputBlur,
   onInputChange,
 }: props) => {
-  const { _ } = useLingui();
-  const schema = useMemo(() => signInSchema(_), [_]);
+  const { i18n } = useLingui();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const schema = useMemo(() => signInSchema(), [i18n.locale]);
   const [isCheckBoxSelected, setIsCheckBoxSelected] = useState(true);
-  const { mutateAsync: googleLogin, isPending: googleLoginLoading } =
-    useGoogleLogin();
+  const {
+    mutateAsync: googleLogin,
+    isPending: googleLoginLoading,
+    error: googleLoginError,
+  } = useGoogleLogin();
   const {
     control,
     handleSubmit,
@@ -65,8 +69,8 @@ const SignInFormComponent = ({
     [login, setError],
   );
 
-  const handleSignInWithGoogle = useCallback(async () => {
-    await googleLogin();
+  const handleSignInWithGoogle = useCallback(() => {
+    googleLogin().catch(() => {});
   }, [googleLogin]);
 
   const handleCheckBox = useCallback(() => {
@@ -128,8 +132,8 @@ const SignInFormComponent = ({
       />
       <View className="mt-5 h-4.5 w-full items-center justify-center">
         <View className="h-0.25 w-full bg-placeholder" />
-        <View className="absolute bg-background px-5">
-          <Text variant="body14Regular">{t`Or`}</Text>
+        <View className="absolute bg-secondary-14 px-5">
+          <Text variant="caption14Regular" className="text-neutral-04">{t`Or`}</Text>
         </View>
       </View>
       <Button
@@ -142,19 +146,29 @@ const SignInFormComponent = ({
       >
         <View className="flex-row gap-2">
           <Icon name="google" size={20} />
-          <Text variant="body14Regular">{t`Continue with Google`}</Text>
+          <Text variant="caption14Regular">{t`Continue with Google`}</Text>
         </View>
       </Button>
-      <View className="flex-row items-start gap-3 pt-5">
+      {googleLoginError && (
+        <Text
+          variant="caption12Regular"
+          className="mt-2 text-center text-error"
+        >
+          {googleLoginError instanceof Error
+            ? googleLoginError.message
+            : t`Google sign-in failed. Please try again.`}
+        </Text>
+      )}
+      <View className="flex-row items-center gap-3 pt-5">
         <CheckBox isSelected={isCheckBoxSelected} onPress={handleCheckBox} />
-        <Text variant="body12Regular" className="min-w-0 flex-1 shrink">
+        <Text variant="caption12Regular" className="min-w-0 flex-1 shrink">
           {t`I confirm I am 13 years of age or older (16+ if located in the EU or UK).`}
         </Text>
       </View>
-      <Pressable onPress={onNextForm} className="items-center pt-16">
+      <Pressable onPress={onNextForm} className="items-center mt-9 py-7">
         <Text>
-          <Text variant="body12Regular">{t`Don't have an account?`}</Text>
-          <Text variant="body12Regular" className="text-yellow">
+          <Text variant="caption12Regular">{t`Don't have an account?`}</Text>
+          <Text variant="caption12Semibold" className="text-secondary-06">
             {t` Sign up`}
           </Text>
         </Text>

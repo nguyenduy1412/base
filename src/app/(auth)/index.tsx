@@ -81,6 +81,17 @@ const AuthScreen = () => {
     overflow: "hidden",
   }));
 
+  const headerContent = {
+    "sign-in": {
+      title: t`Welcome to Dogspotting`,
+      subtitle: t`Log in your account to continue`,
+    },
+    "sign-up": {
+      title: t`Create Account`,
+      subtitle: t`Fill your information below or\nregister with your account`,
+    },
+  } as const;
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View className="flex-1 bg-background">
@@ -92,20 +103,20 @@ const AuthScreen = () => {
             contentPosition="top"
           />
           <View className="absolute pt-25 px-5">
-            <Text className="text-white text-3xl font-bold">
-              {t`Welcome to Dogspotting`}
+            <Text variant="heading32Semibold" className="text-neutral-12">
+              {headerContent[form].title}
             </Text>
             <Text
-              variant="body14Regular"
-              className="text-white leading-[14.4px] mt-4"
+              variant="caption14Regular"
+              className="text-neutral-12 mt-4"
             >
-              {t`Log in your account to continue`}
+              {headerContent[form].subtitle}
             </Text>
           </View>
         </View>
 
         <View className="absolute inset-x-0 top-68 bottom-0 px-5 pb-8">
-          <View className="rounded-[20px] py-7 px-5 bg-background shadow-md">
+          <View className="rounded-[20px] pt-7 px-5 bg-secondary-14 shadow-md">
             <View className="absolute -top-31.25 right-0">
               <AnimatedCorgi size={135} lookX={lookX} lookY={lookY} />
             </View>
