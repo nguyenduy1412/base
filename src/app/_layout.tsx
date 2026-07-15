@@ -4,8 +4,7 @@ import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { useSelector } from "@legendapp/state/react";
 import { DarkTheme, DefaultTheme, ThemeProvider, Stack } from "expo-router";
-import * as SplashScreen from "expo-splash-screen";
-import { Suspense, useCallback, useEffect } from "react";
+import { Suspense, useCallback } from "react";
 import { StyleSheet, View } from "react-native";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -16,6 +15,7 @@ import { SafeAreaListener, EdgeInsets } from "react-native-safe-area-context";
 import { Uniwind } from "uniwind";
 import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 import { fontsMap } from "@/theme/fonts";
 import { theme$ } from "@/store/theme";
 import { messages as messagesEn } from "../locale/en/messages";
@@ -34,6 +34,7 @@ const optionStack = {
   headerShown: false,
   animation: "fade",
 } as const;
+
 const RootLayout = () => {
   const colorScheme = useSelector(theme$.mode);
   const [fontsLoaded, fontError] = useFonts(fontsMap);
@@ -44,12 +45,6 @@ const RootLayout = () => {
     },
     [],
   );
-
-  useEffect(() => {
-    if (fontsLoaded || fontError) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded, fontError]);
 
   if (!fontsLoaded && !fontError) {
     return null;
@@ -76,7 +71,7 @@ const RootLayout = () => {
                         <Stack.Screen name="(auth)" options={optionStack} />
                         <Stack.Screen name="(tabs)" options={optionStack} />
                         <Stack.Screen
-                          name="onboarding/identity"
+                          name="onboarding"
                           options={optionStack}
                         />
                         <Stack.Screen
