@@ -14,8 +14,8 @@ const TabsLayout = () => {
   if (!user) {
     return <Redirect href={ROUTE_GROUPS.AUTH} />;
   }
-
-  return supportsLiquidGlass ? <NativeTab /> : <CustomTab />;
+  
+  return !supportsLiquidGlass ? <NativeTab /> : <CustomTab />;
 };
 
 export default TabsLayout;

@@ -1,6 +1,7 @@
 import { SPLASH } from "@/assets/images";
-import { memo, useEffect } from "react";
+import { memo, useCallback, useEffect } from "react";
 import { ImageBackground, View } from "react-native";
+import * as ExpoSplashScreen from "expo-splash-screen";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { withUniwind } from "uniwind";
 import AnimatedPaw from "./AnimatedPaw";
@@ -30,6 +31,10 @@ type SplashScreenProps = {
 const SplashScreen = ({ onFinish }: SplashScreenProps) => {
   const { top: safeTop } = useSafeAreaInsets();
 
+  const handleLayout = useCallback(() => {
+    ExpoSplashScreen.hideAsync();
+  }, []);
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       onFinish?.();
@@ -43,6 +48,7 @@ const SplashScreen = ({ onFinish }: SplashScreenProps) => {
       source={SPLASH}
       className="flex-1 bg-primary"
       resizeMode="cover"
+      onLayout={handleLayout}
     >
       <View className="flex-1">
         {PAWS.map((paw, index) => (

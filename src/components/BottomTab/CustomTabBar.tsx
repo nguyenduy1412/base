@@ -49,8 +49,9 @@ const PILL_RIM_COLORS = [
   "rgba(255, 255, 255, 0.15)",
   "rgba(255, 255, 255, 0.5)",
 ];
+const LENS_DARKEN = 0.04;
 const BUBBLE_REST_FILL = "rgba(0, 0, 0, 0.07)";
-const BUBBLE_GLASS_FILL = "rgba(255, 255, 255, 0)";
+const BUBBLE_GLASS_FILL = `rgba(0, 0, 0, ${LENS_DARKEN})`;
 
 const BAR_H = 56;
 const BAR_MARGIN_X = 20;
@@ -71,8 +72,8 @@ const BAR_PRESS_DELTA = 6;
 const MAX_PULL = 14;
 const MAX_STRETCH = 0.7;
 const SQUASH_X = 0;
-const SQUASH_Y = 1.2;
-const VELOCITY_DEADZONE = 650;
+const SQUASH_Y = 2.4;
+const VELOCITY_DEADZONE = 500;
 const VELOCITY_REF = 2400;
 
 const SPRING_SLIDE = { duration: 650, dampingRatio: 0.85 };
@@ -157,11 +158,16 @@ const rubberBand = (value: number, min: number, max: number) => {
 type BarBackgroundProps = {
   pillRRect: ReturnType<typeof rrect>;
   width: number;
+  pillColor?: string;
 };
 
-const BarBackground = ({ pillRRect, width }: BarBackgroundProps) => (
+const BarBackground = ({
+  pillRRect,
+  width,
+  pillColor = PILL_COLOR,
+}: BarBackgroundProps) => (
   <>
-    <RoundedRect rect={pillRRect} color={PILL_COLOR}>
+    <RoundedRect rect={pillRRect} color={pillColor}>
       <Shadow dx={0} dy={8} blur={6} color={SHADOW_COLOR} />
       <Shadow dx={0} dy={-8} blur={6} color={SHADOW_COLOR} />
       <Shadow dx={3} dy={2} blur={5} color="rgba(255, 255, 255, 0.3)" inner />
