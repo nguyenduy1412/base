@@ -37,7 +37,7 @@ const OnboardingOptionRow = ({
       <View className="w-full flex-row items-center justify-between">
         {leftElement}
 
-        <Text variant="body15Regular" className="leading-5.5 text-label">
+        <Text variant="caption15Regular" className="leading-5.5 text-label">
           {label}
         </Text>
 

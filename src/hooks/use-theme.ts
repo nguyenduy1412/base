@@ -1,5 +1,3 @@
-
-
 import { useCSSVariable } from "uniwind";
 
 export function useTheme() {

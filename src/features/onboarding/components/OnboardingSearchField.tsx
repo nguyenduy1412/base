@@ -1,4 +1,4 @@
-import TextInput, { TextInputProps } from "@/components/TextInput";
+import { TextInput, type TextInputProps } from "@/components/TextInput";
 import { cn } from "@/utils/cn";
 import { Search } from "lucide-react-native";
 import { memo } from "react";
@@ -25,7 +25,7 @@ const OnboardingSearchField = ({
       {...props}
       label={label}
       required={required}
-      labelVariant="body14Regular"
+      labelVariant="caption14Regular"
       labelClassName={cn("mb-2 text-label", labelClassName)}
       containerClassName="w-full"
       className={cn(

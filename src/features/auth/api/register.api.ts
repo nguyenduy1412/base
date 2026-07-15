@@ -1,10 +1,15 @@
 import { supabase } from "@/lib/supabase";
-import { RegisterFormValues } from "../types";
+import { SignUpFormValues } from "../types";
+import { AUTH_REDIRECT_URL } from "../constants";
 
-export const register = async (data: RegisterFormValues) => {
-  const { data: authData, error } = await supabase.auth.signUp({
+export const register = async (data: SignUpFormValues) => {
+  const { data: authData, error } = await supabase.auth.signInWithOtp({
     email: data.email,
-    password: data.password,
+    options: {
+      emailRedirectTo: AUTH_REDIRECT_URL,
+      shouldCreateUser: true,
+      data: { name: data.name },
+    },
   });
 
   if (error) {

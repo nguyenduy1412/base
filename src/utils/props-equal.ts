@@ -24,13 +24,6 @@ export function arePropsEqual<T extends Record<string, any>>(
   return true;
 }
 
-/**
- * Higher-order function that generates a custom comparison function for React.memo.
- *
- * @example
- * export default React.memo(MyComponent, memoPropsEqual(['user', 'friend']));
- */
-
 export function memoPropsEqual<T extends Record<string, any>>(
   deepKeys: (keyof T)[],
 ): (prevProps: T, nextProps: T) => boolean {

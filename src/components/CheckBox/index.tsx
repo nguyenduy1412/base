@@ -47,6 +47,7 @@ const CheckBox = ({
     <Pressable
       disabled={isDisabled}
       hitSlop={8}
+      onPress={onPress}
       style={{ borderWidth, height: boxSize, width: boxSize }}
       className={cn("items-center justify-center", boxClassName, className)}
     >

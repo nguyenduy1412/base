@@ -32,7 +32,7 @@ const OnboardingScreen = ({
 
       <OnboardingProgress currentStep={currentStep} totalSteps={totalSteps} />
       <Text
-        variant="body24Semibold"
+        variant="subtitle24Semibold"
         className="mb-5 font-serif text-[32px] leading-9.5 text-text-heading"
       >
         {title}

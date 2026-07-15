@@ -1,1 +1,10 @@
 export const BACKGROUND_RUN = require("./background-login.jpg");
+export const SPLASH = require("./splash.jpg");
+export const VERIFY = require("./verify.png");
+export const CHECK_MAIL = require("./check-mail.png");
+export const HOME_TAB = require("./house.png");
+export const SEARCH_TAB = require("./search.png");
+export const CREATE_TAB = require("./create.png");
+export const TROPHY_TAB = require("./cup.png");
+export const PROFILE_TAB = require("./user-round.png");
+export const AVATAR_PROFILE = require("./profile/avatar.jpg");

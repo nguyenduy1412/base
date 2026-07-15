@@ -49,7 +49,7 @@ export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
 
           {title ? (
             <Text
-              variant="body24Semibold"
+              variant="subtitle24Semibold"
               className="font-serif text-[32px] leading-9.5 text-text-heading"
             >
               {title}

@@ -1,9 +1,14 @@
 import type { ComponentType } from "react";
 import type { SvgProps } from "react-native-svg";
+import { withUniwind } from "uniwind";
 import GoogleIcon from "./google.svg";
+import PawIcon from "./paw.svg";
+import CorgiIcon from "./corgi.svg";
 
 const icons = {
   google: GoogleIcon,
+  paw: PawIcon,
+  corgi: CorgiIcon,
 } satisfies Record<string, ComponentType<SvgProps>>;
 
 export const iconNames = Object.keys(icons) as IconName[];
@@ -22,6 +27,7 @@ export type IconProps = Omit<SvgProps, "height" | "width"> & {
   size?: number;
   width?: number;
   height?: number;
+  colorClassName?: string;
 };
 
 const Icon = ({
@@ -49,4 +55,4 @@ const Icon = ({
   );
 };
 
-export default Icon;
+export default withUniwind(Icon);
