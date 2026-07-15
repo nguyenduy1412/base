@@ -1,8 +1,8 @@
-import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Bitcoin, ChevronDown, Search } from "lucide-react-native";
-import { useMemo, useRef } from "react";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { useLingui } from "@lingui/react";
+import { ChevronDown, Search } from "lucide-react-native";
+import { useMemo } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
 
 import Avatar from "@/components/Avatar";
@@ -11,8 +11,8 @@ import OnboardingScreen from "@/features/onboarding/components/OnboardingScreen"
 import OnboardingSelectField from "@/features/onboarding/components/OnboardingSelectField";
 import OnboardingTextField from "@/features/onboarding/components/OnboardingTextField";
 
-import { useBottomSheetField } from "@/features/onboarding/hooks/useBottomSheetField";
 import Icon from "@/assets/svg/Icon";
+import { useBottomSheetField } from "@/features/onboarding/hooks/useBottomSheetField";
 
 import {
   BIRTHDAYS,
@@ -25,8 +25,8 @@ import {
 } from "@/features/onboarding/schemas/onboarding";
 import { useOnboardingStore } from "@/store/onboardingStore";
 import BreedBottomSheet from "../BreedBottomSheet";
-import OnboardingFooter from "../OnboardingFooter";
 import DayBottomSheet from "../DayBottomSheet";
+import OnboardingFooter from "../OnboardingFooter";
 
 interface IdentityStepProps {
   onContinue: () => void;
@@ -37,6 +37,8 @@ export default function IdentityStep({
   onContinue,
   onBack,
 }: IdentityStepProps) {
+  const { _ } = useLingui();
+  const schema = useMemo(() => identitySchema(_), [_]);
   const identity = useOnboardingStore((state) => state.identity);
   const setIdentity = useOnboardingStore((state) => state.setIdentity);
 
@@ -48,7 +50,7 @@ export default function IdentityStep({
   } = useForm<identityFormValues>({
     defaultValues: identity,
     mode: "onChange",
-    resolver: zodResolver(identitySchema),
+    resolver: zodResolver(schema),
   });
 
   const {
@@ -120,7 +122,7 @@ export default function IdentityStep({
       onBack={onBack}
       footer={
         <OnboardingFooter
-          //   disabled={!isValid}
+          disabled={!isValid}
           onPress={handleSubmit(onSubmit)}
         />
       }

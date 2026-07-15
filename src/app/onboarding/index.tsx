@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { useRouter } from "expo-router";
+import HealthAndHabitsStep from "@/features/onboarding/components/steps/HealthAndHabitsStep";
 import IdentityStep from "@/features/onboarding/components/steps/IdentityStep";
+import OneThingAboutYouStep from "@/features/onboarding/components/steps/OneThingAboutYouStep";
 import TellUsAboutStep from "@/features/onboarding/components/steps/TellUsAboutStep";
+import { useRouter } from "expo-router";
+import { useState } from "react";
 
 export default function OnboardingFlow() {
   const router = useRouter();
@@ -29,7 +31,10 @@ export default function OnboardingFlow() {
 
     case 2:
       return <TellUsAboutStep onContinue={goToNextStep} onBack={goBack} />;
-
+    case 3:
+      return <HealthAndHabitsStep onContinue={goToNextStep} onBack={goBack} />;
+    case 4:
+      return <OneThingAboutYouStep onContinue={goToNextStep} onBack={goBack} />;
     default:
       return null;
   }

@@ -12,3 +12,408 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "Plural-Forms: \n"
+
+#: src/features/auth/components/SignUpFormComponent.tsx
+msgid " and"
+msgstr " and"
+
+#: src/features/auth/components/SignUpFormComponent.tsx
+msgid " Privacy Policy"
+msgstr " Privacy Policy"
+
+#: src/features/auth/components/SignUpFormComponent.tsx
+msgid " Sign in"
+msgstr " Sign in"
+
+#: src/features/auth/components/SignInFormComponent.tsx
+msgid " Sign up"
+msgstr " Sign up"
+
+#: src/features/auth/components/SignUpFormComponent.tsx
+msgid " Termsof Service"
+msgstr " Termsof Service"
+
+#. placeholder {0}: identity.dogName
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "{0}’s Health & Habits"
+msgstr "{0}’s Health & Habits"
+
+#: src/features/auth/components/TermsOfServiceModal.tsx
+msgid "Accept"
+msgstr "Accept"
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Age"
+msgstr "Age"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Age is required."
+msgstr "Age is required."
+
+#: src/features/auth/components/SignUpFormComponent.tsx
+msgid "Already have an account?"
+msgstr "Already have an account?"
+
+#: src/features/auth/components/SignUpFormComponent.tsx
+#: src/features/onboarding/components/OnboardingFooter.tsx
+msgid "Continue"
+msgstr "Continue"
+
+#: src/features/auth/components/SignInFormComponent.tsx
+#: src/features/auth/components/SignUpFormComponent.tsx
+msgid "Continue with Google"
+msgstr "Continue with Google"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Country calling code is required."
+msgstr "Country calling code is required."
+
+#: src/features/auth/hooks/useRegister.ts
+msgid "Đăng ký tài khoản thành công!"
+msgstr "Đăng ký tài khoản thành công!"
+
+#: src/features/auth/hooks/useRegister.ts
+msgid "Đăng ký thất bại. Vui lòng thử lại."
+msgstr "Đăng ký thất bại. Vui lòng thử lại."
+
+#: src/features/auth/hooks/useGoogleLogin.ts
+msgid "Đăng nhập bằng Google thất bại. Vui lòng thử lại."
+msgstr "Đăng nhập bằng Google thất bại. Vui lòng thử lại."
+
+#: src/features/auth/hooks/useLogin.ts
+msgid "Đăng nhập thành công!"
+msgstr "Đăng nhập thành công!"
+
+#: src/features/auth/hooks/useLogin.ts
+msgid "Đăng nhập thất bại. Vui lòng thử lại."
+msgstr "Đăng nhập thất bại. Vui lòng thử lại."
+
+#: src/features/auth/components/TermsOfServiceModal.tsx
+msgid "Decline"
+msgstr "Decline"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Dog name must be at least 2 characters."
+msgstr "Dog name must be at least 2 characters."
+
+#: src/features/auth/components/SignInFormComponent.tsx
+msgid "Don't have an account?"
+msgstr "Don't have an account?"
+
+#: src/features/auth/components/SignInFormComponent.tsx
+#: src/features/auth/components/SignUpFormComponent.tsx
+msgid "Email"
+msgstr "Email"
+
+#: src/features/auth/components/SignInFormComponent.tsx
+#: src/features/auth/components/SignUpFormComponent.tsx
+msgid "Enter your email"
+msgstr "Enter your email"
+
+#: src/features/auth/components/SignUpFormComponent.tsx
+msgid "Enter your name"
+msgstr "Enter your name"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "First name is required."
+msgstr "First name is required."
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "First name must not exceed 50 characters."
+msgstr "First name must not exceed 50 characters."
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Food Type"
+msgstr "Food Type"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Food type is required."
+msgstr "Food type is required."
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Grooming frequency is required."
+msgstr "Grooming frequency is required."
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Health conditions"
+msgstr "Health conditions"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Helps us connect you with the best local deals and brands in [Neighborhood]. We work with partners who offer real discounts to Dogspotting members"
+msgstr "Helps us connect you with the best local deals and brands in [Neighborhood]. We work with partners who offer real discounts to Dogspotting members"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Helps us connect you with the right groomers in [Neighborhood] and surface grooming deals that match your schedule"
+msgstr "Helps us connect you with the right groomers in [Neighborhood] and surface grooming deals that match your schedule"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Helps us recommend the right training events, classes, and trainer profiles in [Neighborhood]"
+msgstr "Helps us recommend the right training events, classes, and trainer profiles in [Neighborhood]"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Helps us recommend treats and rewards [Dog Name] will actually enjoy during training and play"
+msgstr "Helps us recommend treats and rewards [Dog Name] will actually enjoy during training and play"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Helps us show the most relevant vet resources and coverage options in your area. We'll never spam you"
+msgstr "Helps us show the most relevant vet resources and coverage options in your area. We'll never spam you"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Helps us show you the discounts and deals that match your budget"
+msgstr "Helps us show you the discounts and deals that match your budget"
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Home"
+msgstr "Home"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Home is required."
+msgstr "Home is required."
+
+#: src/features/auth/components/SignUpFormComponent.tsx
+msgid "I am at least 13 years old and agree to the"
+msgstr "I am at least 13 years old and agree to the"
+
+#: src/features/auth/components/SignInFormComponent.tsx
+msgid "I confirm I am 13 years of age or older (16+ if located in the EU or UK)."
+msgstr "I confirm I am 13 years of age or older (16+ if located in the EU or UK)."
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Insurance"
+msgstr "Insurance"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Insurance is required."
+msgstr "Insurance is required."
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Last name is required."
+msgstr "Last name is required."
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Last name must not exceed 50 characters."
+msgstr "Last name must not exceed 50 characters."
+
+#: src/features/auth/components/TermsOfServiceModal.tsx
+msgid "Last Updated: 08/07/2026"
+msgstr "Last Updated: 08/07/2026"
+
+#: src/app/(auth)/index.tsx
+msgid "Log in your account to continue"
+msgstr "Log in your account to continue"
+
+#: src/features/auth/hooks/useGoogleLogin.ts
+#: src/features/auth/hooks/useLogin.ts
+#: src/features/auth/hooks/useRegister.ts
+msgid "Lỗi"
+msgstr "Lỗi"
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Match compatible dogs"
+msgstr "Match compatible dogs"
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Match with similar dogs nearby"
+msgstr "Match with similar dogs nearby"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Monthly spend on dog"
+msgstr "Monthly spend on dog"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Monthly spend on dog is required."
+msgstr "Monthly spend on dog is required."
+
+#: src/features/auth/components/SignUpFormComponent.tsx
+msgid "Name"
+msgstr "Name"
+
+#: src/features/auth/components/SignInFormComponent.tsx
+msgid "Or"
+msgstr "Or"
+
+#: src/features/auth/components/SignUpFormComponent.tsx
+msgid "Or sign in with"
+msgstr "Or sign in with"
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Personalise rewards and alerts"
+msgstr "Personalise rewards and alerts"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Phone number is required."
+msgstr "Phone number is required."
+
+#: src/features/auth/types/schema.ts
+msgid "Please enter a valid email address."
+msgstr "Please enter a valid email address."
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Please enter a valid phone number."
+msgstr "Please enter a valid phone number."
+
+#: src/features/auth/types/schema.ts
+msgid "Please enter your name."
+msgstr "Please enter your name."
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Please select at least one health condition."
+msgstr "Please select at least one health condition."
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Please select how you heard about Dogspotting."
+msgstr "Please select how you heard about Dogspotting."
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Please select your age range."
+msgstr "Please select your age range."
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Primary breed is required."
+msgstr "Primary breed is required."
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Recommend parks and events"
+msgstr "Recommend parks and events"
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Select age"
+msgstr "Select age"
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Select food type"
+msgstr "Select food type"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Select grooming frequency"
+msgstr "Select grooming frequency"
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Select home"
+msgstr "Select home"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Select insurance"
+msgstr "Select insurance"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Select monthly spend on dog"
+msgstr "Select monthly spend on dog"
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Select size"
+msgstr "Select size"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Select training level"
+msgstr "Select training level"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Select treats"
+msgstr "Select treats"
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Select vibe"
+msgstr "Select vibe"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Select where your shop"
+msgstr "Select where your shop"
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Show relevant content"
+msgstr "Show relevant content"
+
+#: src/features/auth/components/SignInFormComponent.tsx
+msgid "Sign in"
+msgstr "Sign in"
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Size"
+msgstr "Size"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Size is required."
+msgstr "Size is required."
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Surface relevant resources "
+msgstr "Surface relevant resources "
+
+#. placeholder {0}: identity.dogName
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Tell us about {0}"
+msgstr "Tell us about {0}"
+
+#: src/features/auth/components/TermsOfServiceModal.tsx
+msgid "Terms of Service"
+msgstr "Terms of Service"
+
+#: src/features/auth/hooks/useLogin.ts
+#: src/features/auth/hooks/useRegister.ts
+msgid "Thành công"
+msgstr "Thành công"
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Training level"
+msgstr "Training level"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Training level is required."
+msgstr "Training level is required."
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Treats"
+msgstr "Treats"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Treats are required."
+msgstr "Treats are required."
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Use letters, numbers, or underscores."
+msgstr "Use letters, numbers, or underscores."
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Username must be at least 3 characters."
+msgstr "Username must be at least 3 characters."
+
+#: src/features/onboarding/components/steps/TellUsAboutStep.tsx
+msgid "Vibe"
+msgstr "Vibe"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Vibe is required."
+msgstr "Vibe is required."
+
+#: src/app/(auth)/index.tsx
+msgid "Welcome to Dogspotting"
+msgstr "Welcome to Dogspotting"
+
+#: src/features/onboarding/schemas/onboarding.ts
+msgid "Where you shop is required."
+msgstr "Where you shop is required."
+
+#: src/features/onboarding/components/steps/HealthAndHabitsStep.tsx
+#: src/features/onboarding/components/steps/OneThingAboutYouStep.tsx
+msgid "Where your shop"
+msgstr "Where your shop"

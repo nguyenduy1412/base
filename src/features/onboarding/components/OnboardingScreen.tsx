@@ -30,12 +30,6 @@ const OnboardingScreen = ({
         currentStep={currentStep}
         totalSteps={totalSteps}
         canGoBack={canGoBack}
-        // rightElement={
-        //   <View className="flex-row gap-2 justify-center items-center">
-        //     <Icon name={"PointIcon"} />
-        //     <Text variant="body14Semibold">{`${ptsValue} pts`}</Text>
-        //   </View>
-        // }
       />
       <View className="h-3"></View>
 

@@ -99,3 +99,30 @@ export const HOMES: SelectOption[] = [
   { label: "No yard", value: "no-yard" },
   { label: "Other", value: "other" },
 ];
+
+export const GROOMING_FREQUENCY: SelectOption[] = [
+  { label: "Weekly", value: "weekly" },
+  { label: "Monthly", value: "monthly" },
+  { label: "Every 2 months", value: "every_2_months" },
+  { label: "Occasional", value: "occasional" },
+];
+
+export const AGES_RANGE: SelectOption[] = [
+  { label: "Under 25", value: "under_25" },
+  { label: "25-34", value: "25_34" },
+  { label: "35-44", value: "35_44" },
+  { label: "45-54", value: "45_54" },
+  { label: "55+", value: "55_plus" },
+];
+
+export const HEAR_ABOUT_US: SelectOption[] = [
+  { label: "Dog park", value: "dog_park" },
+  { label: "A friend", value: "friend" },
+  { label: "Instagram", value: "instagram" },
+  { label: "Instagram Ad", value: "instagram_ad" },
+  { label: "Facebook", value: "facebook" },
+  { label: "Facebook Ad", value: "facebook_ad" },
+  { label: "Tiktok", value: "tiktok" },
+  { label: "Local Facebook group", value: "local_facebook_group" },
+  { label: "Other", value: "other" },
+];

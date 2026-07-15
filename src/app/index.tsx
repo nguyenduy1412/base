@@ -9,7 +9,7 @@ const RootIndex = () => {
     return <Redirect href="/(tabs)" />;
   }
 
-  return <Redirect href="/onboarding/identity" />;
+  return <Redirect href="/onboarding" />;
 };
 
 export default RootIndex;

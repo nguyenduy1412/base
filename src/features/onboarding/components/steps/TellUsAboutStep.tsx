@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useMemo } from "react";
 
 import { SelectBottomSheet } from "@/components/BottomSheet/SelectBottomSheet";
 import { Text } from "@/components/Text";
@@ -6,6 +6,7 @@ import OnboardingScreen from "@/features/onboarding/components/OnboardingScreen"
 import OnboardingSelectField from "@/features/onboarding/components/OnboardingSelectField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { t } from "@lingui/core/macro";
+import { useLingui } from "@lingui/react";
 import { ChevronDown } from "lucide-react-native";
 import { Controller, useForm } from "react-hook-form";
 import { View } from "react-native";
@@ -43,9 +44,11 @@ const FIELD_CONFIGS: FieldConfig<tellUsAboutFormValues>[] = [
 ];
 
 const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
+  const { _ } = useLingui();
+  const schema = useMemo(() => tellUsAboutSchema(_), [_]);
   const tellUsAbout = useOnboardingStore((state) => state.tellUsAbout);
   const setTellUsAbout = useOnboardingStore((state) => state.setTellUsAbout);
-
+  const identity = useOnboardingStore((state) => state.identity);
   const {
     control,
     formState: { errors, isValid },
@@ -54,7 +57,7 @@ const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
   } = useForm<tellUsAboutFormValues>({
     defaultValues: tellUsAbout,
     mode: "onChange",
-    resolver: zodResolver(tellUsAboutSchema),
+    resolver: zodResolver(schema),
   });
 
   const {
@@ -69,7 +72,7 @@ const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
 
   const onSubmit = (values: tellUsAboutFormValues) => {
     setTellUsAbout(values);
-    // onContinue?.();
+    onContinue?.();
   };
 
   return (
@@ -92,7 +95,7 @@ const TellUsAboutStep = ({ onBack, onContinue }: TellUsAboutStepProps) => {
           variant="body32Semibold"
           className="mb-2 font-serif text-[32px] leading-9.5 text-text-heading"
         >
-          {t`Tell us about Bella`}
+          {t`Tell us about ${identity.dogName}`}
         </Text>
 
         <Controller
