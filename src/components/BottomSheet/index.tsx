@@ -5,7 +5,13 @@ import {
   BottomSheetModal,
   BottomSheetView,
 } from "@gorhom/bottom-sheet";
-import { forwardRef, ReactNode } from "react";
+import {
+  forwardRef,
+  ReactNode,
+  useMemo,
+  useRef,
+  useImperativeHandle,
+} from "react";
 import { View } from "react-native";
 import { useCSSVariable } from "uniwind";
 
@@ -14,21 +20,48 @@ export type AppBottomSheetProps = {
   children: ReactNode;
   className?: string;
   contentClassName?: string;
+  snapPoints?: string[];
+  enableDynamicSizing?: boolean;
+  onDismiss?: () => void;
+  onPresent?: () => void;
 };
 
 export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
   function AppBottomSheet(
-    { title, children, className, contentClassName },
+    {
+      title,
+      children,
+      className,
+      snapPoints = ["55%"],
+      contentClassName,
+      enableDynamicSizing = false,
+      onDismiss,
+      onPresent,
+    },
     ref,
   ) {
-    // const memoizedSnapPoints = useMemo(() => snapPoints, [snapPoints]);
+    const innerRef = useRef<BottomSheetModal>(null);
+
+    useImperativeHandle(ref, () => ({
+      ...(innerRef.current as BottomSheetModal),
+      present: (data?: any) => {
+        onPresent?.();
+        innerRef.current?.present(data);
+      },
+    }));
+
+    const memoizedSnapPoints = useMemo(() => snapPoints, [snapPoints]);
     const backgroundColor = useCSSVariable("--color-white") as string;
+
+    const Wrapper = enableDynamicSizing ? BottomSheetView : View;
 
     return (
       <BottomSheetModal
-        ref={ref}
-        // snapPoints={memoizedSnapPoints}
+        ref={innerRef}
+        onDismiss={onDismiss}
+        snapPoints={enableDynamicSizing ? undefined : memoizedSnapPoints}
         enablePanDownToClose
+        enableDynamicSizing={enableDynamicSizing}
         backgroundStyle={{
           backgroundColor,
           borderTopLeftRadius: 24,
@@ -42,7 +75,10 @@ export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
           />
         )}
       >
-        <BottomSheetView>
+        <Wrapper
+          style={enableDynamicSizing ? undefined : { flex: 1 }}
+          className={cn(className)}
+        >
           {title ? (
             <Text
               variant="subtitle24Semibold"
@@ -51,9 +87,16 @@ export const AppBottomSheet = forwardRef<BottomSheetModal, AppBottomSheetProps>(
               {title}
             </Text>
           ) : null}
-
-          <View className={cn("mt-4.5", contentClassName)}>{children}</View>
-        </BottomSheetView>
+          <View
+            className={cn(
+              enableDynamicSizing ? "" : "flex-1",
+              title ? "mt-4.5" : "",
+              contentClassName,
+            )}
+          >
+            {children}
+          </View>
+        </Wrapper>
       </BottomSheetModal>
     );
   },

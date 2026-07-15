@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import React from 'react'
 
 type PostItemProps = {
@@ -13,5 +13,3 @@ const PostItem = ({ post }: PostItemProps) => {
 }
 
 export default PostItem
-
-const styles = StyleSheet.create({})

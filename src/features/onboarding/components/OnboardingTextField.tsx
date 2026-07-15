@@ -29,10 +29,10 @@ const OnboardingTextField = ({
       label={label}
       required={required}
       labelVariant="caption14Regular"
-      labelClassName={cn("mb-2 text-label", labelClassName)}
+      labelClassName={cn("text-label", labelClassName)}
       containerClassName="w-full"
       className={cn(
-        "h-full flex-1 py-0 text-[15px] leading-5.5 text-text-heading",
+        "h-full flex-1 py-0 text-[15px]  text-text-heading",
         className,
       )}
       inputStyle={{ height: 48 }}
@@ -42,7 +42,10 @@ const OnboardingTextField = ({
       error={error}
       errorClassName={cn("mt-1 text-error", errorClassName)}
       innerShadow={false}
-      inputContainerClassName={cn("h-12 rounded-xl", inputContainerClassName)}
+      inputContainerClassName={cn(
+        "h-12 rounded-xl border-input-border",
+        inputContainerClassName,
+      )}
     />
   );
 };

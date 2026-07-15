@@ -41,7 +41,6 @@
   --font-rounded:
     "SF Pro Rounded", "Hiragino Maru Gothic ProN", Meiryo, "MS PGothic",
     sans-serif;
-
 }
 
 @layer theme {
@@ -134,6 +133,7 @@
       --color-on-error: #ffffff;
 
       --color-text: #313533;
+      --color-description: #5c6662;
       --color-text-heading: #313533;
       --color-text-primary: #313533;
       --color-text-strong: #191b1a;

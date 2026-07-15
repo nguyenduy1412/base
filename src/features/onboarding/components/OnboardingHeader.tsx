@@ -1,8 +1,7 @@
 import { Button } from "@/components/Button";
-import { Text } from "@/components/Text";
 import { useRouter } from "expo-router";
 import { ArrowLeft } from "lucide-react-native";
-import { memo } from "react";
+import { memo, ReactNode } from "react";
 import { View } from "react-native";
 import { withUniwind } from "uniwind";
 
@@ -11,12 +10,14 @@ export interface OnboardingHeaderProps {
   currentStep: number;
   totalSteps: number;
   canGoBack?: boolean;
+  rightElement?: ReactNode;
 }
 
 const OnboardingHeader = ({
   currentStep,
   totalSteps,
   canGoBack,
+  rightElement,
 }: OnboardingHeaderProps) => {
   const router = useRouter();
 
@@ -28,11 +29,11 @@ const OnboardingHeader = ({
     <View className=" flex-row items-center justify-between mb-6 ">
       {canGoBack ? (
         <Button
-          isShadow
+          isShadow={false}
           activeOpacity={0.85}
           onPress={handleNavigationBack}
           className="h-9 w-9 rounded-full px-0 py-0 "
-          color="background"
+          color="white"
         >
           <ArrowLeftIcon
             size={24}
@@ -44,14 +45,14 @@ const OnboardingHeader = ({
         <View className="h-9 w-9" />
       )}
 
-      <Text
+      {/* <Text
         className="font-serif leading-7.25 text-text-heading"
         variant="subtitle24Semibold"
       >
         Step {currentStep} of {totalSteps}
-      </Text>
+      </Text> */}
 
-      <View className="h-9 w-9" />
+      {rightElement ? rightElement : <View className="h-9 w-9" />}
     </View>
   );
 };

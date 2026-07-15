@@ -7,6 +7,7 @@ export interface OnboardingSearchFieldProps extends TextInputProps {
   label: string;
   required?: boolean;
   error?: string;
+  pickerOnly?: boolean;
 }
 
 const OnboardingSearchField = ({
@@ -18,6 +19,7 @@ const OnboardingSearchField = ({
   labelClassName,
   errorClassName,
   leftIcon,
+  pickerOnly = false,
   ...props
 }: OnboardingSearchFieldProps) => {
   return (
@@ -29,7 +31,7 @@ const OnboardingSearchField = ({
       labelClassName={cn("mb-2 text-label", labelClassName)}
       containerClassName="w-full"
       className={cn(
-        "h-full flex-1 py-0 text-[15px] leading-5.5 text-text-heading",
+        "h-full flex-1 py-0 text-[15px]  text-text-heading",
         className,
       )}
       inputStyle={{ height: 48 }}
@@ -38,7 +40,10 @@ const OnboardingSearchField = ({
       error={error}
       errorClassName={cn("mt-1 text-error", errorClassName)}
       innerShadow={false}
-      inputContainerClassName={cn("h-12 rounded-xl", inputContainerClassName)}
+      inputContainerClassName={cn(
+        "h-12 rounded-xl border-input-border",
+        inputContainerClassName,
+      )}
       type="search"
     />
   );

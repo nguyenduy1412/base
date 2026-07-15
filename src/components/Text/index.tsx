@@ -1,7 +1,7 @@
 import { cn } from "@/utils/cn";
 import React from "react";
 import { Text as RNText } from "react-native";
-import { type TextProps } from "./types";
+import { type TextProps, type TextVariant } from "./types";
 
 const TEXT_SIZE_CLASSES = {
   12: "text-[12px]",
@@ -98,7 +98,7 @@ export const TEXT_VARIANTS = {
   caption15Medium: interMedium(15),
   caption15Semibold: interSemibold(15),
   caption15Bold: interBold(15),
-} as const;
+} as const satisfies Record<TextVariant, string>;
 
 export const Text = React.forwardRef<RNText, TextProps>(
   (
