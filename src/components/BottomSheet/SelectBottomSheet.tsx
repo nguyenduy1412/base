@@ -47,7 +47,7 @@ export const SelectBottomSheet = forwardRef<
             >
               <View className="w-full flex-row items-center justify-between">
                 <Text
-                  variant="body15Regular"
+                  variant="caption15Regular"
                   className="leading-5.5 text-label"
                 >
                   {option.label}

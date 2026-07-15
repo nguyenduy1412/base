@@ -6,7 +6,7 @@ import { useSelector } from "@legendapp/state/react";
 import { DarkTheme, DefaultTheme, ThemeProvider, Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { Suspense, useCallback, useEffect } from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -14,35 +14,30 @@ import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { PortalProvider } from "react-native-teleport";
 import { SafeAreaListener, EdgeInsets } from "react-native-safe-area-context";
 import { Uniwind } from "uniwind";
-
-import { AsyncFont } from "@/components/AsyncFont";
-import { fontsToLoad } from "@/theme/fonts";
+import { StatusBar } from "expo-status-bar";
+import { useFonts } from "expo-font";
+import { fontsMap } from "@/theme/fonts";
 import { theme$ } from "@/store/theme";
 import { messages as messagesEn } from "../locale/en/messages";
 import { messages as messagesVi } from "../locale/vi/messages";
 import { queryClient } from "@/lib/react-query";
 
-// Initialize Lingui i18n
 i18n.load({
   vi: messagesVi,
   en: messagesEn,
 });
-i18n.activate("vi");
+i18n.activate("en");
 
 SplashScreen.preventAutoHideAsync();
 
-function SplashFallback() {
-  useEffect(
-    () => () => {
-      SplashScreen.hideAsync();
-    },
-    [],
-  );
-  return null;
-}
-
-const TabLayout = () => {
+const optionStack = {
+  headerShown: false,
+  animation: "fade",
+} as const;
+const RootLayout = () => {
   const colorScheme = useSelector(theme$.mode);
+  const [fontsLoaded, fontError] = useFonts(fontsMap);
+
   const handleSafeAreaChange = useCallback(
     ({ insets }: { insets: EdgeInsets }) => {
       Uniwind.updateInsets(insets);
@@ -50,11 +45,18 @@ const TabLayout = () => {
     [],
   );
 
+  useEffect(() => {
+    if (fontsLoaded || fontError) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
+
   return (
-    <Suspense fallback={<SplashFallback />}>
-      {fontsToLoad.map(({ fontFamily, src }) => (
-        <AsyncFont key={fontFamily} src={src} fontFamily={fontFamily} />
-      ))}
+    <Suspense fallback={<View className="flex-1 bg-primary" />}>
       <SafeAreaListener onChange={handleSafeAreaChange}>
         <GestureHandlerRootView style={styles.container}>
           <QueryClientProvider client={queryClient}>
@@ -64,8 +66,24 @@ const TabLayout = () => {
               >
                 <PortalProvider>
                   <KeyboardProvider>
+                    <StatusBar style="light" />
                     <BottomSheetModalProvider>
-                      <Stack screenOptions={{ headerShown: false }} />
+                      <Stack
+                        screenOptions={optionStack}
+                        initialRouteName="index"
+                      >
+                        <Stack.Screen name="index" options={optionStack} />
+                        <Stack.Screen name="(auth)" options={optionStack} />
+                        <Stack.Screen name="(tabs)" options={optionStack} />
+                        <Stack.Screen
+                          name="onboarding/identity"
+                          options={optionStack}
+                        />
+                        <Stack.Screen
+                          name="login-callback"
+                          options={optionStack}
+                        />
+                      </Stack>
                     </BottomSheetModalProvider>
                   </KeyboardProvider>
                 </PortalProvider>
@@ -78,7 +96,7 @@ const TabLayout = () => {
   );
 };
 
-export default TabLayout;
+export default RootLayout;
 
 const styles = StyleSheet.create({
   container: {

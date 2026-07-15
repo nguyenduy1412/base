@@ -1,15 +1,18 @@
+import SplashScreen from "@/components/SplashScreen";
+import { ROUTE_GROUPS } from "@/constants/routes";
 import { auth$ } from "@/store/auth";
 import { useSelector } from "@legendapp/state/react";
-import { Redirect } from "expo-router";
+import { router } from "expo-router";
+import { useCallback } from "react";
 
 const RootIndex = () => {
   const user = useSelector(auth$.user);
 
-  if (user) {
-    return <Redirect href="/(tabs)" />;
-  }
+  const handleFinish = useCallback(() => {
+    router.replace(user?.id ? ROUTE_GROUPS.TABS : ROUTE_GROUPS.AUTH);
+  }, [user?.id]);
 
-  return <Redirect href="/onboarding/identity" />;
+  return <SplashScreen onFinish={handleFinish} />;
 };
 
 export default RootIndex;

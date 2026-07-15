@@ -19,7 +19,7 @@ export type ButtonColor =
 export interface ButtonProps extends Omit<TouchableOpacityProps, "style"> {
   className?: string;
   textClassName?: string;
-  variant?: TextVariant; // maps to the variant prop of Text
+  variant?: TextVariant;
   title?: string;
   isShadow?: boolean;
   isLoading?: boolean;

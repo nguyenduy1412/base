@@ -28,7 +28,7 @@ const OnboardingTextField = ({
       {...props}
       label={label}
       required={required}
-      labelVariant="body14Regular"
+      labelVariant="caption14Regular"
       labelClassName={cn("mb-2 text-label", labelClassName)}
       containerClassName="w-full"
       className={cn(

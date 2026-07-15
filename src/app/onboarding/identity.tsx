@@ -20,11 +20,10 @@ import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarDays, Search } from "lucide-react-native";
 import { useMemo, useRef, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { View } from "react-native";
 
 export default function OnboardingIdentityScreen() {
-  // const router = useRouter();
   const breedSheetRef = useRef<BottomSheetModal>(null);
   const birthdaySheetRef = useRef<BottomSheetModal>(null);
   const identity = useOnboardingStore((state) => state.identity);
@@ -32,18 +31,17 @@ export default function OnboardingIdentityScreen() {
 
   const {
     control,
-    formState: { errors, isValid },
+    formState: { errors },
     handleSubmit,
     setValue,
-    watch,
   } = useForm<OnboardingFormValues>({
     defaultValues: identity,
     mode: "onChange",
     resolver: zodResolver(onboardingSchema),
   });
 
-  const primaryBreed = watch("primaryBreed");
-  const birthday = watch("birthday");
+  const primaryBreed = useWatch({ control, name: "primaryBreed" });
+  const birthday = useWatch({ control, name: "birthday" });
 
   const selectedBreed = useMemo(() => {
     return breedOptions.find((option) => option.value === primaryBreed);
@@ -67,7 +65,6 @@ export default function OnboardingIdentityScreen() {
 
   const onSubmit = (values: OnboardingFormValues) => {
     setIdentity(values);
-    // router.push("/onboarding/profile");
   };
 
   return (
